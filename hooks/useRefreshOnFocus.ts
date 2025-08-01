@@ -1,5 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import * as React from 'react';
 
 export function useRefreshOnFocus(refetch: () => void) {
   const enabledRef = React.useRef(false);
@@ -11,6 +11,6 @@ export function useRefreshOnFocus(refetch: () => void) {
       } else {
         enabledRef.current = true;
       }
-    }, [refetch])
+    }, [refetch]),
   );
 }

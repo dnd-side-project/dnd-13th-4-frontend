@@ -1,26 +1,35 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Design System Colors
+ * Based on the provided design system specification
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Primary Colors
+export const PrimaryColors = {
+  blue100: '#5BA4FA',
+  blue200: '#090A0D',
+  blue300: '#E5F1FF',
+} as const;
 
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
-};
+// Secondary Colors
+export const SecondaryColors = {
+  coral: '#FFAC9E',
+  mint: '#86D2DB',
+  purple: '#BC9DE8',
+  pink: '#FBB9CD',
+  yellow: '#FEE370',
+  green: '#BAEC6A',
+} as const;
+
+// Grey Scale
+export const GreyColors = {
+  grey50: '#F9FAFB',
+  grey100: '#F2F4F6',
+  grey200: '#E5E8EB',
+  grey300: '#D1D6DB',
+  grey400: '#B0B8C1',
+  grey500: '#8B95A1',
+  grey600: '#6B7684',
+  grey700: '#4E5968',
+  grey800: '#333D4B',
+  grey900: '#191F28',
+} as const;

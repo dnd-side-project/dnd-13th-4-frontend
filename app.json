@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d5d172fd-934f-4e97-9dc8-45f56d83980a"
+      }
+    },
+    "owner": "wini_kirikiri"
   }
 }

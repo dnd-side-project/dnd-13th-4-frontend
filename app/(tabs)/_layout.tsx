@@ -12,8 +12,8 @@ import { Platform } from 'react-native';
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
     shouldShowBanner: true,
     shouldShowList: true,
   }),
@@ -22,25 +22,16 @@ Notifications.setNotificationHandler({
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const [expoPushToken, setExpoPushToken] = useState('');
-  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>(
-    [],
-  );
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(
-      // 토큰을 받아 상태로 저장. 이 토큰으로 특정사용자에게 푸시가 가능해짐.
-      // 보통은 백엔드에게 token을 전달. 백엔드는 이 token으로 푸시를 보냄.
-      (token) => token && setExpoPushToken(token),
-    );
-
-    if (Platform.OS === 'android') {
-      Notifications.getNotificationChannelsAsync().then((value) =>
-        setChannels(value ?? []),
-      );
-    }
+    // 토큰을 받아 상태로 저장. 이 토큰으로 특정사용자에게 푸시가 가능해짐.
+    // 보통은 백엔드에게 token을 전달. 백엔드는 이 token으로 푸시를 보냄.
+    registerForPushNotificationsAsync()
+      .then((token) => setExpoPushToken(token ?? ''))
+      .catch((error: any) => setExpoPushToken(`${error}`));
 
     // 알림 수신 리스너 등록
     const notificationListener = Notifications.addNotificationReceivedListener(

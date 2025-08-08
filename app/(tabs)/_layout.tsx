@@ -7,7 +7,7 @@ import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import * as Notifications from 'expo-notifications';
 import { Tabs } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, ScrollView, Text } from 'react-native';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -54,39 +54,59 @@ export default function TabLayout() {
   }, []);
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name='index'
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='house.fill' color={color} />
-          ),
+    <>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          headerShown: false,
+          tabBarButton: HapticTab,
+          tabBarBackground: TabBarBackground,
+          tabBarStyle: Platform.select({
+            ios: {
+              // Use a transparent background on iOS to show the blur effect
+              position: 'absolute',
+            },
+            default: {},
+          }),
         }}
-      />
-      <Tabs.Screen
-        name='explore'
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='paperplane.fill' color={color} />
-          ),
+      >
+        <Tabs.Screen
+          name='index'
+          options={{
+            title: 'Home',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='house.fill' color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='explore'
+          options={{
+            title: 'Explore',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='paperplane.fill' color={color} />
+            ),
+          }}
+        />
+      </Tabs>
+
+      {/* 토큰 출력용 UI (디버깅용) */}
+      <ScrollView
+        style={{
+          position: 'absolute',
+          bottom: 100,
+          left: 10,
+          right: 10,
+          backgroundColor: 'white',
+          padding: 10,
+          borderRadius: 10,
+          elevation: 4,
         }}
-      />
-    </Tabs>
+      >
+        <Text selectable numberOfLines={10} style={{ fontSize: 12 }}>
+          {expoPushToken || '토큰 로딩 중...'}
+        </Text>
+      </ScrollView>
+    </>
   );
 }

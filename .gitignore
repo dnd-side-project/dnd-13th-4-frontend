@@ -40,3 +40,4 @@ app-example
 
 *-firebase-adminsdk-*.json
 testFcmScript.ts
+google-services.json

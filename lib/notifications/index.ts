@@ -20,22 +20,21 @@ export async function schedulePushNotification(): Promise<void> {
   });
 }
 
+export type PushMessageProps = {
+  to: string; // expoPushToken
+  sound?: 'default' | null;
+  title?: string;
+  body?: string;
+  data?: Record<string, any>;
+};
+
 /**
  * 외부 푸시 알림을 보내는 함수(테스트용)
  */
-export async function sendPushNotification(
-  expoPushToken: string,
-): Promise<void> {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
-  };
 
-  // 이것이 호출되면, expo서버에서 token에 해당하는 디바이스로 푸시를 발송.
-  // 디바이스에서는 인터넷만 켜져있으면 푸시를 수신함.
+export async function sendPushNotification(
+  message: PushMessageProps,
+): Promise<void> {
   await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -46,9 +45,8 @@ export async function sendPushNotification(
     body: JSON.stringify(message),
   });
 }
-
 function handleRegistrationError(errorMessage: string): void {
-  alert(errorMessage);
+  console.error(errorMessage);
   throw new Error(errorMessage);
 }
 

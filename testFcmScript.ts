@@ -8,13 +8,14 @@
 const { JWT } = require('google-auth-library');
 const fetch = require('node-fetch');
 
+const FIREBASE_PROJECT_NAME = 'wini-3c48c';
+
 async function sendFCMv1Notification() {
-  //   const key = require(process.env.FCM_SERVER_KEY);
   // NOTE : 이 로직은 process.env 로 관리하면 좋음.
   const key = require('./wini-3c48c-firebase-adminsdk-fbsvc-f18aeab9e7.json');
   const firebaseAccessToken = await getAccessTokenAsync(key);
 
-  //   const deviceToken = process.env.FCM_DEVICE_TOKEN;
+  // NOTE : 디바이스에서 발급받은 토큰을 넣어줌.
   const deviceToken =
     'dkMeeEopRaCEBDPOJxmGwP:APA91bF_BcSHKWZOrDZhfifYOlwYJMXb2CjIPYY1orQ3q6QEGrwrwFc6V7JzWI7Y3zwjEQStaDV2QQwjZMyveSZk-vKwenDTq_9GPEbA-2IlZfavBY91Lck';
 
@@ -33,8 +34,7 @@ async function sendFCMv1Notification() {
   };
 
   const response = await fetch(
-    // `https://fcm.googleapis.com/v1/projects/${process.env.FCM_PROJECT_NAME}/messages:send`,
-    `https://fcm.googleapis.com/v1/projects/${'wini-3c48c'}/messages:send`,
+    `https://fcm.googleapis.com/v1/projects/${FIREBASE_PROJECT_NAME}/messages:send`,
     {
       method: 'POST',
       headers: {

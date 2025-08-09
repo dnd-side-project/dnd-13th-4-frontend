@@ -7,7 +7,7 @@ import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import * as Notifications from 'expo-notifications';
 import { Tabs } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Platform, ScrollView, Text } from 'react-native';
+import { Platform } from 'react-native';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -89,24 +89,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-
-      {/* 토큰 출력용 UI (디버깅용) */}
-      <ScrollView
-        style={{
-          position: 'absolute',
-          bottom: 100,
-          left: 10,
-          right: 10,
-          backgroundColor: 'white',
-          padding: 10,
-          borderRadius: 10,
-          elevation: 4,
-        }}
-      >
-        <Text selectable numberOfLines={10} style={{ fontSize: 12 }}>
-          {expoPushToken || '토큰 로딩 중...'}
-        </Text>
-      </ScrollView>
     </>
   );
 }

@@ -98,7 +98,7 @@ export async function registerForPushNotificationsAsync(): Promise<
       // FCM or APNs 를 찌를때 사용하는 토큰
       const pushTokenString = (await Notifications.getDevicePushTokenAsync())
         .data;
-      console.log(2, pushTokenString);
+
       return pushTokenString;
     } catch (e: unknown) {
       handleRegistrationError(`${e}`);

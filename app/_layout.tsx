@@ -1,15 +1,11 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useAppState } from '@/hooks/useAppState';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
 import {
   focusManager,
@@ -25,34 +21,42 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
+// Keep the splash screen visible while fonts are loading
+SplashScreen.preventAutoHideAsync();
+
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
 });
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const [fontsLoaded] = useFonts({
+    'Pretendard': require('../assets/fonts/Pretendard-Regular.ttf'),
+    'Pretendard-Medium': require('../assets/fonts/Pretendard-Medium.ttf'),
+    'Pretendard-SemiBold': require('../assets/fonts/Pretendard-SemiBold.ttf'),
+    'Pretendard-Bold': require('../assets/fonts/Pretendard-Bold.ttf'),
   });
 
   useOnlineManager();
 
   useAppState(onAppStateChange);
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-          <Stack.Screen name='+not-found' />
-        </Stack>
-        <StatusBar style='auto' />
-      </ThemeProvider>
+      <Stack>
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='+not-found' />
+      </Stack>
+      <StatusBar style='auto' />
     </QueryClientProvider>
   );
 }

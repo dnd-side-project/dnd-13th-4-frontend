@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "481023075296",
+    "project_id": "wini-3c48c",
+    "storage_bucket": "wini-3c48c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481023075296:android:ce41787703db1ac8b2c185",
+        "android_client_info": {
+          "package_name": "com.kirikiri.wini"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY8hProTw64iUpBKzk80N4u8rQ-m_mxUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

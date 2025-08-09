@@ -32,44 +32,37 @@ export const Typography = {
   // Headings
   head1: {
     fontSize: ptToPx(23),
-    fontWeight: FontWeights.bold,
     lineHeight: ptToPx(23) * 1.4, // 140%
-    fontFamily: 'Pretendard',
+    fontFamily: 'Pretendard-Bold',
   },
   head2: {
     fontSize: ptToPx(21),
-    fontWeight: FontWeights.semibold,
     lineHeight: ptToPx(21) * 1.45, // 145%
-    fontFamily: 'Pretendard',
+    fontFamily: 'Pretendard-SemiBold',
   },
   head3: {
     fontSize: ptToPx(19),
-    fontWeight: FontWeights.medium,
     lineHeight: ptToPx(19) * 1.45, // 145%
-    fontFamily: 'Pretendard',
+    fontFamily: 'Pretendard-Medium',
   },
 
   body1: {
     fontSize: ptToPx(17),
-    fontWeight: FontWeights.regular,
     lineHeight: ptToPx(17) * 1.5, // 150%
     fontFamily: 'Pretendard',
   },
   body2: {
     fontSize: ptToPx(15),
-    fontWeight: FontWeights.regular,
     lineHeight: ptToPx(15) * 1.6, // 160%
     fontFamily: 'Pretendard',
   },
   body3: {
     fontSize: ptToPx(13),
-    fontWeight: FontWeights.regular,
     lineHeight: ptToPx(13) * 1.5, // 150%
     fontFamily: 'Pretendard',
   },
   body4: {
     fontSize: ptToPx(11),
-    fontWeight: FontWeights.regular,
     lineHeight: ptToPx(11) * 1.4, // 140% (estimated)
     fontFamily: 'Pretendard',
   },

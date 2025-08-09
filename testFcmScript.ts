@@ -10,14 +10,14 @@ const fetch = require('node-fetch');
 
 const FIREBASE_PROJECT_NAME = 'wini-3c48c';
 
-async function sendFCMv1Notification() {
+export async function sendFCMv1Notification(deviceToken: string) {
   // NOTE : 이 로직은 process.env 로 관리하면 좋음.
   const key = require('./wini-3c48c-firebase-adminsdk-fbsvc-f18aeab9e7.json');
   const firebaseAccessToken = await getAccessTokenAsync(key);
 
   // NOTE : 디바이스에서 발급받은 토큰을 넣어줌.
-  const deviceToken =
-    'dkMeeEopRaCEBDPOJxmGwP:APA91bF_BcSHKWZOrDZhfifYOlwYJMXb2CjIPYY1orQ3q6QEGrwrwFc6V7JzWI7Y3zwjEQStaDV2QQwjZMyveSZk-vKwenDTq_9GPEbA-2IlZfavBY91Lck';
+  // const deviceToken =
+  //   'dkMeeEopRaCEBDPOJxmGwP:APA91bF_BcSHKWZOrDZhfifYOlwYJMXb2CjIPYY1orQ3q6QEGrwrwFc6V7JzWI7Y3zwjEQStaDV2QQwjZMyveSZk-vKwenDTq_9GPEbA-2IlZfavBY91Lck';
 
   const messageBody = {
     message: {

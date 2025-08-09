@@ -4,7 +4,8 @@
 # 리뷰 설정
 reviews:
   # 자동 리뷰 활성화
-  auto_review: true
+  auto_review:
+    enabled: true
 
   # 리뷰 프로필 설정 (chill, assertive 등)
   profile: 'chill'

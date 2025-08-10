@@ -29,7 +29,7 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
     );
   };
 
-  if (!__DEV__) return null;
+  if (process.env.EXPO_PUBLIC_ENV === 'production') return null;
 
   return (
     <TouchableOpacity style={styles.floatingButton} onPress={handleShowAlert}>

@@ -1,14 +1,14 @@
+import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
-import { sendFCMv1Notification } from '@/testFcmScript';
 import * as Notifications from 'expo-notifications';
 import { Tabs } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Button, Platform } from 'react-native';
+import { Platform } from 'react-native';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -56,13 +56,6 @@ export default function TabLayout() {
 
   return (
     <>
-      {/* NOTE : remote push notification 테스트용 버튼 */}
-      <Button
-        title='Press to schedule a notification'
-        onPress={async () => {
-          await sendFCMv1Notification(expoPushToken);
-        }}
-      />
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -97,6 +90,8 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+
+      <DebugFloatingTokenButton token={expoPushToken} />
     </>
   );
 }

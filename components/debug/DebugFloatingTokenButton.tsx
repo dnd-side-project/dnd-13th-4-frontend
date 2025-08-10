@@ -1,3 +1,4 @@
+import { schedulePushNotification } from '@/lib/notifications';
 import * as Clipboard from 'expo-clipboard';
 import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -18,6 +19,10 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
             await Clipboard.setStringAsync(token);
             Alert.alert('복사 완료', '토큰이 클립보드에 복사되었습니다.');
           },
+        },
+        {
+          text: '로컬푸시',
+          onPress: async () => await schedulePushNotification(),
         },
       ],
       { cancelable: true },

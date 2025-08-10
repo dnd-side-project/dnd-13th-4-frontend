@@ -28,23 +28,6 @@ export type PushMessageProps = {
   data?: Record<string, any>;
 };
 
-/**
- * 외부 푸시 알림을 보내는 함수(테스트용)
- */
-
-export async function sendPushNotification(
-  message: PushMessageProps,
-): Promise<void> {
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
 function handleRegistrationError(errorMessage: string): void {
   console.error(errorMessage);
   throw new Error(errorMessage);

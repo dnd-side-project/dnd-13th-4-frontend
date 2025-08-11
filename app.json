@@ -9,14 +9,20 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kirikiri.wini",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.kirikiri.wini",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -59,5 +65,13 @@
         "weight": "700"
       }
     ]
+
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d5d172fd-934f-4e97-9dc8-45f56d83980a"
+      }
+    },
+    "owner": "wini_kirikiri"
   }
 }

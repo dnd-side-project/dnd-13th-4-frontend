@@ -1,57 +1,31 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { CustomText } from '@/components/CustomText';
-import { Typography } from '@/constants/Typography';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { StyleSheet, Text, View } from 'react-native';
 
-export default function TypographyScreen() {
-  const typographyKeys = Object.keys(Typography) as Array<keyof typeof Typography>;
-
+export default function Home() {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <CustomText variant="head1" color="blue200" style={styles.title}>
-          Typography Showcase
-        </CustomText>
-        
-        {typographyKeys.map((variant) => (
-          <View key={variant} style={styles.section}>
-            <CustomText variant="body3" color="grey600" style={styles.label}>
-              {variant} - {Typography[variant].fontSize}px / {Typography[variant].fontWeight}
-            </CustomText>
-            <CustomText variant={variant} style={styles.sample}>
-              The quick brown fox jumps over the lazy dog
-            </CustomText>
-            <CustomText variant={variant} color="blue100" style={styles.sample}>
-              한글 타이포그래피 테스트입니다
-            </CustomText>
-          </View>
-        ))}
+    <SafeScreenLayout>
+      <Text style={styles.title}>홈</Text>
+      <View style={styles.contentArea}>
+        <Text style={styles.content}>메인 콘텐츠 영역</Text>
       </View>
-    </ScrollView>
+    </SafeScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  title: {
+    fontSize: 24,
+    fontFamily: 'Pretendard-Bold',
+    color: '#000',
+  },
+  contentArea: {
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+    borderRadius: 12,
   },
   content: {
-    padding: 20,
-    paddingTop: 60,
-  },
-  title: {
-    marginBottom: 30,
-  },
-  section: {
-    marginBottom: 24,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-  },
-  label: {
-    marginBottom: 8,
-  },
-  sample: {
-    marginBottom: 4,
+    fontSize: 16,
+    fontFamily: 'Pretendard',
+    color: '#333',
   },
 });

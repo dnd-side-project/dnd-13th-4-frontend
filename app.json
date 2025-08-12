@@ -44,6 +44,28 @@
     "experiments": {
       "typedRoutes": true
     },
+    "fonts": [
+      {
+        "asset": "./assets/fonts/Pretendard-Regular.woff",
+        "family": "Pretendard"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-Medium.woff",
+        "family": "Pretendard",
+        "weight": "500"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-SemiBold.woff",
+        "family": "Pretendard",
+        "weight": "600"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-Bold.woff",
+        "family": "Pretendard",
+        "weight": "700"
+      }
+    ]
+
     "extra": {
       "router": {},
       "eas": {

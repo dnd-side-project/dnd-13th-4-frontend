@@ -4,38 +4,39 @@
 # 리뷰 설정
 reviews:
   # 자동 리뷰 활성화
-  auto_review: true
-  
-  # 리뷰 프로필 설정 (CHILL, ASSERTIVE, PYTHONIC 등)
-  profile: "CHILL"
-  
+  auto_review:
+    enabled: true
+
+  # 리뷰 프로필 설정 (chill, assertive 등)
+  profile: 'chill'
+
   # 리뷰 노력 수준 (1-5, 높을수록 더 상세한 리뷰)
   effort: 3
-  
+
   # 특정 파일 패턴 제외
   exclude:
-    - "*.md"
-    - "package-lock.json"
-    - "yarn.lock"
-    - "*.generated.*"
-    - "dist/**"
-    - "build/**"
-    - "node_modules/**"
-    - "eslint.config.js"
-    - ".prettierrc"
-    - "tsconfig.json"
-  
+    - '*.md'
+    - 'package-lock.json'
+    - 'yarn.lock'
+    - '*.generated.*'
+    - 'dist/**'
+    - 'build/**'
+    - 'node_modules/**'
+    - 'eslint.config.js'
+    - '.prettierrc'
+    - 'tsconfig.json'
+
   # 특정 파일 패턴만 포함
   include:
-    - "app/**/*.ts"
-    - "app/**/*.tsx"
-    - "hooks/**/*.ts"
-    - "components/**/*.tsx"
-    - "components/**/*.ts"
-  
+    - 'app/**/*.ts'
+    - 'app/**/*.tsx'
+    - 'hooks/**/*.ts'
+    - 'components/**/*.tsx'
+    - 'components/**/*.ts'
+
   # 리뷰할 최대 파일 수
   max_files: 50
-  
+
   # 단일 파일의 최대 라인 수
   max_lines_per_file: 1000
 
@@ -45,44 +46,44 @@ language:
     # TypeScript 관련 리뷰 옵션
     strict_mode: true
     check_types: true
-    
+
   javascript:
     # JavaScript 관련 리뷰 옵션
-    es_version: "2022"
+    es_version: '2022'
 
 # 커스텀 리뷰 규칙
 rules:
   # 보안 관련 이슈 체크
   security: true
-  
+
   # 성능 관련 이슈 체크
   performance: true
-  
+
   # 코드 스타일 체크
   style: true
-  
+
   # 버그 패턴 체크
   bugs: true
-  
+
   # 복잡성 체크
   complexity: true
 
 # 리뷰 템플릿 커스터마이징
 template:
   # 리뷰 코멘트 톤 설정
-  tone: "constructive"
-  
+  tone: 'constructive'
+
   # 한국어 리뷰 요청 (실험적)
-  language: "korean"
-  
+  language: 'ko-KR'
+
   # 리뷰 포맷
   format: |
     ## 📝 리뷰 요약
     {summary}
-    
+
     ## 🔍 주요 발견사항
     {findings}
-    
+
     ## ✅ 권장사항
     {recommendations}
 
@@ -90,6 +91,6 @@ template:
 notifications:
   # PR 생성 시 자동 리뷰
   on_pr_created: true
-  
+
   # 커밋 푸시 시 리뷰
   on_push: true

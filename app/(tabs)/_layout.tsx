@@ -3,14 +3,12 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import * as Notifications from 'expo-notifications';
-import { Tabs } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
-        
+import { Platform, Pressable, Text, View } from 'react-native';
+
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -22,7 +20,6 @@ Notifications.setNotificationHandler({
 });
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
@@ -54,42 +51,96 @@ export default function TabLayout() {
       responseListener.remove();
     };
   }, []);
-    
-  return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name='index'
-        options={{
-          title: 'Typography',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='textformat' color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name='explore'
-        options={{
-          title: 'Colors',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='paintpalette' color={color} />
-          ),
-        }}
-      />
 
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarButton: HapticTab,
+          tabBarBackground: TabBarBackground,
+          tabBarStyle: {
+            height: 84,
+            ...Platform.select({
+              ios: {
+                // Use a transparent background on iOS to show the blur effect
+                position: 'absolute',
+              },
+              default: {},
+            }),
+          },
+        }}
+      >
+        <Tabs.Screen
+          name='index'
+          options={{
+            title: 'Home',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='textformat' color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='Storage'
+          options={{
+            title: 'Storage',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='paintpalette' color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='MindLetter'
+          options={{
+            title: '',
+            tabBarIcon: ({ focused }) => (
+              <View
+                style={{
+                  width: 56,
+                  height: 56,
+                  borderRadius: 28,
+                  backgroundColor: '#4A90E2',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 20,
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 24 }}>+</Text>
+              </View>
+            ),
+            tabBarButton: (props) => (
+              <Pressable
+                onPress={() => {
+                  router.push('/CreateMindLetter');
+                }}
+                style={[props.style, { top: -10 }]}
+              >
+                {props.children}
+              </Pressable>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='Statistics'
+          options={{
+            title: 'Statistics',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='textformat' color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='MyPage'
+          options={{
+            title: 'MyPage',
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name='paintpalette' color={color} />
+            ),
+          }}
+        />
+      </Tabs>
       <DebugFloatingTokenButton token={expoPushToken} />
-    </>
+    </View>
   );
 }

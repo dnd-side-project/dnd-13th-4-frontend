@@ -3,14 +3,13 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import * as Notifications from 'expo-notifications';
 import { Tabs } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-        
+
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -54,7 +53,7 @@ export default function TabLayout() {
       responseListener.remove();
     };
   }, []);
-    
+
   return (
     <Tabs
       screenOptions={{
@@ -90,6 +89,6 @@ export default function TabLayout() {
       />
 
       <DebugFloatingTokenButton token={expoPushToken} />
-    </>
+    </Tabs>
   );
 }

@@ -1,3 +1,4 @@
+import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import HistoryChip from '@/components/chip/HistoryChip';
 import { CustomText } from '@/components/CustomText';
@@ -11,6 +12,8 @@ export default function TypographyScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.content}>
         <HistoryChip text='불편했던' /> <CategoryChip text='소음' />
+        <RoundButton text='큰 소리로 노래했어요' />{' '}
+        <RoundButton text='큰 소리로 노래했어요' selected />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>

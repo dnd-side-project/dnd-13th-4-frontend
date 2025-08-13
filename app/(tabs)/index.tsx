@@ -1,3 +1,4 @@
+import ProgressBar from '@/components/bar/ProgressBar';
 import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
@@ -27,6 +28,7 @@ export default function TypographyScreen() {
         <CTAButton text='이전' />
         <StatChip leftText='이번 주 받은쪽지' rightText='11개' />
         <TimeChip text='~18:00' />
+        <ProgressBar percentage={100} />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>

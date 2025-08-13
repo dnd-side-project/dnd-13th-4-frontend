@@ -4,17 +4,15 @@ import { CustomText } from '../CustomText';
 
 type Props = {
   text: string;
-  selected?: boolean;
+  active?: boolean;
 };
 
-const LongSquareButton = ({ text, selected }: Props) => {
+const LongSquareButton = ({ text, active }: Props) => {
   return (
-    <View
-      style={[styles.button, selected ? styles.selected : styles.unSelected]}
-    >
+    <View style={[styles.button, active ? styles.active : styles.unActive]}>
       <CustomText
         variant='body2'
-        color={selected ? PrimaryColors.blue100 : GreyColors.grey800}
+        color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
         {text}
       </CustomText>
@@ -32,12 +30,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 12,
   },
-  selected: {
+  active: {
     fontWeight: 700, // TODO : weight적용이 안됨.
     backgroundColor: PrimaryColors.blue300,
     borderColor: PrimaryColors.blue100,
   },
-  unSelected: {
+  unActive: {
     borderColor: 'rgba(0,0,0,0)',
     backgroundColor: GreyColors.grey100,
   },

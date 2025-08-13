@@ -7,12 +7,12 @@ type Props = {
   active?: boolean;
 };
 
-const RoundButton = ({ text, active = false }: Props) => {
+const CTAButton = ({ text, active }: Props) => {
   return (
     <View style={[styles.button, active ? styles.active : styles.unActive]}>
       <CustomText
-        variant='body2'
-        color={active ? PrimaryColors.blue100 : GreyColors.grey800}
+        variant='body1'
+        color={active ? '#ffffff' : GreyColors.grey600}
       >
         {text}
       </CustomText>
@@ -20,23 +20,21 @@ const RoundButton = ({ text, active = false }: Props) => {
   );
 };
 
-export default RoundButton;
+export default CTAButton;
 
 const styles = StyleSheet.create({
   button: {
-    alignSelf: 'flex-start',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderWidth: 2,
+    alignSelf: 'stretch',
+    paddingVertical: 16,
     borderRadius: 999,
+    alignItems: 'center',
   },
   active: {
     fontWeight: 700, // TODO : weight적용이 안됨.
-    backgroundColor: PrimaryColors.blue300,
-    borderColor: PrimaryColors.blue100,
+    backgroundColor: PrimaryColors.blue100,
   },
   unActive: {
     borderColor: 'rgba(0,0,0,0)',
-    backgroundColor: GreyColors.grey100,
+    backgroundColor: GreyColors.grey200,
   },
 });

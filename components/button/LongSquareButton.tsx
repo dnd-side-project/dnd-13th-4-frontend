@@ -7,7 +7,7 @@ type Props = {
   selected?: boolean;
 };
 
-const SquareButton = ({ selected = false, text }: Props) => {
+const LongSquareButton = ({ text, selected }: Props) => {
   return (
     <View
       style={[styles.button, selected ? styles.selected : styles.unSelected]}
@@ -22,13 +22,13 @@ const SquareButton = ({ selected = false, text }: Props) => {
   );
 };
 
-export default SquareButton;
+export default LongSquareButton;
 
 const styles = StyleSheet.create({
   button: {
-    alignSelf: 'flex-start',
+    alignSelf: 'stretch',
     paddingVertical: 16,
-    paddingHorizontal: 42,
+    paddingHorizontal: 20,
     borderWidth: 2,
     borderRadius: 12,
   },

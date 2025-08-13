@@ -1,3 +1,4 @@
+import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
 import CategoryChip from '@/components/chip/CategoryChip';
@@ -17,6 +18,8 @@ export default function TypographyScreen() {
         <RoundButton text='큰 소리로 노래했어요' selected />
         <SquareButton text='중요한 회의 중' selected />
         <SquareButton text='중요한 회의 중' />
+        <LongSquareButton text='편하게 이야기 나눠보고 싶어요🌼' selected />
+        <LongSquareButton text='편하게 이야기 나눠보고 싶어요🌼' />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>

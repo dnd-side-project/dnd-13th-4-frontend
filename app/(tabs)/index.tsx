@@ -1,3 +1,4 @@
+import CategoryChip from '@/components/chip/CategoryChip';
 import HistoryChip from '@/components/chip/HistoryChip';
 import { CustomText } from '@/components/CustomText';
 import { Typography } from '@/constants/Typography';
@@ -9,11 +10,10 @@ export default function TypographyScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <HistoryChip text='불편했던' />
+        <HistoryChip text='불편했던' /> <CategoryChip text='소음' />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>
-
         {typographyKeys.map((variant) => (
           <View key={variant} style={styles.section}>
             <CustomText variant='body3' color='grey600' style={styles.label}>

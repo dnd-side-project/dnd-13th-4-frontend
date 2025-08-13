@@ -4,6 +4,7 @@ import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import HistoryChip from '@/components/chip/HistoryChip';
+import StatChip from '@/components/chip/StatChip';
 import { CustomText } from '@/components/CustomText';
 import { Typography } from '@/constants/Typography';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -23,6 +24,7 @@ export default function TypographyScreen() {
         <LongSquareButton text='편하게 이야기 나눠보고 싶어요🌼' />
         <CTAButton text='다음' active />
         <CTAButton text='이전' />
+        <StatChip leftText='이번 주 받은쪽지' rightText='11개' />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>

@@ -1,15 +1,16 @@
 import { GreyColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   leftText: string;
   rightText: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-const StatChip = ({ leftText, rightText }: Props) => {
+const StatChip = ({ leftText, rightText, style }: Props) => {
   return (
-    <View style={styles.chip}>
+    <View style={[style, styles.chip]}>
       <CustomText
         variant='body3'
         color={GreyColors.grey500}

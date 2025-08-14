@@ -1,15 +1,22 @@
 import { GreyColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   selected?: boolean;
   text: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-const CategoryChip = ({ selected = false, text }: Props) => {
+const CategoryChip = ({ selected = false, text, style }: Props) => {
   return (
-    <View style={[styles.chip, selected ? styles.selected : styles.unSelected]}>
+    <View
+      style={[
+        style,
+        styles.chip,
+        selected ? styles.selected : styles.unSelected,
+      ]}
+    >
       <CustomText
         color={selected ? '#ffffff' : GreyColors.grey600}
         variant='body2'

@@ -1,17 +1,18 @@
 import { PrimaryColors } from '@/constants/Colors';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   text: string;
   active?: boolean;
   onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
-const CTAButton = ({ text, active, onPress }: Props) => {
+const CTAButton = ({ text, active, onPress, style }: Props) => {
   return (
     <Pressable
-      style={[styles.button, active ? styles.active : styles.unActive]}
+      style={[style, styles.button, active ? styles.active : styles.unActive]}
       onPress={onPress}
       accessibilityRole='button'
       accessibilityState={{ selected: active }}

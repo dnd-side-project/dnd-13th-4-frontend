@@ -1,22 +1,26 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   text: string;
   active?: boolean;
+  onPress?: () => void;
 };
 
-const CTAButton = ({ text, active }: Props) => {
+const CTAButton = ({ text, active, onPress }: Props) => {
   return (
-    <View style={[styles.button, active ? styles.active : styles.unActive]}>
+    <Pressable
+      style={[styles.button, active ? styles.active : styles.unActive]}
+      onPress={onPress}
+    >
       <CustomText
         variant='body1'
         color={active ? '#ffffff' : GreyColors.grey600}
       >
         {text}
       </CustomText>
-    </View>
+    </Pressable>
   );
 };
 

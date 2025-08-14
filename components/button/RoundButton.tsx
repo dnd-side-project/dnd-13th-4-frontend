@@ -1,22 +1,26 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   text: string;
   active?: boolean;
+  onPress?: () => void;
 };
 
-const RoundButton = ({ text, active = false }: Props) => {
+const RoundButton = ({ text, active = false, onPress }: Props) => {
   return (
-    <View style={[styles.button, active ? styles.active : styles.unActive]}>
+    <Pressable
+      style={[styles.button, active ? styles.active : styles.unActive]}
+      onPress={onPress}
+    >
       <CustomText
         variant='body2'
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
         {text}
       </CustomText>
-    </View>
+    </Pressable>
   );
 };
 

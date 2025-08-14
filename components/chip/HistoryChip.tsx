@@ -1,14 +1,15 @@
 import { PrimaryColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 
 type Props = {
   text: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-const HistoryChip = ({ text }: Props) => {
+const HistoryChip = ({ text, style }: Props) => {
   return (
-    <View style={styles.chip}>
+    <View style={[style, styles.chip]}>
       <CustomText variant='body3' color={PrimaryColors.blue100}>
         {text}
       </CustomText>

@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     borderWidth: 1,
+    borderColor: PrimaryColors.blue100,
   },
   active: {
     fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue100,
   },
   unActive: {
-    borderColor: PrimaryColors.blue100,
     backgroundColor: '#ffffff',
   },
 });

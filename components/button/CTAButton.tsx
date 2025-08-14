@@ -1,4 +1,4 @@
-import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { PrimaryColors } from '@/constants/Colors';
 import { Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 
@@ -17,8 +17,8 @@ const CTAButton = ({ text, active, onPress }: Props) => {
       accessibilityState={{ selected: active }}
     >
       <CustomText
-        variant='body1'
-        color={active ? '#ffffff' : GreyColors.grey600}
+        style={[active ? styles.active : styles.unActive]}
+        color={active ? '#ffffff' : PrimaryColors.blue100}
       >
         {text}
       </CustomText>
@@ -34,13 +34,14 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 999,
     alignItems: 'center',
+    borderWidth: 1,
   },
   active: {
     fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue100,
   },
   unActive: {
-    borderColor: 'rgba(0,0,0,0)',
-    backgroundColor: GreyColors.grey200,
+    borderColor: PrimaryColors.blue100,
+    backgroundColor: '#ffffff',
   },
 });

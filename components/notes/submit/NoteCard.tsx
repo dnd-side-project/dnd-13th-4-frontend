@@ -1,4 +1,5 @@
 import { CustomText } from '@/components/CustomText';
+import { PrimaryColors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
 
@@ -22,12 +23,14 @@ const NoteCard = () => {
       <View style={styles.imageContainer}>
         <Image style={[styles.image, { height }]} source={source} />
       </View>
-      <View style={styles.feeling}>
-        <CustomText>불편했던 마음을 전해요</CustomText>
+      <View style={styles.feelingContainer}>
+        <CustomText style={styles.feelingText}>
+          <CustomText style={styles.feeling}>불편했던</CustomText> 마음을 전해요
+        </CustomText>
       </View>
       <View style={styles.situationContainer}>
-        <View>
-          <CustomText>상황</CustomText>
+        <View style={styles.badge}>
+          <CustomText style={styles.badgeText}>상황</CustomText>
         </View>
         <View>
           <CustomText>룸메님이 큰소리로 노래했어요</CustomText>
@@ -35,8 +38,8 @@ const NoteCard = () => {
         </View>
       </View>
       <View style={styles.promiseContainer}>
-        <View>
-          <CustomText>약속</CustomText>
+        <View style={styles.badge}>
+          <CustomText style={styles.badgeText}>약속</CustomText>
         </View>
         <View>
           <CustomText>배려해주면 집이 더 따뜻해질 거에요👍</CustomText>
@@ -66,7 +69,21 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  feeling: { alignSelf: 'center' },
+  feelingContainer: {
+    marginTop: 20,
+    marginBottom: 24,
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: PrimaryColors.blue200,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+  },
+  feelingText: { fontSize: 17 },
+  feeling: {
+    fontSize: 17,
+    color: PrimaryColors.blueText,
+    fontFamily: 'Pretendard-Bold',
+  },
   situationContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -76,5 +93,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  badge: {
+    backgroundColor: PrimaryColors.blue300,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+  },
+  badgeText: {
+    fontSize: 13,
+    color: PrimaryColors.blue100,
+    fontFamily: 'Pretendard-SemiBold',
   },
 });

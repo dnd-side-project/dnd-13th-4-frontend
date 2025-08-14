@@ -5,8 +5,9 @@
 
 // Primary Colors
 export const PrimaryColors = {
+  blueText: '#227FEB',
   blue100: '#5BA4FA',
-  blue200: '#090A0D',
+  blue200: '#A5D3FC',
   blue300: '#E5F1FF',
 } as const;
 

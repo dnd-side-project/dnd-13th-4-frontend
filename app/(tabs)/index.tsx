@@ -1,4 +1,3 @@
-import StatChip from '@/components/chip/StatChip';
 import { CustomText } from '@/components/CustomText';
 import { Typography } from '@/constants/Typography';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -9,7 +8,6 @@ export default function TypographyScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <StatChip leftText='1' rightText='2' />
         <CustomText variant='head1' color='blue200' style={styles.title}>
           Typography Showcase
         </CustomText>

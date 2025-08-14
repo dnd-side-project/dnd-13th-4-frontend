@@ -1,3 +1,4 @@
+import { CustomText } from '@/components/CustomText';
 import { useEffect, useState } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
 
@@ -21,6 +22,26 @@ const NoteCard = () => {
       <View style={styles.imageContainer}>
         <Image style={[styles.image, { height }]} source={source} />
       </View>
+      <View style={styles.feeling}>
+        <CustomText>불편했던 마음을 전해요</CustomText>
+      </View>
+      <View style={styles.situationContainer}>
+        <View>
+          <CustomText>상황</CustomText>
+        </View>
+        <View>
+          <CustomText>룸메님이 큰소리로 노래했어요</CustomText>
+          <CustomText>그때 저는 중요한 업무중이었어요</CustomText>
+        </View>
+      </View>
+      <View style={styles.promiseContainer}>
+        <View>
+          <CustomText>약속</CustomText>
+        </View>
+        <View>
+          <CustomText>배려해주면 집이 더 따뜻해질 거에요👍</CustomText>
+        </View>
+      </View>
     </View>
   );
 };
@@ -37,11 +58,23 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     overflow: 'hidden',
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+  },
+  feeling: { alignSelf: 'center' },
+  situationContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  promiseContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

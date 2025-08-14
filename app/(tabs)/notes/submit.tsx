@@ -1,15 +1,18 @@
 import CTAButton from '@/components/button/CTAButton';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
-import { StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 
 const Submit = () => {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('@/assets/images/note-submit-bg.png')} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
+      style={styles.container}
+    >
       <FromToText />
       <NoteCard />
       <CTAButton text='마음쪽지 보내기' active />
-    </View>
+    </ImageBackground>
   );
 };
 

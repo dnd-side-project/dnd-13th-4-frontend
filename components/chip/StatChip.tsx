@@ -45,5 +45,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   left: {},
-  right: { fontWeight: 700 /** TODO : fontWeight적용이 안됨 */ },
+  right: {
+    fontFamily: 'Pretendard-Bold',
+  },
 });

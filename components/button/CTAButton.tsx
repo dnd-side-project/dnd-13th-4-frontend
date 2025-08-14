@@ -13,6 +13,8 @@ const CTAButton = ({ text, active, onPress }: Props) => {
     <Pressable
       style={[styles.button, active ? styles.active : styles.unActive]}
       onPress={onPress}
+      accessibilityRole='button'
+      accessibilityState={{ selected: active }}
     >
       <CustomText
         variant='body1'
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   active: {
-    fontWeight: 700, // TODO : weight적용이 안됨.
+    fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue100,
   },
   unActive: {

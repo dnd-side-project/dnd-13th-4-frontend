@@ -30,7 +30,11 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
   });
 
   return (
-    <View style={styles.track}>
+    <View
+      style={styles.track}
+      accessibilityRole='progressbar'
+      accessibilityValue={{ min: 0, max: 100, now: clamped }}
+    >
       <Animated.View style={[styles.bar, { width }]} />
     </View>
   );

@@ -13,6 +13,8 @@ const RoundButton = ({ text, active = false, onPress }: Props) => {
     <Pressable
       style={[styles.button, active ? styles.active : styles.unActive]}
       onPress={onPress}
+      accessibilityRole='button'
+      accessibilityState={{ selected: active }}
     >
       <CustomText
         variant='body2'
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
   active: {
-    fontWeight: 700, // TODO : weight적용이 안됨.
+    fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue300,
     borderColor: PrimaryColors.blue100,
   },

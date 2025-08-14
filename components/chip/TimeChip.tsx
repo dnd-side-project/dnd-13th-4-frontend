@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: PrimaryColors.blue300,
     paddingHorizontal: 6,
-    fontWeight: 500,
+    fontFamily: 'Pretendard-Medium',
   },
 });

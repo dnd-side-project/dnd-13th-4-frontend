@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 1,
   },
-  selected: { backgroundColor: GreyColors.grey800 },
+  selected: {
+    backgroundColor: GreyColors.grey800,
+    borderColor: GreyColors.grey800,
+  },
   unSelected: { borderWidth: 1, borderColor: GreyColors.grey300 },
 });

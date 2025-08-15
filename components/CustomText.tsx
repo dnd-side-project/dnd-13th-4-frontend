@@ -30,11 +30,11 @@ export function CustomText({
   ...rest
 }: CustomTextProps) {
   const typographyStyle = Typography[variant];
-  
+
   const isPaletteKey =
     typeof color === 'string' &&
     Object.prototype.hasOwnProperty.call(allColors, color);
-  
+
   const textColor = isPaletteKey
     ? allColors[color as keyof typeof allColors]
     : color;

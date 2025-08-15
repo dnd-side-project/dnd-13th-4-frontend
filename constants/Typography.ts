@@ -4,9 +4,7 @@
  * Using Pretendard font family
  */
 
-// Font sizes in points (pt) converted to pixels for React Native
-// 1pt = 1.333px on most devices
-const ptToPx = (pt: number) => pt * 1.333;
+// Font sizes in pixels - matching Figma design values directly
 
 // Export typography scale for reference
 export const TypographySizes = {
@@ -31,40 +29,41 @@ export const FontWeights = {
 export const Typography = {
   // Headings
   head1: {
-    fontSize: ptToPx(23),
-    lineHeight: ptToPx(23) * 1.4, // 140%
+    fontSize: 23,
+    lineHeight: 23 * 1.4, // 140%
     fontFamily: 'Pretendard-Bold',
   },
   head2: {
-    fontSize: ptToPx(21),
-    lineHeight: ptToPx(21) * 1.45, // 145%
+    fontSize: 21,
+    lineHeight: 21 * 1.45, // 145%
     fontFamily: 'Pretendard-SemiBold',
   },
   head3: {
-    fontSize: ptToPx(19),
-    lineHeight: ptToPx(19) * 1.45, // 145%
+    fontSize: 19,
+    lineHeight: 19 * 1.45, // 145%
     fontFamily: 'Pretendard-Medium',
   },
 
   body1: {
-    fontSize: ptToPx(17),
-    lineHeight: ptToPx(17) * 1.5, // 150%
+    fontSize: 17,
+    lineHeight: 17 * 1.5, // 150%
     fontFamily: 'Pretendard',
   },
   body2: {
-    fontSize: ptToPx(15),
-    lineHeight: ptToPx(15) * 1.6, // 160%
+    fontSize: 15,
+    lineHeight: 15 * 1.6, // 160%
     fontFamily: 'Pretendard',
   },
   body3: {
-    fontSize: ptToPx(13),
-    lineHeight: ptToPx(13) * 1.5, // 150%
+    fontSize: 13,
+    lineHeight: 13 * 1.5, // 150%
     fontFamily: 'Pretendard',
   },
   body4: {
-    fontSize: ptToPx(11),
-    lineHeight: ptToPx(11) * 1.4, // 140% (estimated)
+    fontSize: 11,
+    lineHeight: 16.5, // 150% as specified in design
     fontFamily: 'Pretendard',
+    fontWeight: '500',
   },
 } as const;
 

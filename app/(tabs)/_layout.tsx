@@ -11,7 +11,7 @@ import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 
-const LOGO = 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/logo.png';
+const LOGO = 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({

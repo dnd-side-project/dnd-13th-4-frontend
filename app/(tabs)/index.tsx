@@ -1,3 +1,4 @@
+
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { StyleSheet, Text, View } from 'react-native';
 

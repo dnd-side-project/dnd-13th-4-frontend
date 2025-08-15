@@ -1,20 +1,30 @@
 import { CustomText } from '@/components/CustomText';
 import { PrimaryColors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
-import { Image, Platform, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import SituationText from './SituationText';
 
 const NoteCard = () => {
   const [height, setHeight] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
-  const source = require('@/assets/images/불편함_카드.png');
+  // ✅ S3 이미지 URL
+  const imageUrl =
+    'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
 
   useEffect(() => {
-    if (cardWidth > 0 && Platform.OS !== 'web') {
-      const { width: imgW, height: imgH } = Image.resolveAssetSource(source);
-      setHeight((cardWidth * imgH) / imgW); // ✅ 부모 실제 width 기반 비율 계산
+    if (cardWidth > 0) {
+      // S3 이미지는 로컬처럼 Image.resolveAssetSource 사용 불가 → Image.getSize 사용
+      Image.getSize(
+        imageUrl,
+        (imgW, imgH) => {
+          setHeight((cardWidth * imgH) / imgW); // ✅ 부모 width 기준 비율 유지
+        },
+        (error) => {
+          console.error('이미지 크기 불러오기 실패:', error);
+        },
+      );
     }
-  }, [cardWidth, source]);
+  }, [cardWidth, imageUrl]);
 
   return (
     <View
@@ -22,14 +32,21 @@ const NoteCard = () => {
       onLayout={(e) => setCardWidth(e.nativeEvent.layout.width)}
     >
       <View style={styles.imageContainer}>
-        <Image style={[styles.image, { height }]} source={source} />
+        <Image
+          style={[{ height, width: cardWidth }]}
+          source={{ uri: imageUrl }}
+          resizeMode='contain'
+        />
       </View>
+
       <View style={styles.feelingContainer}>
         <CustomText style={styles.feelingText}>
           <CustomText style={styles.feeling}>불편했던</CustomText> 마음을 전해요
         </CustomText>
       </View>
+
       <SituationText />
+
       <View style={styles.promiseContainer}>
         <View style={styles.badge}>
           <CustomText style={styles.badgeText}>약속</CustomText>
@@ -57,11 +74,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
   feelingContainer: {
     marginTop: 20,
     marginBottom: 24,
@@ -77,13 +89,7 @@ const styles = StyleSheet.create({
     color: PrimaryColors.blueText,
     fontFamily: 'Pretendard-Bold',
   },
-  situationContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   promiseContainer: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },

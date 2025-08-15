@@ -2,6 +2,7 @@ import { CustomText } from '@/components/CustomText';
 import { PrimaryColors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
+import SituationText from './SituationText';
 
 const NoteCard = () => {
   const [height, setHeight] = useState(0);
@@ -28,15 +29,7 @@ const NoteCard = () => {
           <CustomText style={styles.feeling}>불편했던</CustomText> 마음을 전해요
         </CustomText>
       </View>
-      <View style={styles.situationContainer}>
-        <View style={styles.badge}>
-          <CustomText style={styles.badgeText}>상황</CustomText>
-        </View>
-        <View>
-          <CustomText>룸메님이 큰소리로 노래했어요</CustomText>
-          <CustomText>그때 저는 중요한 업무중이었어요</CustomText>
-        </View>
-      </View>
+      <SituationText />
       <View style={styles.promiseContainer}>
         <View style={styles.badge}>
           <CustomText style={styles.badgeText}>약속</CustomText>

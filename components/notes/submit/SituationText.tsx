@@ -7,7 +7,7 @@ import NoteBadge from './NoteBadge';
 const SituationText = () => {
   return (
     <View style={styles.situationContainer}>
-      <NoteBadge />
+      <NoteBadge text='상황' />
       <View style={styles.textContainer}>
         <View>
           <CustomText variant='body2' color={GreyColors.grey700}>

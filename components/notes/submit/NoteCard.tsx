@@ -1,7 +1,7 @@
-import { CustomText } from '@/components/CustomText';
-import { PrimaryColors } from '@/constants/Colors';
 import { useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
+import FeelingText from './FeelingText';
+import PromiseText from './PromiseText';
 import SituationText from './SituationText';
 
 const NoteCard = () => {
@@ -38,21 +38,15 @@ const NoteCard = () => {
           resizeMode='contain'
         />
       </View>
-
-      <View style={styles.feelingContainer}>
-        <CustomText style={styles.feelingText}>
-          <CustomText style={styles.feeling}>불편했던</CustomText> 마음을 전해요
-        </CustomText>
-      </View>
-
-      <SituationText />
-
-      <View style={styles.promiseContainer}>
-        <View style={styles.badge}>
-          <CustomText style={styles.badgeText}>약속</CustomText>
+      <View style={{ paddingHorizontal: 16 }}>
+        <View style={{ marginTop: 20, marginBottom: 24 }}>
+          <FeelingText />
         </View>
         <View>
-          <CustomText>배려해주면 집이 더 따뜻해질 거에요👍</CustomText>
+          <SituationText />
+        </View>
+        <View style={{ marginBottom: 24 }}>
+          <PromiseText />
         </View>
       </View>
     </View>
@@ -73,34 +67,5 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-  },
-  feelingContainer: {
-    marginTop: 20,
-    marginBottom: 24,
-    alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: PrimaryColors.blue200,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-  },
-  feelingText: { fontSize: 17 },
-  feeling: {
-    fontSize: 17,
-    color: PrimaryColors.blueText,
-    fontFamily: 'Pretendard-Bold',
-  },
-  promiseContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  badge: {
-    backgroundColor: PrimaryColors.blue300,
-    paddingHorizontal: 8,
-    borderRadius: 12,
-  },
-  badgeText: {
-    fontSize: 13,
-    color: PrimaryColors.blue100,
-    fontFamily: 'Pretendard-SemiBold',
   },
 });

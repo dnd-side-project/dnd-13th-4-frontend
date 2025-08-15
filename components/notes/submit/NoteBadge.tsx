@@ -2,10 +2,14 @@ import { CustomText } from '@/components/CustomText';
 import { PrimaryColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
-const NoteBadge = () => {
+type NoteBadgeProps = {
+  text: string;
+};
+
+const NoteBadge = ({ text }: NoteBadgeProps) => {
   return (
     <View style={styles.badge}>
-      <CustomText style={styles.badgeText}>상황</CustomText>
+      <CustomText style={styles.badgeText}>{text}</CustomText>
     </View>
   );
 };

@@ -1,11 +1,8 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 
-// 이 페이지는 직접 접근되지 않습니다.
-// + 버튼을 눌렀을 때 tabBarButton에서 CreateMindLetter로 리다이렉트됩니다.
 export default function MindLetter() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>이 페이지는 표시되지 않습니다</Text>
-    </View>
-  );
+  // 이 화면은 실제로 렌더링되지 않습니다.
+  // tabBarButton으로 다른 화면으로 이동하기 때문입니다.
+  return <View />;
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';
+import RandomMessage from './RandomMessage';
 import SituationText from './SituationText';
 
 const NoteCard = () => {
@@ -47,6 +48,9 @@ const NoteCard = () => {
         </View>
         <View style={{ marginBottom: 24 }}>
           <PromiseText />
+        </View>
+        <View style={{ marginBottom: 24 }}>
+          <RandomMessage />
         </View>
       </View>
     </View>

@@ -15,7 +15,13 @@ const Submit = () => {
       <View>
         <NoteCard />
       </View>
-      <CTAButton text='마음쪽지 보내기' active />
+      <View style={styles.buttonContainer}>
+        <CTAButton
+          style={{ alignSelf: 'flex-end' }}
+          text='마음쪽지 보내기'
+          active
+        />
+      </View>
     </ImageBackground>
   );
 };
@@ -30,5 +36,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: '#ffffff',
+  },
+  buttonContainer: {
+    marginTop: 'auto',
+    alignSelf: 'stretch',
   },
 });

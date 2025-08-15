@@ -101,8 +101,8 @@ const ExpandLeftIcon = ({ size = 24, color = '#000000' }: IconProps) => (
   </Svg>
 );
 
-const RefreshIcon = ({ size = 24, color = '#000000' }: IconProps) => (
-  <Svg width={size} height={size} viewBox='0 0 24 24' fill='none'>
+const RefreshIcon = ({ size = 16, color = '#000000' }: IconProps) => (
+  <Svg width={size} height={size} viewBox='0 0 13 16' fill='none'>
     <Path
       d='M8.07059 8.85693L4.92773 11.9998L8.07059 15.1427'
       stroke={color}

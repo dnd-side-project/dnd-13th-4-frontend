@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';
 import RandomMessage from './RandomMessage';
 import SituationText from './SituationText';
 
-const NoteCard = () => {
+type NoteCardProps = {
+  style?: StyleProp<ViewStyle>;
+  cardWidth: number;
+  changeCardWidth: (newCardWidth: number) => void;
+};
+
+const NoteCard = ({ style, cardWidth, changeCardWidth }: NoteCardProps) => {
   const [height, setHeight] = useState(0);
-  const [cardWidth, setCardWidth] = useState(0);
+
   // ✅ S3 이미지 URL
   const imageUrl =
     'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
@@ -29,8 +35,8 @@ const NoteCard = () => {
 
   return (
     <View
-      style={styles.container}
-      onLayout={(e) => setCardWidth(e.nativeEvent.layout.width)}
+      style={[styles.container, style]}
+      onLayout={(e) => changeCardWidth(e.nativeEvent.layout.width)}
     >
       <View style={styles.imageContainer}>
         <Image
@@ -43,7 +49,7 @@ const NoteCard = () => {
         <View style={{ marginTop: 20, marginBottom: 24 }}>
           <FeelingText />
         </View>
-        <View>
+        <View style={{ marginBottom: 20 }}>
           <SituationText />
         </View>
         <View style={{ marginBottom: 24 }}>

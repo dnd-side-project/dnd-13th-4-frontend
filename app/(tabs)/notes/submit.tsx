@@ -1,9 +1,13 @@
 import CTAButton from '@/components/button/CTAButton';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
+import { PrimaryColors } from '@/constants/Colors';
+import { useState } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
 const Submit = () => {
+  const [cardWidth, setCardWidth] = useState(0);
+
   return (
     <ImageBackground
       source={require('@/assets/images/note-submit-bg.png')} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
@@ -12,8 +16,13 @@ const Submit = () => {
       <View style={{ paddingTop: 24, paddingBottom: 40 }}>
         <FromToText />
       </View>
-      <View>
-        <NoteCard />
+      <View style={{ position: 'relative' }}>
+        <NoteCard
+          style={{ zIndex: 100 }}
+          cardWidth={cardWidth}
+          changeCardWidth={(newCardWidth) => setCardWidth(newCardWidth)}
+        />
+        <View style={[styles.backgroundCard, { width: cardWidth - 17 }]} />
       </View>
       <View style={styles.buttonContainer}>
         <CTAButton
@@ -40,5 +49,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 'auto',
     alignSelf: 'stretch',
+  },
+  backgroundCard: {
+    position: 'absolute',
+    width: 290,
+    height: 401,
+    borderRadius: 20,
+    backgroundColor: PrimaryColors.blue100,
+    left: '50%',
+    transform: [{ translateX: -145 }, { rotate: '9deg' }],
+    top: 7,
+    zIndex: 10,
   },
 });

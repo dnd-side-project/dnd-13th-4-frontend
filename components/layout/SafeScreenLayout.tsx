@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 44,
-    paddingHorizontal: 24, // 좌우 여백
+    paddingHorizontal: 24,
   },
 });

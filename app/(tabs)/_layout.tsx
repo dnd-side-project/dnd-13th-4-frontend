@@ -1,13 +1,17 @@
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Icon } from '@/components/icons';
 import TabBarBackground from '@/components/ui/TabBarBackground';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { Typography } from '@/constants/Typography';
 
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Platform, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
+
+const LOGO = 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/logo.png';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -52,41 +56,92 @@ export default function TabLayout() {
     };
   }, []);
 
-
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
       <Tabs
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
+          headerShadowVisible: false,
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
+          tabBarActiveTintColor: GreyColors.grey800,
+          tabBarInactiveTintColor: GreyColors.grey400,
+          tabBarLabelStyle: {
+            ...Typography.body4,
+            marginTop: 6,
+          },
           tabBarStyle: {
-            height: 84,
-            ...Platform.select({
-              ios: {
-                // Use a transparent background on iOS to show the blur effect
-                position: 'absolute',
-              },
-              default: {},
-            }),
+            height: 88,
+            borderTopWidth: 1,
+            shadowColor: '#000000',
+            borderTopColor: PrimaryColors.blue300,
+            shadowOffset: { width: 0, height: -3 },
+            shadowOpacity: 0.1,
+            shadowRadius: 12,
+            elevation: 10,
           },
         }}
       >
         <Tabs.Screen
           name='index'
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name='textformat' color={color} />
+            title: '홈',
+            headerTitle: () => (
+              <Image
+                source={{ uri: LOGO }}
+                style={{
+                  width: 57,
+                  height: 24,
+                  resizeMode: 'contain',
+                }}
+              />
+            ),
+            headerStyle: {
+              backgroundColor: 'white',
+              paddingVertical: 16,
+              elevation: 0, // Android shadow 제거
+              shadowOpacity: 0, // iOS shadow 제거
+            },
+            headerTitleStyle: {
+              ...Typography.head2,
+              color: GreyColors.grey900,
+            },
+            tabBarIcon: ({ focused }) => (
+              <Icon
+                name='home'
+                size={20}
+                color={focused ? GreyColors.grey800 : GreyColors.grey400}
+                style={{ marginTop: 6 }}
+              />
             ),
           }}
         />
         <Tabs.Screen
           name='Storage'
           options={{
-            title: 'Storage',
-            tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name='paintpalette' color={color} />
+            title: '보관함',
+            headerTitle: '보관함',
+            headerStyle: {
+              backgroundColor: 'white',
+              paddingVertical: 16,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+              ...Typography.head2,
+              color: GreyColors.grey900,
+            },
+            tabBarIcon: ({ focused }) => (
+              <Icon
+                name='dashboard'
+                size={20}
+                color={focused ? GreyColors.grey800 : GreyColors.grey400}
+                style={{ marginTop: 6 }}
+              />
             ),
           }}
         />
@@ -94,29 +149,26 @@ export default function TabLayout() {
           name='MindLetter'
           options={{
             title: '',
-            tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: 28,
-                  backgroundColor: '#4A90E2',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 20,
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 24 }}>+</Text>
-              </View>
-            ),
+            headerShown: false, // 이 페이지만 헤더 숨김
             tabBarButton: (props) => (
               <Pressable
                 onPress={() => {
                   router.push('/CreateMindLetter');
                 }}
-                style={[props.style, { top: -10 }]}
+                style={[props.style]}
               >
-                {props.children}
+                <View
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: 44,
+                    backgroundColor: PrimaryColors.blue100,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Icon name='star' size={30} color='white' />
+                </View>
               </Pressable>
             ),
           }}
@@ -124,18 +176,50 @@ export default function TabLayout() {
         <Tabs.Screen
           name='Statistics'
           options={{
-            title: 'Statistics',
-            tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name='textformat' color={color} />
+            title: '통계',
+            headerTitle: '통계',
+            headerStyle: {
+              backgroundColor: 'white',
+              paddingVertical: 16,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+              ...Typography.head2,
+              color: GreyColors.grey900,
+            },
+            tabBarIcon: ({ focused }) => (
+              <Icon
+                name='graph'
+                size={20}
+                color={focused ? GreyColors.grey800 : GreyColors.grey400}
+                style={{ marginTop: 6 }}
+              />
             ),
           }}
         />
         <Tabs.Screen
           name='MyPage'
           options={{
-            title: 'MyPage',
-            tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name='paintpalette' color={color} />
+            title: '마이페이지',
+            headerTitle: '마이페이지',
+            headerStyle: {
+              backgroundColor: 'white',
+              paddingVertical: 16,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+              ...Typography.head2,
+              color: GreyColors.grey900,
+            },
+            tabBarIcon: ({ focused }) => (
+              <Icon
+                name='user'
+                size={20}
+                color={focused ? GreyColors.grey800 : GreyColors.grey400}
+                style={{ marginTop: 6 }}
+              />
             ),
           }}
         />

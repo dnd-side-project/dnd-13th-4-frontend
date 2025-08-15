@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 interface SafeScreenLayoutProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  edges?: ('top' | 'right' | 'bottom' | 'left')[];
 }
 
 export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({

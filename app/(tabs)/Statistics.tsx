@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function Statistics() {
   return (
-    <SafeScreenLayout edges={['top', 'left', 'right']}>
+    <SafeScreenLayout>
       <Text style={styles.title}>통계</Text>
       <View style={styles.contentArea}>
         <Text style={styles.content}>통계 데이터</Text>

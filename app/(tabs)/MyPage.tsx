@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function MyPage() {
   return (
-    <SafeScreenLayout edges={['top', 'left', 'right']}>
+    <SafeScreenLayout>
       <Text style={styles.title}>마이페이지</Text>
       <View style={styles.contentArea}>
         <Text style={styles.content}>사용자 설정 및 정보</Text>

@@ -22,7 +22,7 @@ const SituationText = () => {
           </CustomText>
           <DashedBottomLine />
         </View>
-        <View>
+        <View style={{ width: '100%' }}>
           <CustomText variant='body2' color={GreyColors.grey700}>
             그때 저는{' '}
             <CustomText
@@ -50,5 +50,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  textContainer: {},
+  textContainer: { flex: 1 },
 });

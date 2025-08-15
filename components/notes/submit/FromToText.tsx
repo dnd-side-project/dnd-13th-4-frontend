@@ -5,14 +5,14 @@ import { StyleSheet, View } from 'react-native';
 const FromToText = () => {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>
+      <View style={styles.text}>
         <CustomText>
           <CustomText style={styles.name}>예림</CustomText>님의 마음,
         </CustomText>
         <CustomText>
           <CustomText style={styles.name}>지우</CustomText>님에게 잘 전달할게요
         </CustomText>
-      </CustomText>
+      </View>
     </View>
   );
 };

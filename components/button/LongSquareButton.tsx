@@ -1,6 +1,13 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { CustomText } from '../CustomText';
+import { Icon } from '../icons';
 
 type Props = {
   text: string;
@@ -17,12 +24,19 @@ const LongSquareButton = ({ text, active, onPress, style }: Props) => {
       accessibilityRole='button'
       accessibilityState={{ selected: active }}
     >
+      <View style={{ width: 24 }} />
       <CustomText
         variant='body2'
+        style={[styles.text, active ? styles.active : styles.unActive]}
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
         {text}
       </CustomText>
+      <Icon
+        name='checkFill'
+        size={24}
+        color={active ? PrimaryColors.blue100 : '#CCD2E3'}
+      />
     </Pressable>
   );
 };
@@ -36,6 +50,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 2,
     borderRadius: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   active: {
     fontFamily: 'Pretendard-Bold',
@@ -45,5 +62,8 @@ const styles = StyleSheet.create({
   unActive: {
     borderColor: 'rgba(0,0,0,0)',
     backgroundColor: GreyColors.grey100,
+  },
+  text: {
+    alignSelf: 'center',
   },
 });

@@ -20,12 +20,14 @@ const RoundButton = ({ text, active = false, onPress, style }: Props) => {
     >
       <CustomText
         variant='body2'
+        style={active ? styles.active : styles.unActive}
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
         {text}
       </CustomText>
       <Icon
         name='checkFill'
+        size={24}
         color={active ? PrimaryColors.blue100 : '#CCD2E3'}
       />
     </Pressable>

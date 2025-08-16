@@ -3,11 +3,13 @@ import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
 import StatusButton from '@/components/button/StatusButton';
+import Header from '@/components/header/Header';
 import { StyleSheet, View } from 'react-native';
 
 const UiTest = () => {
   return (
     <View style={styles.container}>
+      <Header text='마음쪽지 생성' />
       <RoundButton text='큰 소리로 노래했어요' />
       <RoundButton text='큰 소리로 노래했어요' active />
 

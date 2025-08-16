@@ -18,7 +18,7 @@ const CTAButton = ({ text, active, onPress, style }: Props) => {
       accessibilityState={{ selected: active }}
     >
       <CustomText
-        style={[active ? styles.active : styles.unActive]}
+        style={[styles.text, active ? styles.active : styles.unActive]}
         color={active ? '#ffffff' : PrimaryColors.blue100}
       >
         {text}
@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: PrimaryColors.blue100,
+  },
+  text: {
+    fontSize: 17,
+    lineHeight: 17,
   },
   active: {
     fontFamily: 'Pretendard-Bold',

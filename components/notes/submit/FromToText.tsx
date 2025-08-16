@@ -26,5 +26,4 @@ const styles = StyleSheet.create({
     color: GreyColors.grey900,
     lineHeight: 32.2,
   },
-  name: { fontFamily: 'Pretendard-Bold' },
 });

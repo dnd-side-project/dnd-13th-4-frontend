@@ -31,7 +31,7 @@ const NoteCard = ({ style, cardWidth, changeCardWidth }: NoteCardProps) => {
         },
       );
     }
-  }, [cardWidth, imageUrl]);
+  }, [cardWidth]);
 
   return (
     <View

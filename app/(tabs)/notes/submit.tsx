@@ -1,7 +1,9 @@
 import CTAButton from '@/components/button/CTAButton';
+import { CustomText } from '@/components/CustomText';
+import { Icon } from '@/components/icons';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
-import { PrimaryColors } from '@/constants/Colors';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useState } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
@@ -13,6 +15,22 @@ const Submit = () => {
       source={require('@/assets/images/note-submit-bg.png')} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
       style={styles.container}
     >
+      <View style={styles.headerContainer}>
+        <Icon
+          style={styles.backIcon}
+          color={GreyColors.grey600}
+          size={30}
+          name='expandLeft'
+        />
+        <CustomText
+          style={styles.headerText}
+          color={GreyColors.grey700}
+          variant='body1'
+        >
+          마음쪽지 생성
+        </CustomText>
+        <View style={{ width: 30 }} />
+      </View>
       <View style={{ paddingTop: 24, paddingBottom: 40 }}>
         <FromToText />
       </View>
@@ -46,6 +64,18 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     backgroundColor: '#ffffff',
   },
+  headerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  backIcon: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  headerText: {},
   buttonContainer: {
     marginTop: 'auto',
     alignSelf: 'stretch',

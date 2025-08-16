@@ -1,18 +1,16 @@
 import { CustomText } from '@/components/CustomText';
-import { iconComponents } from '@/components/icons';
+import { Icon } from '@/components/icons';
 import { GreyColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
 const RandomMessage = () => {
-  const IconComponent = iconComponents.refresh;
-
   return (
     <View style={styles.container}>
       <CustomText style={styles.text}>
         지금처럼만 하면 우리 룸메 계약 연장 가능✨
       </CustomText>
       <View style={styles.icon}>
-        <IconComponent color={GreyColors.grey500} />
+        <Icon name='refresh' color={GreyColors.grey500} />
       </View>
     </View>
   );

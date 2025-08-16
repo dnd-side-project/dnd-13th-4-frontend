@@ -1,6 +1,7 @@
 import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
+import StatusButton from '@/components/button/StatusButton';
 import { StyleSheet, View } from 'react-native';
 
 const UiTest = () => {
@@ -17,6 +18,10 @@ const UiTest = () => {
       <View>
         <LongSquareButton text='편하게 이야기 나눠보고 싶어요🌼' active />
         <LongSquareButton text='편하게 이야기 나눠보고 싶어요🌼' />
+      </View>
+      <View>
+        <StatusButton text='30분 후' />
+        <StatusButton text='30분 후' active />
       </View>
     </View>
   );

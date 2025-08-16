@@ -1,6 +1,7 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
+import { Icon } from '../icons';
 
 type Props = {
   text: string;
@@ -23,6 +24,10 @@ const RoundButton = ({ text, active = false, onPress, style }: Props) => {
       >
         {text}
       </CustomText>
+      <Icon
+        name='checkFill'
+        color={active ? PrimaryColors.blue100 : '#CCD2E3'}
+      />
     </Pressable>
   );
 };
@@ -36,6 +41,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 2,
     borderRadius: 999,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 34,
   },
   active: {
     fontFamily: 'Pretendard-Bold',

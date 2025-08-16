@@ -27,7 +27,7 @@ const CTAButton = ({
       ]}
       onPress={onPress}
       accessibilityRole='button'
-      accessibilityState={{ selected: active }}
+      accessibilityState={{ selected: active, disabled }}
     >
       <CustomText
         style={[styles.text, active ? styles.active : styles.unActive]}

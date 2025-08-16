@@ -1,13 +1,12 @@
-
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Home() {
+export default function Statistics() {
   return (
     <SafeScreenLayout>
-      <Text style={styles.title}>홈</Text>
+      <Text style={styles.title}>통계</Text>
       <View style={styles.contentArea}>
-        <Text style={styles.content}>메인 콘텐츠 영역</Text>
+        <Text style={styles.content}>통계 데이터</Text>
       </View>
     </SafeScreenLayout>
   );

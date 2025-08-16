@@ -1,13 +1,12 @@
-
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Home() {
+export default function MyPage() {
   return (
     <SafeScreenLayout>
-      <Text style={styles.title}>홈</Text>
+      <Text style={styles.title}>마이페이지</Text>
       <View style={styles.contentArea}>
-        <Text style={styles.content}>메인 콘텐츠 영역</Text>
+        <Text style={styles.content}>사용자 설정 및 정보</Text>
       </View>
     </SafeScreenLayout>
   );

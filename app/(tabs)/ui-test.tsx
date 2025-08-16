@@ -1,3 +1,4 @@
+import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
@@ -23,6 +24,11 @@ const UiTest = () => {
         <StatusButton text='30분 후' />
         <StatusButton text='30분 후' active />
       </View>
+      <View>
+        <CTAButton text='이전' />
+        <CTAButton text='다음' active />
+        <CTAButton text='다음' active disabled />
+      </View>
     </View>
   );
 };
@@ -30,5 +36,5 @@ const UiTest = () => {
 export default UiTest;
 
 const styles = StyleSheet.create({
-  container: { display: 'contents' },
+  container: { width: '100%' },
 });

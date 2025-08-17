@@ -1,3 +1,4 @@
+import { PrimaryColors } from '@/constants/Colors';
 import { ReactNode, useRef } from 'react';
 import { View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
@@ -28,9 +29,8 @@ const Carousel = ({ itemList, height, width }: CarouselProps) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <CarouselUi
-        autoPlayInterval={2000}
         data={itemList}
         height={height}
         loop={true}
@@ -40,20 +40,32 @@ const Carousel = ({ itemList, height, width }: CarouselProps) => {
         mode='parallax'
         modeConfig={{
           parallaxScrollingScale: 0.8,
-          parallaxScrollingOffset: 200,
+          parallaxScrollingOffset: 210,
           parallaxAdjacentItemScale: 0.8,
         }}
         onProgressChange={progress}
         renderItem={({ index, item }) => <View>{item}</View>}
       />
 
-      <Pagination.Basic
+      <Pagination.Custom
         progress={progress}
         // data는 array의 length만 사용하기에, itemList개수로 dummy array를 만듦.
         // data에 ReactNode타입 삽입이 되지않음.
         data={Array.from<number>({ length: itemList.length })}
-        dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 }}
-        containerStyle={{ gap: 5, marginTop: 10 }}
+        dotStyle={{
+          backgroundColor: 'rgba(0,0,0,0.2)',
+          borderRadius: 50,
+          paddingVertical: 4,
+          width: 8,
+          height: 8,
+        }}
+        activeDotStyle={{
+          backgroundColor: PrimaryColors.blue100,
+          borderRadius: 50,
+          width: 15,
+          height: 15,
+        }}
+        containerStyle={{ gap: 8, alignItems: 'center' }}
         onPress={onPressPagination}
       />
     </View>

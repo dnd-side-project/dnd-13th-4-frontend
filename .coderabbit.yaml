@@ -74,7 +74,7 @@ template:
   tone: 'constructive'
 
   # 한국어 리뷰 요청 (실험적)
-  language: 'ko-KR'
+  language: 'ko'
 
   # 리뷰 포맷
   format: |

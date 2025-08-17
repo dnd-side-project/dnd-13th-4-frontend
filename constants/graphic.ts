@@ -1,6 +1,6 @@
 const S3_URL = 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com';
 
-type GraphicKind =
+export type GraphicKind =
   | 'awkward'
   | 'disappointed'
   | 'grateful'
@@ -8,7 +8,11 @@ type GraphicKind =
   | 'reliable'
   | 'uncomfortable';
 
-type GraphicPage = 'home' | 'storage' | 'letter_detail' | 'emotion_select';
+export type GraphicPage =
+  | 'home'
+  | 'storage'
+  | 'letter_detail'
+  | 'emotion_select';
 
 type GetGraphicUrlProps = {
   page: GraphicPage;

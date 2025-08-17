@@ -11,9 +11,10 @@ type CarouselProps = {
   itemList: ReactNode[];
   width: number;
   height: number;
+  onChange?: (index: number) => void;
 };
 
-const Carousel = ({ itemList, height, width }: CarouselProps) => {
+const Carousel = ({ itemList, height, width, onChange }: CarouselProps) => {
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
 
@@ -37,6 +38,7 @@ const Carousel = ({ itemList, height, width }: CarouselProps) => {
         pagingEnabled={true}
         snapEnabled={true}
         width={width}
+        onSnapToItem={(index) => onChange?.(index)}
         mode='parallax'
         modeConfig={{
           parallaxScrollingScale: 0.8,

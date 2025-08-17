@@ -1,17 +1,23 @@
 import CTAButton from '@/components/button/CTAButton';
 import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
+import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateFeelingHeader';
 import { GreyColors } from '@/constants/Colors';
-import { getGraphicUrl } from '@/constants/graphic';
+import { useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 
 const SCREEN_W = Dimensions.get('window').width;
 
 const Feeling = () => {
+  const [index, setIndex] = useState(0);
+  const emotion = EMOTION_LIST[index];
+
+  const changeIndex = (newIndex: number): void => setIndex(newIndex);
+
   return (
     <View style={styles.container}>
-      <NoteCreateFeelingHeader />
+      <NoteCreateFeelingHeader emotionLabel={emotion.label} />
       <View style={styles.feelingContainer}>
         <CustomText
           variant='body1'
@@ -32,98 +38,19 @@ const Feeling = () => {
         <Carousel
           width={SCREEN_W}
           height={291}
-          itemList={[
+          onChange={changeIndex}
+          itemList={EMOTION_LIST.map((emotion) => (
             <Image
-              key={getGraphicUrl({ page: 'emotion_select', kind: 'awkward' })}
-              source={{
-                uri: getGraphicUrl({ page: 'emotion_select', kind: 'awkward' }),
-              }}
+              key={emotion.uri}
+              source={{ uri: emotion.uri }}
               style={{
                 width: '100%',
                 height: '100%',
                 resizeMode: 'contain',
                 borderRadius: 20,
               }}
-            />,
-            <Image
-              key={getGraphicUrl({
-                page: 'emotion_select',
-                kind: 'disappointed',
-              })}
-              source={{
-                uri: getGraphicUrl({
-                  page: 'emotion_select',
-                  kind: 'disappointed',
-                }),
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />,
-            <Image
-              key={getGraphicUrl({ page: 'emotion_select', kind: 'grateful' })}
-              source={{
-                uri: getGraphicUrl({
-                  page: 'emotion_select',
-                  kind: 'grateful',
-                }),
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />,
-            <Image
-              key={getGraphicUrl({ page: 'emotion_select', kind: 'joyful' })}
-              source={{
-                uri: getGraphicUrl({ page: 'emotion_select', kind: 'joyful' }),
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />,
-            <Image
-              key={getGraphicUrl({ page: 'emotion_select', kind: 'reliable' })}
-              source={{
-                uri: getGraphicUrl({
-                  page: 'emotion_select',
-                  kind: 'reliable',
-                }),
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />,
-            <Image
-              key={getGraphicUrl({
-                page: 'emotion_select',
-                kind: 'uncomfortable',
-              })}
-              source={{
-                uri: getGraphicUrl({
-                  page: 'emotion_select',
-                  kind: 'uncomfortable',
-                }),
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />,
-          ]}
+            />
+          ))}
         />
       </View>
       <View style={styles.buttonContainer}>

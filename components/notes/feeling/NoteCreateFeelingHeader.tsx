@@ -6,7 +6,11 @@ import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, View } from 'react-native';
 
-const NoteCreateFeelingHeader = () => {
+type Props = {
+  emotionLabel: string;
+};
+
+const NoteCreateFeelingHeader = ({ emotionLabel }: Props) => {
   return (
     <LinearGradient
       colors={['#C1DEFF', '#F5FAFF']}
@@ -27,7 +31,7 @@ const NoteCreateFeelingHeader = () => {
       <View style={styles.preview}>
         <View style={styles.feelingBox}>
           <CustomText color={PrimaryColors.blue100} variant='head3'>
-            고마웠던
+            {emotionLabel}
           </CustomText>
         </View>
         <CustomText color={PrimaryColors.blue100} variant='head3'>

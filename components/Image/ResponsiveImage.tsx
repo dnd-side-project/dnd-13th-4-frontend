@@ -35,7 +35,11 @@ const ResponsiveImage = ({
       return;
     }
 
-    const uri = (source as any)?.uri as string | undefined;
+    const uri =
+      typeof source === 'object' && source && !Array.isArray(source)
+        ? (source as { uri?: string }).uri
+        : undefined;
+
     if (!uri) return;
 
     Image.getSize(
@@ -46,7 +50,7 @@ const ResponsiveImage = ({
         setHeight(width); // 폴백
       },
     );
-  }, [source, width, onError]);
+  }, [source, width]);
 
   return (
     <Image

@@ -1,3 +1,4 @@
+import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { useEffect, useState } from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
@@ -39,11 +40,7 @@ const NoteCard = ({ style, cardWidth, changeCardWidth }: NoteCardProps) => {
       onLayout={(e) => changeCardWidth(e.nativeEvent.layout.width)}
     >
       <View style={styles.imageContainer}>
-        <Image
-          style={[{ height, width: cardWidth }]}
-          source={{ uri: imageUrl }}
-          resizeMode='contain'
-        />
+        <ResponsiveImage source={{ uri: imageUrl }} width={cardWidth} />
       </View>
       <View style={{ paddingHorizontal: 16 }}>
         <View style={{ marginTop: 20, marginBottom: 24 }}>

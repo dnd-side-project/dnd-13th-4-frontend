@@ -23,8 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
   },
   buttonContainer: {
     marginTop: 'auto',

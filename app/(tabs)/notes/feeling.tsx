@@ -4,6 +4,7 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
+import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useState } from 'react';
@@ -36,22 +37,10 @@ const Feeling = () => {
           </CustomText>
         </View>
       </NoteCreateFeelingHeader>
-      <View style={styles.feelingContainer}>
-        <CustomText
-          variant='body1'
-          fontWeight='bold'
-          color={GreyColors.grey400}
-        >
-          감정.
-        </CustomText>
-        <CustomText
-          variant='body1'
-          fontWeight='bold'
-          color={GreyColors.grey800}
-        >
-          룸메에게 어떤 마음을 전하고 싶나요?
-        </CustomText>
-      </View>
+      <NoteCreateGuide
+        leftText='감정.'
+        rightText='룸메에게 어떤 마음을 전하고 싶나요?'
+      />
       <View style={styles.carouselContainer}>
         <Carousel
           width={screenWidth}

@@ -1,4 +1,5 @@
 import { CustomText } from '@/components/CustomText';
+import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
@@ -18,6 +19,10 @@ const Action = () => {
           </View>
         </View>
       </NoteCreateHeaderLayout>
+      <NoteCreateGuide
+        leftText='상황1.'
+        rightText='룸메가 어떤 행동을 했나요?'
+      />
     </View>
   );
 };

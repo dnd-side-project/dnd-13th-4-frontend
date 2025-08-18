@@ -61,7 +61,10 @@ const Action = () => {
           </Pressable>
         ))}
       </View>
-      <ScrollView style={styles.actionContainer}>
+      <ScrollView
+        style={styles.actionContainer}
+        contentContainerStyle={{ rowGap: 12 }}
+      >
         {actions.map((action, index) => (
           <RoundButton
             key={action}
@@ -113,7 +116,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 10,
   },
-  actionContainer: { paddingTop: 10, paddingHorizontal: 20, gap: 12 },
+  actionContainer: {
+    paddingTop: 10,
+    paddingHorizontal: 20,
+  },
   ctaContainer: {
     alignSelf: 'stretch',
     paddingHorizontal: 20,

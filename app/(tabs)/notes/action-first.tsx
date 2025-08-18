@@ -85,6 +85,7 @@ const ActionFirst = () => {
             style={{ flex: 1 }}
             text='다음'
             active
+            onPress={() => router.push('/notes/action-second')}
             disabled={!selectedAction}
           />
         </View>

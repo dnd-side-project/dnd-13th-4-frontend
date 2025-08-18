@@ -25,7 +25,7 @@ const CTAButton = ({
         active ? styles.active : styles.unActive,
         disabled ? styles.disabled : null,
       ]}
-      onPress={onPress}
+      onPress={disabled ? undefined : onPress}
       accessibilityRole='button'
       accessibilityState={{ selected: active, disabled }}
     >

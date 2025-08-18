@@ -33,15 +33,15 @@ const Action = () => {
         <CategoryChip text='📦 기타' />
       </View>
       <View style={styles.actionContainer}>
-        <RoundButton text='큰 소리로 노래했어요' />
+        <RoundButton text='큰 소리로 노래했어요' active />
         <RoundButton text='기상 알람을 안 껐어요' />
         <RoundButton text='미디어 볼륨을 너무 높였어요' />
         <RoundButton text='통화 중 너무 크게 말했어요' />
         <RoundButton text='생활 소음이 너무 크게 냈어요' />
       </View>
       <View style={styles.ctaContainer}>
-        <CTAButton text='이전' />
-        <CTAButton text='다음' active />
+        <CTAButton style={{ flex: 1 }} text='이전' />
+        <CTAButton style={{ flex: 1 }} text='다음' active />
       </View>
     </View>
   );
@@ -50,13 +50,14 @@ const Action = () => {
 export default Action;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff' },
+  container: { flex: 1, backgroundColor: '#ffffff', paddingBottom: 16 },
 
   selectItemContainer: {
     gap: 2,
   },
 
   selectItemBox: {
+    alignSelf: 'flex-start',
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderRadius: 8,
@@ -77,5 +78,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     width: '100%',
+    marginTop: 'auto',
+    gap: 17,
   },
 });

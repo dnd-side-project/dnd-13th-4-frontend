@@ -19,6 +19,7 @@ const CategoryChip = ({ selected = false, text, style }: Props) => {
     >
       <CustomText
         color={selected ? '#ffffff' : GreyColors.grey600}
+        fontWeight={selected ? 'bold' : 'medium'}
         variant='body2'
       >
         {text}

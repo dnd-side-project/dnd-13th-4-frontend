@@ -1,3 +1,4 @@
+import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -23,6 +24,12 @@ const Action = () => {
         leftText='상황1.'
         rightText='룸메가 어떤 행동을 했나요?'
       />
+      <View style={styles.actionTypeContainer}>
+        <CategoryChip text='📣 소음' selected />
+        <CategoryChip text='🫧 위생' />
+        <CategoryChip text='🧺 집안일' />
+        <CategoryChip text='📦 기타' />
+      </View>
     </View>
   );
 };
@@ -30,7 +37,7 @@ const Action = () => {
 export default Action;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1, backgroundColor: '#ffffff' },
 
   selectItemContainer: {
     gap: 2,
@@ -43,5 +50,11 @@ const styles = StyleSheet.create({
     borderColor: PrimaryColors.blue200,
     paddingVertical: 2,
     paddingHorizontal: 12,
+  },
+  actionTypeContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
   },
 });

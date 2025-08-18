@@ -18,7 +18,7 @@ const Carousel = ({ itemList, height, width, onChange }: CarouselProps) => {
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
 
-  const onPressPagination = (index: number) => {
+  const onPressPagination = (index: number): void => {
     ref.current?.scrollTo({
       /**
        * Calculate the difference between the current index and the target index

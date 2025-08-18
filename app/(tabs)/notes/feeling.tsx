@@ -6,11 +6,10 @@ import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateFeelingHeader';
 import { GreyColors } from '@/constants/Colors';
 import { useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-
-const SCREEN_W = Dimensions.get('window').width;
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 const Feeling = () => {
+  const { width: screenWidth } = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const emotion = EMOTION_LIST[index];
 
@@ -37,7 +36,7 @@ const Feeling = () => {
       </View>
       <View style={styles.carouselContainer}>
         <Carousel
-          width={SCREEN_W}
+          width={screenWidth}
           height={305}
           onChange={changeIndex}
           itemList={EMOTION_LIST.map((emotion) => (
@@ -54,7 +53,7 @@ const Feeling = () => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <CTAButton style={{ alignSelf: 'flex-end' }} text='다음' active />
+        <CTAButton text='다음' active />
       </View>
     </View>
   );

@@ -50,14 +50,12 @@ const styles = StyleSheet.create({
     paddingBottom: 47,
   },
   previewDescription: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
     paddingBottom: 6,
   },
   preview: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,

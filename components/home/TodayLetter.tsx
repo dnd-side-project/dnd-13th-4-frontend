@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: 'absolute',
-    width: 95,
-    height: 120,
-    borderRadius: 8,
+    width: 99,
+    height: 124,
+    borderRadius: 9,
   },
   contentOverlay: {
     position: 'relative',

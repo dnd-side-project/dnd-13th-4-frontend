@@ -7,7 +7,7 @@ import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderL
 import { PrimaryColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                               ';
 
@@ -35,7 +35,17 @@ const ActionSecond = () => {
         </View>
       </NoteCreateHeaderLayout>
       <View style={styles.contentContainer}>
-        <NoteCreateGuide leftText='상황2.' rightText='당시 어떤 상태였나요?' />
+        <View style={styles.guideContainer}>
+          <NoteCreateGuide
+            leftText='상황2.'
+            rightText='당시 어떤 상태였나요?'
+          />
+          <Pressable onPress={() => router.push('/')}>
+            <CustomText style={styles.skip} color={PrimaryColors.blue100}>
+              SKIP
+            </CustomText>
+          </Pressable>
+        </View>
         <View style={styles.grid}>
           {MY_STATE_LIST.map((item) => (
             <SquareButton
@@ -49,11 +59,12 @@ const ActionSecond = () => {
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
+            onPress={() => router.push('/notes/action-first')}
             style={{ flex: 1 }}
             text='이전'
-            onPress={() => router.push('/notes/action-first')}
           />
           <CTAButton
+            onPress={() => router.push('/')}
             style={{ flex: 1 }}
             text='다음'
             active
@@ -90,6 +101,13 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: 20,
   },
+
+  guideContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  skip: { paddingHorizontal: 20, textDecorationLine: 'underline' },
 
   grid: {
     paddingTop: 44,

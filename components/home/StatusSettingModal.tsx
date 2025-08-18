@@ -6,182 +6,274 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback } from 'react';
-import { Pressable, View, StyleSheet } from 'react-native';
+import { forwardRef, useState } from 'react';
+import {
+  Dimensions,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
+import SquareButton from '../button/SquareButton';
+
+const CARD_IN_ROW = 2;
+
+interface UserStatus {
+  emoji: string;
+  text: string;
+  endTime?: Date;
+}
 
 interface StatusSettingModalProps {
   onClose: () => void;
   onCustomTimePress: () => void;
   selectedCustomTime: Date | null;
+  onSave: (status: UserStatus, endTime?: Date) => void;
+  currentStatus: UserStatus;
 }
 
 export const StatusSettingModal = forwardRef<
   BottomSheetModal,
   StatusSettingModalProps
->(({ onClose, onCustomTimePress, selectedCustomTime }, ref) => {
-  const snapPoints = ['100%'];
+>(
+  (
+    { onClose, onCustomTimePress, selectedCustomTime, onSave, currentStatus },
+    ref,
+  ) => {
+    const screenHeight = Dimensions.get('window').height;
+    const snapPoints = [screenHeight - 60];
 
-  // 선택된 커스텀 시간을 텍스트로 변환
-  const getCustomTimeText = () => {
-    if (!selectedCustomTime) return '직접 설정';
-    
-    const now = new Date();
-    const diffInMinutes = Math.round((selectedCustomTime.getTime() - now.getTime()) / (1000 * 60));
-    const hours = Math.floor(diffInMinutes / 60);
-    const minutes = diffInMinutes % 60;
-    
-    if (hours === 0) {
-      return `${minutes}분 후`;
-    } else if (minutes === 0) {
-      return `${hours}시간 후`;
-    } else {
-      return `${hours}시간 ${minutes}분 후`;
-    }
-  };
+    // 선택된 상태 관리
+    const [selectedStatus, setSelectedStatus] =
+      useState<UserStatus>(currentStatus);
+    const [selectedTimeOption, setSelectedTimeOption] =
+      useState<string>('30min');
 
-  // 백드롭 컴포넌트 렌더 함수
-  const renderBackdrop = useCallback(
-    (props: any) => (
+    // 선택된 커스텀 시간을 텍스트로 변환
+    const getCustomTimeText = () => {
+      if (!selectedCustomTime) return '직접 설정';
+
+      const now = new Date();
+      const diffInMinutes = Math.round(
+        (selectedCustomTime.getTime() - now.getTime()) / (1000 * 60),
+      );
+      const hours = Math.floor(diffInMinutes / 60);
+      const minutes = diffInMinutes % 60;
+
+      if (hours === 0) {
+        return `${minutes}분 후`;
+      } else if (minutes === 0) {
+        return `${hours}시간 후`;
+      } else {
+        return `${hours}시간 ${minutes}분 후`;
+      }
+    };
+
+    // 저장 핸들러
+    const handleSave = () => {
+      let endTime: Date | undefined;
+
+      if (selectedTimeOption === 'custom' && selectedCustomTime) {
+        endTime = selectedCustomTime;
+      } else if (selectedTimeOption !== 'keep') {
+        const now = new Date();
+        const minutes =
+          {
+            '30min': 30,
+            '1hour': 60,
+            '4hour': 240,
+            '8hour': 480,
+          }[selectedTimeOption] || 30;
+
+        endTime = new Date(now.getTime() + minutes * 60 * 1000);
+      }
+
+      onSave(selectedStatus, endTime);
+    };
+
+    // 상태 선택 핸들러
+    const handleStatusSelect = (emoji: string, text: string) => {
+      setSelectedStatus({ emoji, text });
+    };
+
+    // 시간 옵션 선택 핸들러
+    const handleTimeSelect = (option: string) => {
+      setSelectedTimeOption(option);
+    };
+
+    // 상태 옵션 데이터
+    const homeStatusOptions = [
+      { id: 'work', emoji: '💻', text: '작업 중' },
+      { id: 'rest', emoji: '🌿', text: '휴식 중' },
+      { id: 'sleep', emoji: '🌙', text: '취침 중' },
+      { id: 'meal', emoji: '🍚', text: '식사 중' },
+    ];
+
+    const outdoorStatusOptions = [
+      { id: 'out', emoji: '🚌', text: '외출 중' },
+      { id: '', emoji: '', text: '' },
+    ];
+
+    // 시간 옵션 데이터
+    const timeOptions = [
+      { id: 'keep', text: '계속 유지' },
+      { id: '30min', text: '30분 후' },
+      { id: '1hour', text: '1시간 후' },
+      { id: '4hour', text: '4시간 후' },
+      { id: '8hour', text: '8시간 후' },
+      { id: 'custom', text: getCustomTimeText() },
+    ];
+
+    // 백드롭 컴포넌트 렌더 함수
+    const renderBackdrop = (props: any) => (
       <BottomSheetBackdrop
         {...props}
         disappearsOnIndex={-1}
         appearsOnIndex={0}
         style={[props.style, { background: 'rgba(107, 118, 132, 0.50)' }]}
       />
-    ),
-    [],
-  );
+    );
 
-  return (
-    <BottomSheetModal
-      ref={ref}
-      snapPoints={snapPoints}
-      enablePanDownToClose={true}
-      handleStyle={{ display: 'none' }}
-      backgroundStyle={styles.background}
-      style={styles.container}
-      backdropComponent={renderBackdrop}
-      enableDynamicSizing={false}
-      animateOnMount={true}
-    >
-      <BottomSheetView style={styles.content}>
-        {/* 헤더 */}
-        <View style={styles.header}>
-          <Pressable onPress={onClose} style={styles.closeIcon}>
-            <Icon name='close' size={24} color={GreyColors.grey600} />
-          </Pressable>
-          <CustomText variant='body1' style={styles.title}>
-            나의 상태 설정
-          </CustomText>
-          <Pressable style={styles.saveButton}>
-            <CustomText variant='body1' style={styles.saveButtonText}>
-              저장
+    return (
+      <BottomSheetModal
+        ref={ref}
+        snapPoints={snapPoints}
+        enablePanDownToClose={true}
+        handleStyle={{ display: 'none' }}
+        backgroundStyle={styles.background}
+        style={styles.container}
+        backdropComponent={renderBackdrop}
+        enableDynamicSizing={false}
+        animateOnMount={true}
+      >
+        <BottomSheetView style={styles.content}>
+          {/* 헤더 */}
+          <View style={styles.header}>
+            <Pressable onPress={onClose} style={styles.closeIcon}>
+              <Icon name='close' size={24} color={GreyColors.grey600} />
+            </Pressable>
+            <CustomText
+              variant='body1'
+              color={GreyColors.grey700}
+              fontWeight='medium'
+              style={styles.title}
+            >
+              나의 상태 설정
             </CustomText>
-          </Pressable>
-        </View>
-
-        {/* 지금 어떤 상태인가요? */}
-        <View style={styles.section}>
-          <CustomText variant='body1' style={styles.sectionTitle}>
-            지금 어떤 상태인가요?
-          </CustomText>
-
-          <View style={styles.customStatusSection}>
-            <CustomText variant='body2' style={styles.customLabel}>
-              집
-            </CustomText>
-            <View style={styles.statusGrid}>
-              <View style={styles.statusRow}>
-                <Pressable style={styles.statusCard}>
-                  <CustomText style={styles.statusText}>
-                    💻 작업 중
-                  </CustomText>
-                </Pressable>
-                <Pressable style={styles.statusCard}>
-                  <CustomText style={styles.statusText}>
-                    🌿 휴식 중
-                  </CustomText>
-                </Pressable>
-              </View>
-              <View style={styles.statusRow}>
-                <Pressable style={styles.statusCard}>
-                  <CustomText style={styles.statusText}>
-                    🌙 취침 중
-                  </CustomText>
-                </Pressable>
-                <Pressable style={styles.statusCard}>
-                  <CustomText style={styles.statusText}>
-                    🍚 식사 중
-                  </CustomText>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-          <View style={styles.customStatusSection}>
-            <CustomText variant='body2' style={styles.customLabel}>
-              야외
-            </CustomText>
-            <Pressable style={[styles.statusCard, styles.selectedStatus]}>
-              <CustomText style={styles.statusText}>🚌 외출 중</CustomText>
+            <Pressable style={styles.saveButton} onPress={handleSave}>
+              <CustomText
+                variant='body1'
+                color={PrimaryColors.blueText}
+                fontWeight='bold'
+              >
+                저장
+              </CustomText>
             </Pressable>
           </View>
-        </View>
 
-        {/* 언제 상태를 지울까요? */}
-        <View style={styles.section}>
-          <CustomText variant='body1' style={styles.sectionTitle}>
-            언제 상태를 지울까요?
-          </CustomText>
+          {/* 지금 어떤 상태인가요? */}
+          <View style={styles.section}>
+            <CustomText
+              variant='body1'
+              color={GreyColors.grey800}
+              fontWeight='bold'
+              style={styles.sectionTitle}
+            >
+              지금 어떤 상태인가요?
+            </CustomText>
 
-          <View style={styles.timeGrid}>
-            <View style={styles.timeRow}>
-              <Pressable style={styles.timeCard}>
-                <CustomText style={styles.timeText}>계속 유지</CustomText>
-              </Pressable>
-              <Pressable style={[styles.timeCard, styles.selectedTime]}>
-                <CustomText
-                  style={[styles.timeText, styles.selectedTimeText]}
-                >
-                  30분 후
-                </CustomText>
-              </Pressable>
-            </View>
-            <View style={styles.timeRow}>
-              <Pressable style={styles.timeCard}>
-                <CustomText style={styles.timeText}>1시간 후</CustomText>
-              </Pressable>
-              <Pressable style={styles.timeCard}>
-                <CustomText style={styles.timeText}>4시간 후</CustomText>
-              </Pressable>
-            </View>
-            <View style={styles.timeRow}>
-              <Pressable style={styles.timeCard}>
-                <CustomText style={styles.timeText}>8시간 후</CustomText>
-              </Pressable>
-              <Pressable 
-                style={[
-                  styles.timeCard,
-                  selectedCustomTime && styles.selectedTime
-                ]} 
-                onPress={onCustomTimePress}
+            <View style={styles.customStatusSection}>
+              <CustomText
+                variant='body2'
+                color={GreyColors.grey500}
+                fontWeight='medium'
+                style={styles.customLabel}
               >
-                <CustomText 
-                  style={[
-                    styles.timeText,
-                    selectedCustomTime && styles.selectedTimeText
-                  ]}
-                >
-                  {getCustomTimeText()}
-                </CustomText>
-              </Pressable>
+                집
+              </CustomText>
+              <FlatList
+                data={homeStatusOptions}
+                numColumns={CARD_IN_ROW}
+                scrollEnabled={false}
+                columnWrapperStyle={styles.statusRow}
+                renderItem={({ item }) => (
+                  <SquareButton
+                    active={
+                      selectedStatus.emoji === item.emoji &&
+                      selectedStatus.text === item.text
+                    }
+                    onPress={() => handleStatusSelect(item.emoji, item.text)}
+                    text={`${item.emoji} ${item.text}`}
+                  />
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+            <View style={styles.customStatusSection}>
+              <CustomText variant='body2' style={styles.customLabel}>
+                야외
+              </CustomText>
+              <FlatList
+                data={outdoorStatusOptions}
+                numColumns={2}
+                scrollEnabled={false}
+                columnWrapperStyle={styles.statusRow}
+                renderItem={({ item }) =>
+                  item.id !== '' ? (
+                    <SquareButton
+                      active={
+                        selectedStatus.emoji === item.emoji &&
+                        selectedStatus.text === item.text
+                      }
+                      onPress={() => handleStatusSelect(item.emoji, item.text)}
+                      text={`${item.emoji} ${item.text}`}
+                    />
+                  ) : (
+                    <View style={{ flex: 1 }} />
+                  )
+                }
+                keyExtractor={(item) => item.id}
+              />
             </View>
           </View>
-        </View>
 
-      </BottomSheetView>
-    </BottomSheetModal>
-  );
-});
+          {/* 언제 상태를 지울까요? */}
+          <View style={styles.section}>
+            <CustomText
+              variant='body1'
+              color={GreyColors.grey800}
+              fontWeight='bold'
+              style={styles.sectionTitle}
+            >
+              언제 상태를 지울까요?
+            </CustomText>
+
+            <FlatList
+              data={timeOptions}
+              numColumns={CARD_IN_ROW}
+              scrollEnabled={false}
+              columnWrapperStyle={styles.timeRow}
+              renderItem={({ item }) => (
+                <SquareButton
+                  style={styles.timeCard}
+                  active={selectedTimeOption === item.id}
+                  onPress={() => {
+                    handleTimeSelect(item.id);
+                    if (item.id === 'custom') {
+                      onCustomTimePress();
+                    }
+                  }}
+                  text={item.text}
+                ></SquareButton>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
+    );
+  },
+);
 
 StatusSettingModal.displayName = 'StatusSettingModal';
 
@@ -222,80 +314,36 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     textAlign: 'center',
-    color: GreyColors.grey700,
-    fontWeight: '500',
   },
   saveButton: {
     marginRight: -8,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  saveButtonText: {
-    color: '#227FEB',
-    fontWeight: '700',
-  },
   section: {
-    marginBottom: 48,
+    marginBottom: 28,
   },
   sectionTitle: {
-    fontWeight: '700',
     marginBottom: 16,
-    color: GreyColors.grey800,
-  },
-  statusGrid: {
-    gap: 12,
   },
   statusRow: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 12,
     gap: 17,
-  },
-  statusCard: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: GreyColors.grey100,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  selectedStatus: {
-    backgroundColor: PrimaryColors.blue100,
-  },
-  statusText: {
-    fontSize: 16,
-    fontWeight: '500',
   },
   customStatusSection: {
-    marginTop: 20,
+    marginBottom: 20,
   },
   customLabel: {
-    color: GreyColors.grey500,
     marginBottom: 4,
-    fontWeight: '500',
-  },
-  timeGrid: {
-    gap: 12,
   },
   timeRow: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 17,
+    marginBottom: 12,
   },
   timeCard: {
-    flex: 1,
-    padding: 16,
     backgroundColor: GreyColors.grey100,
     borderRadius: 12,
-    alignItems: 'center',
-  },
-  selectedTime: {
-    backgroundColor: PrimaryColors.blue100,
-  },
-  timeText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: GreyColors.grey700,
-  },
-  selectedTimeText: {
-    color: 'white',
   },
 });

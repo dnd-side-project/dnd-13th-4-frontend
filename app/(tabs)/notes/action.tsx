@@ -2,14 +2,37 @@ import CTAButton from '@/components/button/CTAButton';
 import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
+import { ACTION_LIST } from '@/components/notes/feeling/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
+
+const EMPTY_ACTION_TEXT = '                                         ';
 
 const Action = () => {
-  const [isSelected, setIsSelected] = useState(false);
+  const [selectedType, setSelectedType] = useState(
+    ACTION_LIST.negative[0].label,
+  );
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+
+  // 현재 선택된 label(type)에 해당하는 카테고리 찾기
+  const currentCategory = useMemo(() => {
+    const categories = [...ACTION_LIST.negative, ...ACTION_LIST.positive];
+    return categories.find((c) => c.label === selectedType) ?? null;
+  }, [selectedType]);
+
+  // 현재 카테고리의 액션 배열
+  const actions = currentCategory?.actions ?? [];
+
+  const handleSelectAction = (newAction: string) => {
+    if (selectedAction === newAction) {
+      setSelectedAction(null);
+    } else {
+      setSelectedAction(newAction);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -20,7 +43,7 @@ const Action = () => {
           </CustomText>
           <View style={styles.selectItemBox}>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
-              큰 소리로 노래했어요
+              {selectedAction ?? EMPTY_ACTION_TEXT}
             </CustomText>
           </View>
         </View>
@@ -30,17 +53,21 @@ const Action = () => {
         rightText='룸메가 어떤 행동을 했나요?'
       />
       <View style={styles.actionTypeContainer}>
-        <CategoryChip text='📣 소음' selected />
-        <CategoryChip text='🫧 위생' />
-        <CategoryChip text='🧺 집안일' />
-        <CategoryChip text='📦 기타' />
+        {ACTION_LIST.negative.map(({ label }) => (
+          <Pressable key={label} onPress={() => setSelectedType(label)}>
+            <CategoryChip text={label} selected={selectedType === label} />
+          </Pressable>
+        ))}
       </View>
       <View style={styles.actionContainer}>
-        <RoundButton text='큰 소리로 노래했어요' />
-        <RoundButton text='기상 알람을 안 껐어요' />
-        <RoundButton text='미디어 볼륨을 너무 높였어요' />
-        <RoundButton text='통화 중 너무 크게 말했어요' />
-        <RoundButton text='생활 소음이 너무 크게 냈어요' />
+        {actions.map((action, index) => (
+          <RoundButton
+            key={action}
+            text={action}
+            active={selectedAction === action}
+            onPress={() => handleSelectAction(action)}
+          />
+        ))}
       </View>
       <View style={styles.ctaContainer}>
         <CTAButton style={{ flex: 1 }} text='이전' />
@@ -48,7 +75,7 @@ const Action = () => {
           style={{ flex: 1 }}
           text='다음'
           active
-          disabled={!isSelected}
+          disabled={!selectedAction}
         />
       </View>
     </View>

@@ -12,7 +12,9 @@ const Submit = () => {
 
   return (
     <ImageBackground
-      source={require('@/assets/images/note-submit-bg.png')} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
+      source={{
+        uri: 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png',
+      }} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
       style={styles.container}
     >
       <View style={styles.headerContainer}>

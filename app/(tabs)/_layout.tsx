@@ -1,15 +1,18 @@
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import { HapticTab } from '@/components/HapticTab';
 import { Icon } from '@/components/icons';
+import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { ROUTE_NAMES } from '@/constants/Routes';
 import { Typography } from '@/constants/Typography';
 
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
+import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 const LOGO =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
@@ -24,8 +27,33 @@ Notifications.setNotificationHandler({
   }),
 });
 
+// 공통 탭 아이콘 생성 함수
+const createTabIcon =
+  (iconName: IconName) =>
+  ({ focused }: { focused: boolean }) =>
+    (
+      <Icon
+        name={iconName}
+        size={20}
+        color={focused ? GreyColors.grey800 : GreyColors.grey400}
+        style={styles.tabIcon}
+      />
+    );
+
+// 중간 플러스 버튼 컴포넌트
+const CreateButton = (props: BottomTabBarButtonProps) => (
+  <Pressable
+    onPress={() => router.push(`/${ROUTE_NAMES.CREATE_MIND_LETTER}`)}
+    style={[props.style]}
+  >
+    <View style={styles.createButton}>
+      <Icon name='star' size={30} color='white' />
+    </View>
+  </Pressable>
+);
+
 export default function TabLayout() {
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState<string>('');
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
@@ -58,11 +86,7 @@ export default function TabLayout() {
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       <Tabs
         screenOptions={{
           headerShown: true,
@@ -71,161 +95,118 @@ export default function TabLayout() {
           tabBarBackground: TabBarBackground,
           tabBarActiveTintColor: GreyColors.grey800,
           tabBarInactiveTintColor: GreyColors.grey400,
-          tabBarLabelStyle: {
-            ...Typography.body4,
-            marginTop: 6,
-          },
-          tabBarStyle: {
-            height: 88,
-            borderTopWidth: 1,
-            shadowColor: '#000000',
-            borderTopColor: PrimaryColors.blue300,
-            shadowOffset: { width: 0, height: -3 },
-            shadowOpacity: 0.1,
-            shadowRadius: 12,
-            elevation: 10,
-          },
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarStyle: styles.tabBarStyle,
         }}
       >
+        {/* 홈 탭 */}
         <Tabs.Screen
           name='index'
           options={{
             title: '홈',
             headerTitle: () => (
-              <Image
-                source={{ uri: LOGO }}
-                style={{
-                  width: 57,
-                  height: 24,
-                  resizeMode: 'contain',
-                }}
-              />
+              <Image source={{ uri: LOGO }} style={styles.logo} />
             ),
-            headerStyle: {
-              backgroundColor: 'white',
-              paddingVertical: 16,
-              elevation: 0, // Android shadow 제거
-              shadowOpacity: 0, // iOS shadow 제거
-            },
-            headerTitleStyle: {
-              ...Typography.head2,
-              color: GreyColors.grey900,
-            },
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                name='home'
-                size={20}
-                color={focused ? GreyColors.grey800 : GreyColors.grey400}
-                style={{ marginTop: 6 }}
-              />
-            ),
+            headerStyle: styles.headerStyle,
+            headerTitleStyle: styles.headerTitleStyle,
+            tabBarIcon: createTabIcon('home'),
           }}
         />
+
+        {/* 보관함 탭 */}
         <Tabs.Screen
           name='Storage'
           options={{
             title: '보관함',
             headerTitle: '보관함',
-            headerStyle: {
-              backgroundColor: 'white',
-              paddingVertical: 16,
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-            headerTitleStyle: {
-              ...Typography.head2,
-              color: GreyColors.grey900,
-            },
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                name='dashboard'
-                size={20}
-                color={focused ? GreyColors.grey800 : GreyColors.grey400}
-                style={{ marginTop: 6 }}
-              />
-            ),
+            headerStyle: styles.headerStyle,
+            headerTitleStyle: styles.headerTitleStyle,
+            tabBarIcon: createTabIcon('dashboard'),
           }}
         />
+
+        {/* 편지 쓰기 버튼 (실제 탭이 아님) */}
         <Tabs.Screen
           name='MindLetter'
           options={{
             title: '',
-            headerShown: false, // 이 페이지만 헤더 숨김
-            tabBarButton: (props) => (
-              <Pressable
-                onPress={() => {
-                  router.push('/CreateMindLetter');
-                }}
-                style={[props.style]}
-              >
-                <View
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 44,
-                    backgroundColor: PrimaryColors.blue100,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Icon name='star' size={30} color='white' />
-                </View>
-              </Pressable>
-            ),
+            headerShown: false,
+            tabBarButton: CreateButton,
           }}
         />
+
+        {/* 통계 탭 */}
         <Tabs.Screen
           name='Statistics'
           options={{
             title: '통계',
             headerTitle: '통계',
-            headerStyle: {
-              backgroundColor: 'white',
-              paddingVertical: 16,
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-            headerTitleStyle: {
-              ...Typography.head2,
-              color: GreyColors.grey900,
-            },
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                name='graph'
-                size={20}
-                color={focused ? GreyColors.grey800 : GreyColors.grey400}
-                style={{ marginTop: 6 }}
-              />
-            ),
+            headerStyle: styles.headerStyle,
+            headerTitleStyle: styles.headerTitleStyle,
+            tabBarIcon: createTabIcon('graph'),
           }}
         />
+
+        {/* 마이페이지 탭 */}
         <Tabs.Screen
           name='MyPage'
           options={{
             title: '마이페이지',
             headerTitle: '마이페이지',
-            headerStyle: {
-              backgroundColor: 'white',
-              paddingVertical: 16,
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-            headerTitleStyle: {
-              ...Typography.head2,
-              color: GreyColors.grey900,
-            },
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                name='user'
-                size={20}
-                color={focused ? GreyColors.grey800 : GreyColors.grey400}
-                style={{ marginTop: 6 }}
-              />
-            ),
+            headerStyle: styles.headerStyle,
+            headerTitleStyle: styles.headerTitleStyle,
+            tabBarIcon: createTabIcon('user'),
           }}
         />
       </Tabs>
+
       <DebugFloatingTokenButton token={expoPushToken} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  logo: {
+    width: 57,
+    height: 24,
+    resizeMode: 'contain',
+  },
+  headerStyle: {
+    backgroundColor: 'white',
+    paddingVertical: 16,
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  headerTitleStyle: {
+    ...Typography.head2,
+    color: GreyColors.grey900,
+  },
+  tabBarLabel: {
+    ...Typography.body4,
+    marginTop: 6,
+  },
+  tabBarStyle: {
+    height: 88,
+    borderTopWidth: 1,
+    shadowColor: '#000000',
+    borderTopColor: PrimaryColors.blue300,
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  tabIcon: {
+    marginTop: 6,
+  },
+  createButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: PrimaryColors.blue100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function Storage() {
   return (
-    <SafeScreenLayout edges={['top', 'left', 'right']}>
+    <SafeScreenLayout>
       <Text style={styles.title}>보관함</Text>
       <View style={styles.contentArea}>
         <Text style={styles.content}>저장된 콘텐츠들</Text>

@@ -1,74 +1,67 @@
 import CTAButton from '@/components/button/CTAButton';
-import SquareButton from '@/components/button/SquareButton';
+import LongSquareButton from '@/components/button/LongSquareButton';
 import { CustomText } from '@/components/CustomText';
-import { MY_STATE_LIST } from '@/components/notes/constants/actions';
+import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-const EMPTY_ACTION_TEXT = '                               ';
+const EMPTY_ACTION_TEXT =
+  '                                                       ';
 
-const ActionSecond = () => {
+const Promise = () => {
   const router = useRouter();
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const [selectedPromise, setSelectedPromise] = useState<string | null>(null);
 
   return (
     <View style={styles.container}>
-      <NoteCreateHeaderLayout progressPrecentage={66}>
+      <NoteCreateHeaderLayout progressPrecentage={100}>
         <View style={styles.selectItemContainer}>
-          <CustomText color={PrimaryColors.blue100} variant='head3'>
-            그때 저는
-          </CustomText>
+          <CustomText variant='head3'> </CustomText>
           <View style={styles.selectItemSecondRow}>
             <View style={styles.selectItemBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {selectedAction ?? EMPTY_ACTION_TEXT}
+                {selectedPromise ?? EMPTY_ACTION_TEXT}
               </CustomText>
             </View>
-            <CustomText color={PrimaryColors.blue100} variant='head3'>
-              이었어요.
-            </CustomText>
           </View>
         </View>
       </NoteCreateHeaderLayout>
       <View style={styles.contentContainer}>
         <View style={styles.guideContainer}>
           <NoteCreateGuide
-            leftText='상황2.'
-            rightText='당시 어떤 상태였나요?'
+            leftText='약속.'
+            rightText='앞으로 어떻게 하면 좋을까요?'
           />
-          <Pressable onPress={() => router.push('/')}>
-            <CustomText style={styles.skip} color={PrimaryColors.blue100}>
-              SKIP
-            </CustomText>
-          </Pressable>
         </View>
-        <View style={styles.grid}>
-          {MY_STATE_LIST.map((item) => (
-            <SquareButton
+        <ScrollView
+          contentContainerStyle={{ rowGap: 12 }}
+          style={styles.listContainer}
+        >
+          {PROMISE_LIST.map((item) => (
+            <LongSquareButton
               key={item}
-              style={styles.gridItem}
               text={item}
-              onPress={() => setSelectedAction(item)}
-              active={item === selectedAction}
+              onPress={() => setSelectedPromise(item)}
+              active={item === selectedPromise}
             />
           ))}
-        </View>
+        </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.push('/notes/action-first')}
+            onPress={() => router.push('/notes/action-second')}
             style={{ flex: 1 }}
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/')}
+            onPress={() => router.push('/notes/submit')}
             style={{ flex: 1 }}
             text='다음'
             active
-            disabled={!selectedAction}
+            disabled={!selectedPromise}
           />
         </View>
       </View>
@@ -76,7 +69,7 @@ const ActionSecond = () => {
   );
 };
 
-export default ActionSecond;
+export default Promise;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffffff' },
@@ -107,20 +100,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  skip: { paddingHorizontal: 20, textDecorationLine: 'underline' },
-
-  grid: {
-    paddingTop: 44,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-
-  gridItem: {
-    width: '48.5%', // 50% 대신 gap 고려해서 줄임
-    marginBottom: 12, // 행 사이 간격
-    justifyContent: 'center',
-    alignItems: 'center',
+  listContainer: {
+    paddingTop: 37,
+    gap: 12,
   },
 
   ctaContainer: {

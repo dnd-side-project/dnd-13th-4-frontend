@@ -3,7 +3,7 @@ import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
-import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
+import { EMOTION_LIST } from '@/components/notes/constants/emotions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -39,34 +39,36 @@ const Feeling = () => {
           </CustomText>
         </View>
       </NoteCreateFeelingHeader>
-      <NoteCreateGuide
-        leftText='감정.'
-        rightText='룸메에게 어떤 마음을 전하고 싶나요?'
-      />
-      <View style={styles.carouselContainer}>
-        <Carousel
-          width={screenWidth}
-          height={305}
-          onChange={changeIndex}
-          itemList={EMOTION_LIST.map((emotion) => (
-            <View key={emotion.uri} style={styles.shadowContainer}>
-              <View style={styles.imageContainer}>
-                <ResponsiveImage
-                  source={{ uri: emotion.uri }}
-                  width={210}
-                  style={styles.image}
-                />
+      <View style={styles.contentContainer}>
+        <NoteCreateGuide
+          leftText='감정.'
+          rightText='룸메에게 어떤 마음을 전하고 싶나요?'
+        />
+        <View style={styles.carouselContainer}>
+          <Carousel
+            width={screenWidth}
+            height={305}
+            onChange={changeIndex}
+            itemList={EMOTION_LIST.map((emotion) => (
+              <View key={emotion.uri} style={styles.shadowContainer}>
+                <View style={styles.imageContainer}>
+                  <ResponsiveImage
+                    source={{ uri: emotion.uri }}
+                    width={210}
+                    style={styles.image}
+                  />
+                </View>
               </View>
-            </View>
-          ))}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <CTAButton
-          text='다음'
-          active
-          onPress={() => router.push('/notes/action')}
-        />
+            ))}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <CTAButton
+            text='다음'
+            active
+            onPress={() => router.push('/notes/action-first')}
+          />
+        </View>
       </View>
     </View>
   );
@@ -108,6 +110,12 @@ const styles = StyleSheet.create({
     gap: 4,
     flexDirection: 'row',
     alignSelf: 'flex-start',
+  },
+  contentContainer: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 16,
+    paddingHorizontal: 20,
   },
   carouselContainer: { marginTop: 50 },
   shadowContainer: {

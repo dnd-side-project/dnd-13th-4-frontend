@@ -12,7 +12,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
 
-const Action = () => {
+const ActionFirst = () => {
   const router = useRouter();
   const [selectedType, setSelectedType] = useState(
     ACTION_LIST.negative[0].label,
@@ -50,48 +50,50 @@ const Action = () => {
           </View>
         </View>
       </NoteCreateHeaderLayout>
-      <NoteCreateGuide
-        leftText='상황1.'
-        rightText='룸메가 어떤 행동을 했나요?'
-      />
-      <View style={styles.actionTypeContainer}>
-        {ACTION_LIST.negative.map(({ label }) => (
-          <Pressable key={label} onPress={() => setSelectedType(label)}>
-            <CategoryChip text={label} selected={selectedType === label} />
-          </Pressable>
-        ))}
-      </View>
-      <ScrollView
-        style={styles.actionContainer}
-        contentContainerStyle={{ rowGap: 12 }}
-      >
-        {actions.map((action, index) => (
-          <RoundButton
-            key={action}
-            text={action}
-            active={selectedAction === action}
-            onPress={() => handleSelectAction(action)}
+      <View style={styles.contentContainer}>
+        <NoteCreateGuide
+          leftText='상황1.'
+          rightText='룸메가 어떤 행동을 했나요?'
+        />
+        <View style={styles.actionTypeContainer}>
+          {ACTION_LIST.negative.map(({ label }) => (
+            <Pressable key={label} onPress={() => setSelectedType(label)}>
+              <CategoryChip text={label} selected={selectedType === label} />
+            </Pressable>
+          ))}
+        </View>
+        <ScrollView
+          style={styles.actionContainer}
+          contentContainerStyle={{ rowGap: 12 }}
+        >
+          {actions.map((action, index) => (
+            <RoundButton
+              key={action}
+              text={action}
+              active={selectedAction === action}
+              onPress={() => handleSelectAction(action)}
+            />
+          ))}
+        </ScrollView>
+        <View style={styles.ctaContainer}>
+          <CTAButton
+            style={{ flex: 1 }}
+            text='이전'
+            onPress={() => router.push('/notes/feeling')}
           />
-        ))}
-      </ScrollView>
-      <View style={styles.ctaContainer}>
-        <CTAButton
-          style={{ flex: 1 }}
-          text='이전'
-          onPress={() => router.push('/notes/feeling')}
-        />
-        <CTAButton
-          style={{ flex: 1 }}
-          text='다음'
-          active
-          disabled={!selectedAction}
-        />
+          <CTAButton
+            style={{ flex: 1 }}
+            text='다음'
+            active
+            disabled={!selectedAction}
+          />
+        </View>
       </View>
     </View>
   );
 };
 
-export default Action;
+export default ActionFirst;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffffff', paddingBottom: 16 },
@@ -109,20 +111,25 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 12,
   },
+  contentContainer: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 16,
+    paddingHorizontal: 20,
+  },
+
   actionTypeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+
     paddingTop: 8,
     paddingBottom: 10,
   },
   actionContainer: {
     paddingTop: 10,
-    paddingHorizontal: 20,
   },
   ctaContainer: {
     alignSelf: 'stretch',
-    paddingHorizontal: 20,
     flexDirection: 'row',
     width: '100%',
     marginTop: 'auto',

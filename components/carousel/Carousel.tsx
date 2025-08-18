@@ -41,9 +41,9 @@ const Carousel = ({ itemList, height, width, onChange }: CarouselProps) => {
         onSnapToItem={(index) => onChange?.(index)}
         mode='parallax'
         modeConfig={{
-          parallaxScrollingScale: 0.8,
-          parallaxScrollingOffset: 210,
-          parallaxAdjacentItemScale: 0.8,
+          parallaxScrollingScale: 1,
+          parallaxScrollingOffset: 185,
+          parallaxAdjacentItemScale: 1,
         }}
         onProgressChange={progress}
         renderItem={({ index, item }) => <View>{item}</View>}

@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     paddingBottom: 16,
+    backgroundColor: '#FFFFFF',
   },
   feelingContainer: {
     paddingTop: 20,

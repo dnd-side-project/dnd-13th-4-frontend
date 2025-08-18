@@ -1,6 +1,7 @@
 import CTAButton from '@/components/button/CTAButton';
 import SquareButton from '@/components/button/SquareButton';
 import { CustomText } from '@/components/CustomText';
+import { MY_STATE_LIST } from '@/components/notes/feeling/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
@@ -36,11 +37,15 @@ const ActionSecond = () => {
       <View style={styles.contentContainer}>
         <NoteCreateGuide leftText='상황2.' rightText='당시 어떤 상태였나요?' />
         <View style={styles.grid}>
-          <SquareButton style={styles.gridItem} text='중요한 업무 중' />
-          <SquareButton style={styles.gridItem} text='쿨쿨 자는 중' />
-          <SquareButton style={styles.gridItem} text='열심히 공부 중' />
-          <SquareButton style={styles.gridItem} text='편하게 쉬는 중' />
-          <SquareButton style={styles.gridItem} text='맛있는 식사 중' />
+          {MY_STATE_LIST.map((item) => (
+            <SquareButton
+              key={item}
+              style={styles.gridItem}
+              text={item}
+              onPress={() => setSelectedAction(item)}
+              active={item === selectedAction}
+            />
+          ))}
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
@@ -87,6 +92,7 @@ const styles = StyleSheet.create({
   },
 
   grid: {
+    paddingTop: 44,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',

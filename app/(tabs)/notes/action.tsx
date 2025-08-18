@@ -5,9 +5,12 @@ import { CustomText } from '@/components/CustomText';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const Action = () => {
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <View style={styles.container}>
       <NoteCreateHeaderLayout progressPrecentage={33}>
@@ -33,7 +36,7 @@ const Action = () => {
         <CategoryChip text='📦 기타' />
       </View>
       <View style={styles.actionContainer}>
-        <RoundButton text='큰 소리로 노래했어요' active />
+        <RoundButton text='큰 소리로 노래했어요' />
         <RoundButton text='기상 알람을 안 껐어요' />
         <RoundButton text='미디어 볼륨을 너무 높였어요' />
         <RoundButton text='통화 중 너무 크게 말했어요' />
@@ -41,7 +44,12 @@ const Action = () => {
       </View>
       <View style={styles.ctaContainer}>
         <CTAButton style={{ flex: 1 }} text='이전' />
-        <CTAButton style={{ flex: 1 }} text='다음' active />
+        <CTAButton
+          style={{ flex: 1 }}
+          text='다음'
+          active
+          disabled={!isSelected}
+        />
       </View>
     </View>
   );

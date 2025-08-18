@@ -1,10 +1,11 @@
 import CTAButton from '@/components/button/CTAButton';
 import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
+import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
-import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateFeelingHeader';
-import { GreyColors } from '@/constants/Colors';
+import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
@@ -17,7 +18,24 @@ const Feeling = () => {
 
   return (
     <View style={styles.container}>
-      <NoteCreateFeelingHeader emotionLabel={emotion.label} />
+      <NoteCreateFeelingHeader>
+        <View style={styles.previewDescription}>
+          <Icon size={15} name='altFill' color={GreyColors.grey500} />
+          <CustomText variant='body3' color={GreyColors.grey500}>
+            룸메에게 보낼 내용 미리보기
+          </CustomText>
+        </View>
+        <View style={styles.preview}>
+          <View style={styles.feelingBox}>
+            <CustomText color={PrimaryColors.blue100} variant='head3'>
+              {emotion.label}
+            </CustomText>
+          </View>
+          <CustomText color={PrimaryColors.blue100} variant='head3'>
+            마음을 전해요.
+          </CustomText>
+        </View>
+      </NoteCreateFeelingHeader>
       <View style={styles.feelingContainer}>
         <CustomText
           variant='body1'
@@ -68,6 +86,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 16,
     backgroundColor: '#FFFFFF',
+  },
+  previewDescription: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingBottom: 6,
+  },
+  preview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  feelingBox: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: PrimaryColors.blue200,
+    paddingVertical: 2,
+    paddingHorizontal: 12,
   },
   feelingContainer: {
     paddingTop: 20,

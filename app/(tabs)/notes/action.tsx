@@ -8,7 +8,7 @@ import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderL
 import { PrimaryColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
 
@@ -61,7 +61,7 @@ const Action = () => {
           </Pressable>
         ))}
       </View>
-      <View style={styles.actionContainer}>
+      <ScrollView style={styles.actionContainer}>
         {actions.map((action, index) => (
           <RoundButton
             key={action}
@@ -70,7 +70,7 @@ const Action = () => {
             onPress={() => handleSelectAction(action)}
           />
         ))}
-      </View>
+      </ScrollView>
       <View style={styles.ctaContainer}>
         <CTAButton
           style={{ flex: 1 }}

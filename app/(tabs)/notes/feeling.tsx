@@ -7,10 +7,12 @@ import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 const Feeling = () => {
+  const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const emotion = EMOTION_LIST[index];
@@ -60,7 +62,11 @@ const Feeling = () => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <CTAButton text='다음' active />
+        <CTAButton
+          text='다음'
+          active
+          onPress={() => router.push('/notes/action')}
+        />
       </View>
     </View>
   );

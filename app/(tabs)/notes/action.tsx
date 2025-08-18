@@ -6,12 +6,14 @@ import { ACTION_LIST } from '@/components/notes/feeling/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
 
 const Action = () => {
+  const router = useRouter();
   const [selectedType, setSelectedType] = useState(
     ACTION_LIST.negative[0].label,
   );
@@ -70,7 +72,11 @@ const Action = () => {
         ))}
       </View>
       <View style={styles.ctaContainer}>
-        <CTAButton style={{ flex: 1 }} text='이전' />
+        <CTAButton
+          style={{ flex: 1 }}
+          text='이전'
+          onPress={() => router.push('/notes/feeling')}
+        />
         <CTAButton
           style={{ flex: 1 }}
           text='다음'

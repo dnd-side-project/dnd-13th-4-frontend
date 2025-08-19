@@ -1,6 +1,7 @@
 import CTAButton from '@/components/button/CTAButton';
 import SquareButton from '@/components/button/SquareButton';
 import { CustomText } from '@/components/CustomText';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -16,24 +17,28 @@ const ActionSecond = () => {
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
 
   return (
-    <View style={styles.container}>
-      <NoteCreateHeaderLayout progressPrecentage={66}>
-        <View style={styles.selectItemContainer}>
-          <CustomText color={PrimaryColors.blue100} variant='head3'>
-            그때 저는
-          </CustomText>
-          <View style={styles.selectItemSecondRow}>
-            <View style={styles.selectItemBox}>
+    <SafeScreenLayout
+      header={
+        <NoteCreateHeaderLayout progressPrecentage={66}>
+          <View style={styles.selectItemContainer}>
+            <CustomText color={PrimaryColors.blue100} variant='head3'>
+              그때 저는
+            </CustomText>
+            <View style={styles.selectItemSecondRow}>
+              <View style={styles.selectItemBox}>
+                <CustomText color={PrimaryColors.blue100} variant='head3'>
+                  {selectedAction ?? EMPTY_ACTION_TEXT}
+                </CustomText>
+              </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {selectedAction ?? EMPTY_ACTION_TEXT}
+                이었어요.
               </CustomText>
             </View>
-            <CustomText color={PrimaryColors.blue100} variant='head3'>
-              이었어요.
-            </CustomText>
           </View>
-        </View>
-      </NoteCreateHeaderLayout>
+        </NoteCreateHeaderLayout>
+      }
+      style={styles.container}
+    >
       <View style={styles.contentContainer}>
         <View style={styles.guideContainer}>
           <NoteCreateGuide
@@ -72,7 +77,7 @@ const ActionSecond = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeScreenLayout>
   );
 };
 
@@ -99,7 +104,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,
-    paddingHorizontal: 20,
   },
 
   guideContainer: {

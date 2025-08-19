@@ -60,12 +60,12 @@ const ActionSecond = () => {
         <View style={styles.ctaContainer}>
           <CTAButton
             onPress={() => router.push('/notes/action-first')}
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
             onPress={() => router.push('/')}
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='다음'
             active
             disabled={!selectedAction}
@@ -129,4 +129,5 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     gap: 17,
   },
+  ctaButton: { flex: 1 },
 });

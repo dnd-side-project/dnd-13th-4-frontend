@@ -77,12 +77,12 @@ const ActionFirst = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='이전'
             onPress={() => router.push('/notes/feeling')}
           />
           <CTAButton
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='다음'
             active
             onPress={() => router.push('/notes/action-second')}
@@ -136,4 +136,5 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     gap: 17,
   },
+  ctaButton: { flex: 1 },
 });

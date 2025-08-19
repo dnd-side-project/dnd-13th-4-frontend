@@ -53,12 +53,12 @@ const Promise = () => {
         <View style={styles.ctaContainer}>
           <CTAButton
             onPress={() => router.push('/notes/action-second')}
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
             onPress={() => router.push('/notes/submit')}
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='다음'
             active
             disabled={!selectedPromise}
@@ -111,4 +111,5 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     gap: 17,
   },
+  ctaButton: { flex: 1 },
 });

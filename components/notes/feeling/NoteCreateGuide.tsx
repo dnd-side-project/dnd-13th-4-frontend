@@ -24,8 +24,6 @@ export default NoteCreateGuide;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
     display: 'flex',
     gap: 4,
     flexDirection: 'row',

@@ -1,3 +1,4 @@
+import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ColorValue, Image, StyleSheet, View } from 'react-native';
@@ -35,7 +36,7 @@ export default function LetterCard({
     <>
       <Image
         source={{
-          uri: 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/home/disappointed.png',
+          uri: `${S3_IMAGE_URL}/home/disappointed.png`,
         }}
         style={styles.backgroundImage}
         resizeMode='cover'

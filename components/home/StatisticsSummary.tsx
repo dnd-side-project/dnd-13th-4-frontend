@@ -1,11 +1,11 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
+import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import { router } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native';
 
-const HOME_STATISTICS_BACKGROUND_IMAGE =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/home/home_statistics.png';
+const HOME_STATISTICS_BACKGROUND_IMAGE = `${S3_IMAGE_URL}/home/home_statistics.png`;
 
 export const StatisticsSummary = () => (
   <ImageBackground

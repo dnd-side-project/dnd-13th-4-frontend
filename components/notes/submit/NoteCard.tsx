@@ -1,3 +1,4 @@
+import { S3_IMAGE_URL } from '@/constants';
 import { useEffect, useState } from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
@@ -15,8 +16,7 @@ const NoteCard = ({ style, cardWidth, changeCardWidth }: NoteCardProps) => {
   const [height, setHeight] = useState(0);
 
   // ✅ S3 이미지 URL
-  const imageUrl =
-    'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
+  const imageUrl = `${S3_IMAGE_URL}/letter_detail/uncomfortable.png`;
 
   useEffect(() => {
     if (cardWidth > 0) {

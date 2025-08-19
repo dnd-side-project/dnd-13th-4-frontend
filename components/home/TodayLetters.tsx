@@ -1,22 +1,13 @@
 import { CustomText } from '@/components/CustomText';
 import { GreyColors } from '@/constants/Colors';
-import { useState } from 'react';
+import { router } from 'expo-router';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 import LetterCard from './TodayLetter';
 
 export const TodayLetters = () => {
-  const [clickedCards, setClickedCards] = useState<Set<number>>(new Set());
-
-  const handleCardPress = (index: number) => {
-    setClickedCards((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
+  const handleCardPress = () => {
+    // ReadMindLetter 페이지로 이동
+    router.push('/ReadMindLetter');
   };
 
   return (
@@ -38,32 +29,19 @@ export const TodayLetters = () => {
         contentContainerStyle={styles.todayLettersContent}
         style={styles.todayLetters}
         data={new Array(5).fill(0)}
-        renderItem={({ index }) => {
-          const isClicked = clickedCards.has(index);
-
-          return (
-            <Pressable onPress={() => handleCardPress(index)}>
-              {isClicked ? (
-                <LetterCard
-                  url={''}
-                  endTime={''}
-                  isRead={isClicked}
-                  index={index}
-                />
-              ) : (
-                <LetterCard
-                  url={''}
-                  endTime={''}
-                  isRead={isClicked}
-                  index={index}
-                  colors={['#5BA4FA', '#45E5DD', '#5BA4FA']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                />
-              )}
-            </Pressable>
-          );
-        }}
+        renderItem={({ index }) => (
+          <Pressable onPress={handleCardPress}>
+            <LetterCard
+              url={''}
+              endTime={''}
+              isRead={false}
+              index={index}
+              colors={['#5BA4FA', '#45E5DD', '#5BA4FA']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+            />
+          </Pressable>
+        )}
         keyExtractor={(_, index) => index.toString()}
       />
     </>

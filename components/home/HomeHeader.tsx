@@ -1,7 +1,5 @@
+import { LOGO } from '@/constants';
 import { Image, StyleSheet, View } from 'react-native';
-
-const LOGO =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
 
 export const HomeHeader = () => (
   <View style={styles.header}>

@@ -30,6 +30,7 @@ Notifications.setNotificationHandler({
 // 공통 탭 아이콘 생성 함수
 const createTabIcon =
   (iconName: IconName) =>
+  // eslint-disable-next-line react/display-name
   ({ focused }: { focused: boolean }) =>
     (
       <Icon
@@ -89,7 +90,7 @@ export default function TabLayout() {
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          headerShown: true,
+          headerShown: false,
           headerShadowVisible: false,
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,

@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, { ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
+import Svg, { Circle, ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
 
 export interface IconProps {
   size?: number;
@@ -126,6 +126,17 @@ const CheckFillIcon = ({ size = 24, color = '#000000' }: IconProps) => (
   </Svg>
 );
 
+const AltFillIcon = ({ size = 24, color = '#000000' }: IconProps) => (
+  <Svg width={size} height={size} viewBox='0 0 15 15' fill='none'>
+    <Circle cx='7.5' cy='7.5' r='2.5' fill={color} />
+    <Path
+      d='M13.125 7.5C13.125 7.5 12.5 2.5 7.5 2.5C2.5 2.5 1.875 7.5 1.875 7.5'
+      stroke={color}
+      strokeWidth='1.25'
+    />
+  </Svg>
+);
+
 export const iconComponents = {
   home: HomeIcon,
   dashboard: DashBoardIcon,
@@ -136,6 +147,7 @@ export const iconComponents = {
   expandLeft: ExpandLeftIcon,
   refresh: RefreshIcon,
   checkFill: CheckFillIcon,
+  altFill: AltFillIcon,
 } as const;
 
 export type IconName = keyof typeof iconComponents;

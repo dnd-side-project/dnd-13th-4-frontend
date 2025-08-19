@@ -9,7 +9,7 @@ type Props = {
   leftIconName?: IconName;
 };
 
-const Header = ({ text, style, leftIconName = 'expandLeft' }: Props) => {
+const Header = ({ text, style, leftIconName }: Props) => {
   return (
     <View style={[style, styles.container]}>
       {leftIconName ? (

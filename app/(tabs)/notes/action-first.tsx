@@ -2,7 +2,7 @@ import CTAButton from '@/components/button/CTAButton';
 import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
-import { ACTION_LIST } from '@/components/notes/feeling/constants/actions';
+import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
@@ -77,12 +77,12 @@ const ActionFirst = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='이전'
             onPress={() => router.push('/notes/feeling')}
           />
           <CTAButton
-            style={{ flex: 1 }}
+            style={styles.ctaButton}
             text='다음'
             active
             onPress={() => router.push('/notes/action-second')}
@@ -136,4 +136,5 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     gap: 17,
   },
+  ctaButton: { flex: 1 },
 });

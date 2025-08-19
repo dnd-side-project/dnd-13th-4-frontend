@@ -3,6 +3,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
+import { LOGO } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { ROUTE_NAMES } from '@/constants/Routes';
 import { Typography } from '@/constants/Typography';
@@ -15,9 +16,6 @@ import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-const LOGO =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({

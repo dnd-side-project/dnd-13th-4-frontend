@@ -1,14 +1,18 @@
 import CTAButton from '@/components/button/CTAButton';
 import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
+import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { EMOTION_LIST } from '@/components/notes/feeling/constants/emotions';
-import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateFeelingHeader';
-import { GreyColors } from '@/constants/Colors';
+import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
+import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 const Feeling = () => {
+  const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const emotion = EMOTION_LIST[index];
@@ -17,23 +21,28 @@ const Feeling = () => {
 
   return (
     <View style={styles.container}>
-      <NoteCreateFeelingHeader emotionLabel={emotion.label} />
-      <View style={styles.feelingContainer}>
-        <CustomText
-          variant='body1'
-          fontWeight='bold'
-          color={GreyColors.grey400}
-        >
-          감정.
-        </CustomText>
-        <CustomText
-          variant='body1'
-          fontWeight='bold'
-          color={GreyColors.grey800}
-        >
-          룸메에게 어떤 마음을 전하고 싶나요?
-        </CustomText>
-      </View>
+      <NoteCreateFeelingHeader>
+        <View style={styles.previewDescription}>
+          <Icon size={15} name='altFill' color={GreyColors.grey500} />
+          <CustomText variant='body3' color={GreyColors.grey500}>
+            룸메에게 보낼 내용 미리보기
+          </CustomText>
+        </View>
+        <View style={styles.preview}>
+          <View style={styles.feelingBox}>
+            <CustomText color={PrimaryColors.blue100} variant='head3'>
+              {emotion.label}
+            </CustomText>
+          </View>
+          <CustomText color={PrimaryColors.blue100} variant='head3'>
+            마음을 전해요.
+          </CustomText>
+        </View>
+      </NoteCreateFeelingHeader>
+      <NoteCreateGuide
+        leftText='감정.'
+        rightText='룸메에게 어떤 마음을 전하고 싶나요?'
+      />
       <View style={styles.carouselContainer}>
         <Carousel
           width={screenWidth}
@@ -53,7 +62,11 @@ const Feeling = () => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <CTAButton text='다음' active />
+        <CTAButton
+          text='다음'
+          active
+          onPress={() => router.push('/notes/action')}
+        />
       </View>
     </View>
   );
@@ -68,6 +81,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 16,
     backgroundColor: '#FFFFFF',
+  },
+  previewDescription: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingBottom: 6,
+  },
+  preview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  feelingBox: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: PrimaryColors.blue200,
+    paddingVertical: 2,
+    paddingHorizontal: 12,
   },
   feelingContainer: {
     paddingTop: 20,

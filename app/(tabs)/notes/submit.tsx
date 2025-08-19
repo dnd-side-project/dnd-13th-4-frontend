@@ -1,57 +1,63 @@
 import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useState } from 'react';
-import { ImageBackground, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const Submit = () => {
   const [cardWidth, setCardWidth] = useState(0);
 
   return (
-    <ImageBackground
-      source={{
+    <SafeScreenLayout
+      background={{
+        type: 'image',
         uri: 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png',
       }} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
       style={styles.container}
+      header={
+        <View style={styles.headerContainer}>
+          <Icon
+            style={styles.backIcon}
+            color={GreyColors.grey600}
+            size={30}
+            name='expandLeft'
+          />
+          <CustomText
+            style={styles.headerText}
+            color={GreyColors.grey700}
+            variant='body1'
+          >
+            마음쪽지 생성
+          </CustomText>
+          <View style={{ width: 30 }} />
+        </View>
+      }
     >
-      <View style={styles.headerContainer}>
-        <Icon
-          style={styles.backIcon}
-          color={GreyColors.grey600}
-          size={30}
-          name='expandLeft'
-        />
-        <CustomText
-          style={styles.headerText}
-          color={GreyColors.grey700}
-          variant='body1'
-        >
-          마음쪽지 생성
-        </CustomText>
-        <View style={{ width: 30 }} />
+      <View style={styles.contentContainer}>
+        <View style={{ paddingTop: 24, paddingBottom: 40 }}>
+          <FromToText />
+        </View>
+        <View style={{ position: 'relative' }}>
+          <NoteCard
+            style={{ zIndex: 100 }}
+            cardWidth={cardWidth}
+            changeCardWidth={(newCardWidth) => setCardWidth(newCardWidth)}
+          />
+          <View style={[styles.backgroundCard, { width: cardWidth - 17 }]} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <CTAButton
+            style={{ alignSelf: 'flex-end' }}
+            text='마음쪽지 보내기'
+            active
+          />
+        </View>
       </View>
-      <View style={{ paddingTop: 24, paddingBottom: 40 }}>
-        <FromToText />
-      </View>
-      <View style={{ position: 'relative' }}>
-        <NoteCard
-          style={{ zIndex: 100 }}
-          cardWidth={cardWidth}
-          changeCardWidth={(newCardWidth) => setCardWidth(newCardWidth)}
-        />
-        <View style={[styles.backgroundCard, { width: cardWidth - 17 }]} />
-      </View>
-      <View style={styles.buttonContainer}>
-        <CTAButton
-          style={{ alignSelf: 'flex-end' }}
-          text='마음쪽지 보내기'
-          active
-        />
-      </View>
-    </ImageBackground>
+    </SafeScreenLayout>
   );
 };
 
@@ -60,11 +66,6 @@ export default Submit;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: '#ffffff',
   },
   headerContainer: {
     display: 'flex',
@@ -72,6 +73,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  contentContainer: {
+    alignItems: 'center',
+    paddingBottom: 16,
+    flex: 1,
   },
   backIcon: {
     alignItems: 'flex-start',

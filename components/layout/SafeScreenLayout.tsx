@@ -1,11 +1,16 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { ImageBackground, StyleSheet, View, ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type BackgroundType =
   | { type: 'solid'; color: string }
-  | { type: 'gradient'; colors: readonly [string, string, ...string[]]; locations?: readonly [number, number, ...number[]] }
+  | {
+      type: 'gradient';
+      colors: readonly [string, string, ...string[]];
+      locations?: readonly [number, number, ...number[]];
+    }
+  | { type: 'image'; uri: string }
   | null;
 
 interface SafeScreenLayoutProps {
@@ -65,6 +70,23 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
             <View style={styles.content}>{children}</View>
           </SafeAreaView>
         </LinearGradient>
+      );
+    }
+
+    if (background.type === 'image') {
+      return (
+        <ImageBackground
+          source={{ uri: background.uri }}
+          style={[styles.container, style]}
+        >
+          <SafeAreaView
+            style={styles.container}
+            edges={header ? ['left', 'right', 'top'] : ['left', 'right']}
+          >
+            {header}
+            <View style={styles.content}>{children}</View>
+          </SafeAreaView>
+        </ImageBackground>
       );
     }
   };

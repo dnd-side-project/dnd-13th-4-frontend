@@ -4,18 +4,18 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
-import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { useState } from 'react';
+import { GreyColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
-const Submit = () => {
-  const [cardWidth, setCardWidth] = useState(0);
+const BACKGROUND_IMAGE =
+  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
 
+const Submit = () => {
   return (
     <SafeScreenLayout
       background={{
         type: 'image',
-        uri: 'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png',
+        uri: BACKGROUND_IMAGE,
       }} // TODO : 개발환경에서 깜빡임 발생함. 최적화 필요함.
       style={styles.container}
       header={
@@ -38,16 +38,11 @@ const Submit = () => {
       }
     >
       <View style={styles.contentContainer}>
-        <View style={{ paddingTop: 24, paddingBottom: 40 }}>
+        <View style={{ paddingTop: 24, paddingBottom: '10%' }}>
           <FromToText />
         </View>
         <View style={{ position: 'relative' }}>
-          <NoteCard
-            style={{ zIndex: 100 }}
-            cardWidth={cardWidth}
-            changeCardWidth={(newCardWidth) => setCardWidth(newCardWidth)}
-          />
-          <View style={[styles.backgroundCard, { width: cardWidth - 17 }]} />
+          <NoteCard style={{ zIndex: 100 }} />
         </View>
         <View style={styles.buttonContainer}>
           <CTAButton
@@ -87,16 +82,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 'auto',
     alignSelf: 'stretch',
-  },
-  backgroundCard: {
-    position: 'absolute',
-    width: 290,
-    height: 401,
-    borderRadius: 20,
-    backgroundColor: PrimaryColors.blue100,
-    left: '50%',
-    transform: [{ translateX: -145 }, { rotate: '9deg' }],
-    top: 7,
-    zIndex: 10,
   },
 });

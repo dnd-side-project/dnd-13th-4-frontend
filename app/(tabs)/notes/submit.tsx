@@ -5,12 +5,15 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
 
 const Submit = () => {
+  const router = useRouter();
+
   return (
     <SafeScreenLayout
       background={{
@@ -20,12 +23,18 @@ const Submit = () => {
       style={styles.container}
       header={
         <View style={styles.headerContainer}>
-          <Icon
-            style={styles.backIcon}
-            color={GreyColors.grey600}
-            size={30}
-            name='expandLeft'
-          />
+          <Pressable
+            onPress={() => router.back()}
+            accessibilityRole='button'
+            accessibilityLabel='뒤로 가기'
+          >
+            <Icon
+              style={styles.backIcon}
+              color={GreyColors.grey600}
+              size={30}
+              name='expandLeft'
+            />
+          </Pressable>
           <CustomText
             style={styles.headerText}
             color={GreyColors.grey700}

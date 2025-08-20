@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 20,
   },
-  card: { width: 317, backgroundColor: '#ffffff', borderRadius: 20 },
+  card: { backgroundColor: '#ffffff', borderRadius: 20 },
   imageContainer: {
     width: '100%',
     overflow: 'hidden',

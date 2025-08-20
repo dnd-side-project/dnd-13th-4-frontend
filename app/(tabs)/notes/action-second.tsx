@@ -69,7 +69,7 @@ const ActionSecond = () => {
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/')}
+            onPress={() => router.push('/notes/promise')}
             style={styles.ctaButton}
             text='다음'
             active

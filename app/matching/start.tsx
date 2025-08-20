@@ -3,9 +3,12 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors, SecondaryColors } from '@/constants/Colors';
 import { LOGO_URL } from '@/constants/imageUri';
+import { useRouter } from 'expo-router';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 const Start = () => {
+  const router = useRouter();
+
   return (
     <SafeScreenLayout
       header={
@@ -27,7 +30,10 @@ const Start = () => {
           >{`Wini는 나와 룸메이트 모두 참여해야\n서비스를 시작할 수 있어요`}</CustomText>
         </View>
         <View style={styles.middle}>
-          <Pressable style={styles.button}>
+          <Pressable
+            onPress={() => router.push('/matching/inviter')}
+            style={styles.button}
+          >
             <View
               style={[
                 styles.icon,
@@ -53,7 +59,10 @@ const Start = () => {
               </CustomText>
             </View>
           </Pressable>
-          <Pressable style={styles.button}>
+          <Pressable
+            onPress={() => router.push('/matching/invitee')}
+            style={styles.button}
+          >
             <View
               style={[
                 styles.icon,

@@ -14,6 +14,10 @@ const BACKGROUND_IMAGE =
 const Submit = () => {
   const router = useRouter();
 
+  const handleSubmit = () => {
+    // TODO: 제출동작 구현
+  };
+
   return (
     <SafeScreenLayout
       background={{
@@ -55,6 +59,7 @@ const Submit = () => {
         </View>
         <View style={styles.buttonContainer}>
           <CTAButton
+            onPress={handleSubmit}
             style={{ alignSelf: 'flex-end' }}
             text='마음쪽지 보내기'
             active

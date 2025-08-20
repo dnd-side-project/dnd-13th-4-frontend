@@ -41,7 +41,7 @@ const Invitee = () => {
           </View>
         </View>
         <View style={styles.ctaContainer}>
-          <CTAButton text='확인' active />
+          <CTAButton onPress={() => router.push('/')} text='확인' active />
         </View>
       </View>
     </SafeScreenLayout>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  top: { gap: 8, paddingTop: 8 },
+  top: { gap: 8, paddingTop: 12 },
   middle: { paddingTop: '33%' },
   inputContainer: {
     borderWidth: 2,

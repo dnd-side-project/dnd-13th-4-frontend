@@ -59,7 +59,11 @@ const Inviter = () => {
           </View>
         </View>
         <View style={styles.ctaContainer}>
-          <CTAButton text='Wini 미리 체험해보기' active />
+          <CTAButton
+            onPress={() => router.push('/')}
+            text='Wini 미리 체험해보기'
+            active
+          />
         </View>
       </View>
     </SafeScreenLayout>
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  top: { gap: 8, paddingTop: 8 },
+  top: { gap: 8, paddingTop: 12 },
   middle: { paddingTop: '33%' },
   inviteCodeContainer: {
     paddingVertical: 24,

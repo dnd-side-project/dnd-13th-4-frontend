@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  top: { gap: 8, paddingTop: 8 },
+  top: { gap: 8, paddingTop: 12 },
   middle: { gap: 16, paddingTop: '25%' },
   bottom: {},
   button: {

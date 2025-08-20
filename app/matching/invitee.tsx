@@ -5,10 +5,19 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { FontWeightToFamily } from '@/constants/Typography';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+
+const INVITE_CODE_LENGTH = 7;
 
 const Invitee = () => {
   const router = useRouter();
+  const [inviteCode, setInviteCode] = useState('');
+
+  const handleConfirm = (): void => {
+    // TODO: 초대코드 확인 로직 구현
+    router.push('/');
+  };
 
   return (
     <SafeScreenLayout
@@ -31,17 +40,24 @@ const Invitee = () => {
               초대코드
             </CustomText>
             <TextInput
+              onChangeText={(text) => setInviteCode(text)}
+              value={inviteCode}
               style={styles.textInput}
               placeholder='초대코드 7자리'
-              placeholderTextColor='#ccc'
+              placeholderTextColor={GreyColors.grey300}
               maxLength={7}
-              keyboardType='numeric'
+              keyboardType='default'
+              autoCapitalize='characters'
               clearButtonMode='while-editing' // TODO : iOS에서만 동작
             />
           </View>
         </View>
         <View style={styles.ctaContainer}>
-          <CTAButton onPress={() => router.push('/')} text='확인' active />
+          <CTAButton
+            onPress={handleConfirm}
+            text='확인'
+            active={inviteCode.length === INVITE_CODE_LENGTH}
+          />
         </View>
       </View>
     </SafeScreenLayout>

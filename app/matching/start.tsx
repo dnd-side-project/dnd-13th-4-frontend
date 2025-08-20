@@ -37,7 +37,7 @@ const Start = () => {
             <View
               style={[
                 styles.icon,
-                { backgroundColor: 'rgba(255, 172, 158, 0.3)' },
+                { backgroundColor: `${SecondaryColors.coral}4D` },
               ]}
             >
               <Icon
@@ -66,7 +66,7 @@ const Start = () => {
             <View
               style={[
                 styles.icon,
-                { backgroundColor: 'rgba(134, 210, 219, 0.3)' },
+                { backgroundColor: `${SecondaryColors.mint}4D` },
               ]}
             >
               <Icon name='keyFill' size={30} color={SecondaryColors.mint} />

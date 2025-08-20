@@ -4,9 +4,11 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import * as Clipboard from 'expo-clipboard';
+import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const Inviter = () => {
+  const router = useRouter();
   const handleCopy = async (copyText: string): Promise<void> => {
     await Clipboard.setStringAsync(copyText);
   };
@@ -18,7 +20,9 @@ const Inviter = () => {
     <SafeScreenLayout
       header={
         <View style={styles.header}>
-          <Icon name='expandLeft' size={24} color={GreyColors.grey600} />
+          <Pressable onPress={() => router.back()}>
+            <Icon name='expandLeft' size={24} color={GreyColors.grey600} />
+          </Pressable>
         </View>
       }
       background={{ type: 'solid', color: '#FFFFFF' }}

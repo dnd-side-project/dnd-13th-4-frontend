@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
-import { iconComponents, IconProps, IconName } from './iconComponents';
+import { iconComponents, IconName, IconProps } from './iconComponents';
 
 interface IconComponentProps extends IconProps {
   name: IconName;

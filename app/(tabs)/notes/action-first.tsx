@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
@@ -8,7 +9,7 @@ import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
@@ -19,6 +20,7 @@ const ActionFirst = () => {
     ACTION_LIST.negative[0].label,
   );
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const { setSituation1 } = useNoteCreateStore();
 
   // 현재 선택된 label(type)에 해당하는 카테고리 찾기
   const currentCategory = useMemo(() => {
@@ -36,6 +38,11 @@ const ActionFirst = () => {
       setSelectedAction(newAction);
     }
   };
+
+  useEffect(() => {
+    // TODO : mock data 생성하여 id 대신 채워넣어야함.
+    setSituation1({ id: 1, text: selectedAction ?? '' });
+  }, [selectedAction]);
 
   return (
     <SafeScreenLayout

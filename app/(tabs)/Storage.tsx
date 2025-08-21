@@ -3,8 +3,19 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors } from '@/constants/Colors';
 import { getGraphicUrl } from '@/constants/graphic';
-import { LinearGradient } from 'expo-linear-gradient';
-import { ImageBackground, StyleSheet, View } from 'react-native';
+import React from 'react';
+import {
+  FlatList, // ✅ 추가
+  ImageBackground,
+  StyleSheet,
+  View,
+} from 'react-native';
+
+const DATA = Array.from({ length: 12 }, (_, i) => ({
+  id: String(i),
+  date: '25.08.07',
+  kind: 'awkward' as const,
+}));
 
 export default function Storage() {
   return (
@@ -16,65 +27,65 @@ export default function Storage() {
       }
       background={{ type: 'solid', color: '#ffffff' }}
     >
-      <View style={styles.container}>
-        <View style={styles.top}>
-          <View style={styles.totalContainer}>
-            <Icon
-              style={styles.messageIcon}
-              name='messageFill'
-              color={GreyColors.grey600}
-              size={16}
-            />
-
-            <CustomText variant='body2' color={GreyColors.grey600}>
-              모아둔 마음쪽지 12개
-            </CustomText>
-          </View>
-          <View style={styles.filterContainer}>
-            <CustomText variant='body3' color={GreyColors.grey600}>
-              최신 순
-            </CustomText>
-            <Icon
-              style={styles.leftToDown}
-              name='expandLeft'
-              color={GreyColors.grey600}
-              size={16}
-            />
-          </View>
+      <View style={styles.top}>
+        <View style={styles.totalContainer}>
+          <Icon
+            style={styles.messageIcon}
+            name='messageFill'
+            color={GreyColors.grey600}
+            size={16}
+          />
+          <CustomText variant='body2' color={GreyColors.grey600}>
+            모아둔 마음쪽지 12개
+          </CustomText>
+        </View>
+        <View style={styles.filterContainer}>
+          <CustomText variant='body3' color={GreyColors.grey600}>
+            최신 순
+          </CustomText>
+          <Icon
+            style={styles.leftToDown}
+            name='expandLeft'
+            color={GreyColors.grey600}
+            size={16}
+          />
         </View>
       </View>
-      <View style={styles.gridContainer}>
-        {[1, 2, 3, 4].map((_, i) => (
-          <ImageBackground
-            key={i}
-            source={{
-              uri: getGraphicUrl({ kind: 'awkward', page: 'storage' }),
-            }}
-            style={styles.imageBg}
-            imageStyle={styles.imageRadius} // 이미지 자체 라운드
-          >
-            {/* 하단 가독성 보정용 그라데이션 (선택) */}
-            <LinearGradient
-              colors={['transparent', 'rgba(0,0,0,0.05)']}
-              style={styles.fade}
-            />
-            <CustomText
-              variant='body3'
-              color={GreyColors.grey600}
-              style={styles.date}
+
+      <FlatList
+        data={DATA}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.gridContent}
+        columnWrapperStyle={{ gap: 16 }}
+        renderItem={({ item }) => (
+          <View style={styles.cardContainer}>
+            <ImageBackground
+              source={{
+                uri: getGraphicUrl({ kind: item.kind, page: 'storage' }),
+              }}
+              style={styles.card}
+              imageStyle={styles.imageRadius}
             >
-              25.08.07
-            </CustomText>
-          </ImageBackground>
-        ))}
-      </View>
+              <CustomText
+                variant='body3'
+                color={GreyColors.grey500}
+                style={styles.date}
+              >
+                {item.date}
+              </CustomText>
+            </ImageBackground>
+          </View>
+        )}
+      />
     </SafeScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
   header: { alignSelf: 'center', paddingVertical: 16 },
-  container: {},
+
   top: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -91,26 +102,32 @@ const styles = StyleSheet.create({
   },
   filterContainer: { flexDirection: 'row', alignItems: 'center' },
   leftToDown: { transform: [{ rotate: '-90deg' }] },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+
+  gridContent: {
+    paddingBottom: 24,
     gap: 16,
   },
-  imageBg: {
-    width: '80%',
-    aspectRatio: 1, // 정사각형(166x166과 유사). 필요시 고정 height로 변경
-    justifyContent: 'flex-end', // 하단에 날짜 배치
+  cardContainer: {
+    flex: 1,
+    aspectRatio: 1,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 20,
+    elevation: 4,
+
+    borderWidth: 1,
+    borderColor: '#ffffff',
+  },
+
+  card: {
+    flex: 1,
+    borderRadius: 16,
+    overflow: 'hidden', // 여기선 이미지/내용만 잘라줌
+    justifyContent: 'flex-end',
   },
   imageRadius: { borderRadius: 12 },
-  fade: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 48,
-  },
-  date: {
-    padding: 8,
-  },
+
+  date: { paddingVertical: 10, paddingHorizontal: 12 },
 });

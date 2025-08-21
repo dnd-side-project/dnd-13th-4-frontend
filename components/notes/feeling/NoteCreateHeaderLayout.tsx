@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import ProgressBar from '@/components/bar/ProgressBar';
 import { CustomText } from '@/components/CustomText';
 import Header from '@/components/header/Header';
@@ -15,6 +16,9 @@ const NoteCreateHeaderLayout = ({
   children,
   progressPrecentage = 0,
 }: Props) => {
+  const { getValues } = useNoteCreateStore();
+  const noteData = getValues();
+
   return (
     <LinearGradient
       colors={['#C1DEFF', '#F5FAFF']}
@@ -27,16 +31,13 @@ const NoteCreateHeaderLayout = ({
         <ProgressBar percentage={progressPrecentage} />
       </View>
       <View style={styles.summaryContainer}>
-        <View style={styles.summary}>
-          <CustomText variant='body3' color={PrimaryColors.blue100}>
-            불편했던
-          </CustomText>
-        </View>
-        <View style={styles.summary}>
-          <CustomText variant='body3' color={PrimaryColors.blue100}>
-            큰 소리로 노래했어요
-          </CustomText>
-        </View>
+        {noteData.map((item) => (
+          <View key={item} style={styles.summary}>
+            <CustomText variant='body3' color={PrimaryColors.blue100}>
+              {item}
+            </CustomText>
+          </View>
+        ))}
       </View>
       <View>{children}</View>
     </LinearGradient>

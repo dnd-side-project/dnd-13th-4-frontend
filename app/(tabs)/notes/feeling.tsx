@@ -1,24 +1,33 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { EMOTION_LIST } from '@/components/notes/constants/emotions';
+import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 const Feeling = () => {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const [index, setIndex] = useState(0);
-  const emotion = EMOTION_LIST[index];
+  const emotion = EMOTION_MOCK_LIST[index];
+  const { setEmotion } = useNoteCreateStore();
 
-  const changeIndex = (newIndex: number): void => setIndex(newIndex);
+  const changeEmotion = (newIndex: number): void => {
+    setIndex(newIndex);
+  };
+
+  useEffect(() => {
+    const { id, text } = EMOTION_MOCK_LIST[index];
+    setEmotion({ id, text });
+  }, [index]);
 
   return (
     <SafeScreenLayout
@@ -33,7 +42,7 @@ const Feeling = () => {
           <View style={styles.preview}>
             <View style={styles.feelingBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {emotion.label}
+                {emotion.text}
               </CustomText>
             </View>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -55,12 +64,12 @@ const Feeling = () => {
           <Carousel
             width={screenWidth}
             height={305}
-            onChange={changeIndex}
-            itemList={EMOTION_LIST.map((emotion) => (
-              <View key={emotion.uri} style={styles.shadowContainer}>
+            onChange={changeEmotion}
+            itemList={EMOTION_MOCK_LIST.map(({ emotionType, graphicUrl }) => (
+              <View key={graphicUrl} style={styles.shadowContainer}>
                 <View style={styles.imageContainer}>
                   <ResponsiveImage
-                    source={{ uri: emotion.uri }}
+                    source={{ uri: graphicUrl }}
                     width={210}
                     style={styles.image}
                   />

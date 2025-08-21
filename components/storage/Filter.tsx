@@ -6,11 +6,16 @@ import { Icon } from '../icons';
 
 type SortOption = 'latest' | 'oldest';
 
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'latest', label: '최신 순' },
+  { value: 'oldest', label: '오래된 순' },
+];
+
 const Filter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<SortOption>('latest');
 
-  const label = selected === 'latest' ? '최신 순' : '오래된 순';
+  const label = SORT_OPTIONS.find((opt) => opt.value === selected)?.label;
 
   const handleSelect = (item: SortOption): void => {
     setIsOpen(false);
@@ -37,22 +42,17 @@ const Filter = () => {
       </Pressable>
       {isOpen && (
         <View style={styles.dropdown}>
-          <Pressable
-            onPress={() => handleSelect('latest')}
-            style={styles.dropdownItem}
-          >
-            <CustomText variant='body3' color={GreyColors.grey600}>
-              최신 순
-            </CustomText>
-          </Pressable>
-          <Pressable
-            onPress={() => handleSelect('oldest')}
-            style={styles.dropdownItem}
-          >
-            <CustomText variant='body3' color={GreyColors.grey600}>
-              오래된 순
-            </CustomText>
-          </Pressable>
+          {SORT_OPTIONS.map((option) => (
+            <Pressable
+              key={option.value}
+              onPress={() => handleSelect(option.value)}
+              style={styles.dropdownItem}
+            >
+              <CustomText variant='body3' color={GreyColors.grey600}>
+                {option.label}
+              </CustomText>
+            </Pressable>
+          ))}
         </View>
       )}
     </View>

@@ -8,6 +8,7 @@ import React from 'react';
 import {
   FlatList, // ✅ 추가
   ImageBackground,
+  Pressable,
   StyleSheet,
   View,
 } from 'react-native';
@@ -53,7 +54,12 @@ export default function Storage() {
         contentContainerStyle={styles.gridContent}
         columnWrapperStyle={{ gap: 16 }}
         renderItem={({ item }) => (
-          <View style={styles.cardContainer}>
+          <Pressable
+            onPress={() => {
+              /** TODO : 마음쪽지 페이지 이동 */
+            }}
+            style={styles.cardContainer}
+          >
             <ImageBackground
               source={{
                 uri: getGraphicUrl({ kind: item.kind, page: 'storage' }),
@@ -69,7 +75,7 @@ export default function Storage() {
                 {item.date}
               </CustomText>
             </ImageBackground>
-          </View>
+          </Pressable>
         )}
       />
     </SafeScreenLayout>

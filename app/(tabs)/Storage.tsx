@@ -1,6 +1,7 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import Filter from '@/components/storage/Filter';
 import { GreyColors } from '@/constants/Colors';
 import { getGraphicUrl } from '@/constants/graphic';
 import React from 'react';
@@ -39,16 +40,8 @@ export default function Storage() {
             모아둔 마음쪽지 12개
           </CustomText>
         </View>
-        <View style={styles.filterContainer}>
-          <CustomText variant='body3' color={GreyColors.grey600}>
-            최신 순
-          </CustomText>
-          <Icon
-            style={styles.leftToDown}
-            name='expandLeft'
-            color={GreyColors.grey600}
-            size={16}
-          />
+        <View>
+          <Filter />
         </View>
       </View>
 
@@ -100,8 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  filterContainer: { flexDirection: 'row', alignItems: 'center' },
-  leftToDown: { transform: [{ rotate: '-90deg' }] },
 
   gridContent: {
     paddingBottom: 24,

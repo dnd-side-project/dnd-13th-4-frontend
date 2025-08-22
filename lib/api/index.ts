@@ -5,13 +5,14 @@ type RequestOptions = {
   path: string;
   params?: Record<string, string | number | boolean>;
   headers?: Record<string, string>;
+  body?: Record<string, unknown>;
 };
 
 const API_BASE_URL = 'http://wini.my';
 
 async function request<T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-  { path, params, headers }: RequestOptions,
+  { path, params, headers, body }: RequestOptions,
 ): Promise<{ data: T; status: number }> {
   const url = `${API_BASE_URL}${path}${buildQuery(params)}`;
 
@@ -21,6 +22,7 @@ async function request<T>(
       'Content-Type': 'application/json',
       ...headers,
     },
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   if (!res.ok) {

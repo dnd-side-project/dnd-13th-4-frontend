@@ -8,11 +8,13 @@ import { ROUTE_NAMES } from '@/constants/Routes';
 import { Typography } from '@/constants/Typography';
 
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const LOGO =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
@@ -86,82 +88,84 @@ export default function TabLayout() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Tabs
-        screenOptions={{
-          headerShown: true,
-          headerShadowVisible: false,
-          tabBarButton: HapticTab,
-          tabBarBackground: TabBarBackground,
-          tabBarActiveTintColor: GreyColors.grey800,
-          tabBarInactiveTintColor: GreyColors.grey400,
-          tabBarLabelStyle: styles.tabBarLabel,
-          tabBarStyle: styles.tabBarStyle,
-        }}
-      >
-        {/* 홈 탭 */}
-        <Tabs.Screen
-          name='index'
-          options={{
-            title: '홈',
-            headerTitle: () => (
-              <Image source={{ uri: LOGO }} style={styles.logo} />
-            ),
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarIcon: createTabIcon('home'),
+    <GestureHandlerRootView style={styles.container}>
+      <BottomSheetModalProvider>
+        <Tabs
+          screenOptions={{
+            headerShown: true,
+            headerShadowVisible: false,
+            tabBarButton: HapticTab,
+            tabBarBackground: TabBarBackground,
+            tabBarActiveTintColor: GreyColors.grey800,
+            tabBarInactiveTintColor: GreyColors.grey400,
+            tabBarLabelStyle: styles.tabBarLabel,
+            tabBarStyle: styles.tabBarStyle,
           }}
-        />
+        >
+          {/* 홈 탭 */}
+          <Tabs.Screen
+            name='index'
+            options={{
+              title: '홈',
+              headerTitle: () => (
+                <Image source={{ uri: LOGO }} style={styles.logo} />
+              ),
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarIcon: createTabIcon('home'),
+            }}
+          />
 
-        {/* 보관함 탭 */}
-        <Tabs.Screen
-          name='Storage'
-          options={{
-            title: '보관함',
-            headerTitle: '보관함',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarIcon: createTabIcon('dashboard'),
-          }}
-        />
+          {/* 보관함 탭 */}
+          <Tabs.Screen
+            name='Storage'
+            options={{
+              title: '보관함',
+              headerTitle: '보관함',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarIcon: createTabIcon('dashboard'),
+            }}
+          />
 
-        {/* 편지 쓰기 버튼 (실제 탭이 아님) */}
-        <Tabs.Screen
-          name='MindLetter'
-          options={{
-            title: '',
-            headerShown: false,
-            tabBarButton: CreateButton,
-          }}
-        />
+          {/* 편지 쓰기 버튼 (실제 탭이 아님) */}
+          <Tabs.Screen
+            name='MindLetter'
+            options={{
+              title: '',
+              headerShown: false,
+              tabBarButton: CreateButton,
+            }}
+          />
 
-        {/* 통계 탭 */}
-        <Tabs.Screen
-          name='Statistics'
-          options={{
-            title: '통계',
-            headerTitle: '통계',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarIcon: createTabIcon('graph'),
-          }}
-        />
+          {/* 통계 탭 */}
+          <Tabs.Screen
+            name='Statistics'
+            options={{
+              title: '통계',
+              headerTitle: '통계',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarIcon: createTabIcon('graph'),
+            }}
+          />
 
-        {/* 마이페이지 탭 */}
-        <Tabs.Screen
-          name='MyPage'
-          options={{
-            title: '마이페이지',
-            headerTitle: '마이페이지',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarIcon: createTabIcon('user'),
-          }}
-        />
-      </Tabs>
+          {/* 마이페이지 탭 */}
+          <Tabs.Screen
+            name='MyPage'
+            options={{
+              title: '마이페이지',
+              headerTitle: '마이페이지',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarIcon: createTabIcon('user'),
+            }}
+          />
+        </Tabs>
 
-      <DebugFloatingTokenButton token={expoPushToken} />
-    </View>
+        <DebugFloatingTokenButton token={expoPushToken} />
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 

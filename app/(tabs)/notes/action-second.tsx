@@ -32,6 +32,11 @@ const ActionSecond = () => {
     }
   };
 
+  const handleSkip = (): void => {
+    setSituation2(null);
+    router.navigate('/notes/promise');
+  };
+
   return (
     <SafeScreenLayout
       header={
@@ -61,7 +66,7 @@ const ActionSecond = () => {
             leftText='상황2.'
             rightText='당시 어떤 상태였나요?'
           />
-          <Pressable onPress={() => router.navigate('/notes/promise')}>
+          <Pressable onPress={handleSkip}>
             <CustomText style={styles.skip} color={PrimaryColors.blue100}>
               SKIP
             </CustomText>

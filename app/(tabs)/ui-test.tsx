@@ -1,3 +1,4 @@
+import ToastBar from '@/components/bar/ToastBar';
 import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import RoundButton from '@/components/button/RoundButton';
@@ -25,6 +26,8 @@ const UiTest = () => {
       <CTAButton text='이전' />
       <CTAButton text='다음' active />
       <CTAButton text='다음' active disabled />
+
+      <ToastBar text='마음쪽지를 보관함에 저장했어요' />
     </View>
   );
 };

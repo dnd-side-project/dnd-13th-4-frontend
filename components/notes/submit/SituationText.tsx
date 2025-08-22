@@ -27,20 +27,22 @@ const SituationText = ({ topText, bottomText }: Props) => {
           </CustomText>
           <DashedBottomLine />
         </View>
-        <View style={{ width: '100%' }}>
-          <CustomText variant='body2' color={GreyColors.grey700}>
-            그때 저는{' '}
-            <CustomText
-              style={{ fontFamily: 'Pretendard-Bold' }}
-              variant='body2'
-              color={PrimaryColors.blueText}
-            >
-              {bottomText}
+        {bottomText && (
+          <View style={{ width: '100%' }}>
+            <CustomText variant='body2' color={GreyColors.grey700}>
+              그때 저는{' '}
+              <CustomText
+                style={{ fontFamily: 'Pretendard-Bold' }}
+                variant='body2'
+                color={PrimaryColors.blueText}
+              >
+                {bottomText}
+              </CustomText>
+              이었어요
             </CustomText>
-            이었어요
-          </CustomText>
-          <DashedBottomLine />
-        </View>
+            <DashedBottomLine />
+          </View>
+        )}
       </View>
     </View>
   );

@@ -1,8 +1,9 @@
+import { toast } from '@/store/toast.store';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { buildQuery } from '../buildQuery';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-// api.ts
 type RequestOptions = {
   path: string;
   params?: Record<string, string | number | boolean>;
@@ -10,28 +11,40 @@ type RequestOptions = {
   body?: Record<string, unknown>;
 };
 
+const client = axios.create({
+  baseURL: API_URL,
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 60000,
+});
+
 async function request<T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { path, params, headers, body }: RequestOptions,
 ): Promise<{ data: T; status: number }> {
-  const url = `${API_URL}${path}${buildQuery(params)}`;
-  console.log(API_URL);
-  const res = await fetch(url, {
+  const url = `${path}${buildQuery(params)}`;
+
+  const config: AxiosRequestConfig = {
+    url,
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
+    headers,
+    ...(method === 'GET' ? {} : { data: body }),
+  };
 
-  if (!res.ok) {
-    throw new Error(`API Error: ${res.status} ${res.statusText}`);
+  try {
+    const res = await client.request<{ data: T; status: number }>(config);
+    return res.data; // { data, status } 형식 그대로 반환
+  } catch (err) {
+    const e = err as AxiosError;
+    const status = e.response?.status;
+    const statusText =
+      (e.response as any)?.statusText || e.message || 'Unknown Error';
+
+    const errorMessage = `API Error: ${status ?? 'N/A'}`;
+
+    toast.show(errorMessage);
+
+    throw new Error(`${errorMessage} ${statusText}`);
   }
-
-  const json: { data: T; status: number } = await res.json();
-
-  return json;
 }
 
 export const api = {

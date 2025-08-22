@@ -5,13 +5,11 @@ import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
+import useEmotionTemplatesQuery from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
-import { EMOTION_TEMPLATE_PATH } from '@/constants/api';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { api } from '@/lib/api';
 import { useNoteCreateStore } from '@/store/note-create.store';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
@@ -19,22 +17,8 @@ const Feeling = () => {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const { emotion, setEmotion } = useNoteCreateStore();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [EMOTION_TEMPLATE_PATH, 'positive'], // NOTE : 여기는 담당 개발자 판단에 따라
-    queryFn: async () => {
-      const { data } = await api.get<
-        {
-          id: number;
-          emotionType: string;
-          text: string;
-        }[]
-      >({
-        path: EMOTION_TEMPLATE_PATH,
-        params: { emotionType: 'positive' },
-      });
-
-      return data;
-    },
+  const { data, isLoading, isError } = useEmotionTemplatesQuery({
+    emotionType: 'positive',
   });
 
   const changeEmotion = (newIndex: number): void => {

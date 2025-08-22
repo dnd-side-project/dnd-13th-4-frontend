@@ -19,7 +19,7 @@ const Submit = () => {
 
   const handleSubmit = () => {
     router.replace('/');
-    toast.show('제출완료');
+    toast.show('마음쪽지를 룸메이트에게 전달했어요');
     reset();
     // TODO: 제출동작 구현
   };

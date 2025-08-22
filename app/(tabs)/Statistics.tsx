@@ -78,31 +78,29 @@ export default function Statistics() {
               starCount={42}
             />
           </TouchableOpacity>
-          <View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: 2,
-              }}
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 2,
+            }}
+          >
+            <CustomText variant='body2' color='white' fontWeight='medium'>
+              이번주
+            </CustomText>
+            <CustomText
+              variant='body2'
+              color='white'
+              fontWeight='medium'
+              style={{ flex: 1, textAlign: 'right', marginRight: 4 }}
             >
-              <CustomText variant='body2' color='white' fontWeight='medium'>
-                이번주
-              </CustomText>
-              <CustomText
-                variant='body2'
-                color='white'
-                fontWeight='medium'
-                style={{ flex: 1, textAlign: 'right', marginRight: 4 }}
-              >
-                19 / 42개
-              </CustomText>
-              <Icon name={'info'} size={16} color='white' />
-            </View>
-            <ProgressBar percentage={45} backgroundColor='white' />
+              19 / 42개
+            </CustomText>
+            <Icon name={'info'} size={16} color='white' />
           </View>
+          <ProgressBar percentage={45} backgroundColor='white' />
           <View
             style={{
               display: 'flex',

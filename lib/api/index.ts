@@ -10,7 +10,7 @@ type RequestOptions = {
 const API_BASE_URL = 'http://wini.my';
 
 async function request<T>(
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { path, params, headers }: RequestOptions,
 ): Promise<{ data: T; status: number }> {
   const url = `${API_BASE_URL}${path}${buildQuery(params)}`;
@@ -37,4 +37,5 @@ export const api = {
   post: <T>(options: RequestOptions) => request<T>('POST', options),
   put: <T>(options: RequestOptions) => request<T>('PUT', options),
   delete: <T>(options: RequestOptions) => request<T>('DELETE', options),
+  patch: <T>(options: RequestOptions) => request<T>('PATCH', options),
 };

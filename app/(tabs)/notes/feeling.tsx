@@ -8,7 +8,9 @@ import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { api } from '@/lib/api';
 import { useNoteCreateStore } from '@/store/note-create.store';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
@@ -16,10 +18,36 @@ const Feeling = () => {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const { emotion, setEmotion } = useNoteCreateStore();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['/templates/situations', 'positive'],
+    queryFn: async () => {
+      const { data } = await api.get<{
+        id: number;
+        emotionType: string;
+        text: string;
+      }>({
+        path: '/templates/situations',
+        params: { emotionType: 'positive' },
+      });
+
+      return data;
+    },
+  });
 
   const changeEmotion = (newIndex: number): void => {
     setEmotion(EMOTION_MOCK_LIST[newIndex]);
   };
+
+  if (isLoading) {
+    /** 로딩 UI */
+    return null;
+  }
+  if (isError || !data) {
+    /** 에러 UI */
+    return null;
+  }
+
+  console.log(data);
 
   return (
     <SafeScreenLayout

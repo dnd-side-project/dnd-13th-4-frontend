@@ -1,7 +1,6 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
-import { Icon } from '../icons';
 
 type Props = {
   text: string;
@@ -10,7 +9,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-const SquareButton = ({ active = false, text, onPress, style }: Props) => {
+const StatusButton = ({ text, active, onPress, style }: Props) => {
   return (
     <Pressable
       style={[style, styles.button, active ? styles.active : styles.unActive]}
@@ -19,36 +18,33 @@ const SquareButton = ({ active = false, text, onPress, style }: Props) => {
       accessibilityState={{ selected: active }}
     >
       <CustomText
-        variant='body2'
-        fontWeight={active ? 'bold' : 'medium'}
         style={active ? styles.active : styles.unActive}
-        color={active ? PrimaryColors.blue100 : GreyColors.grey800}
+        color={active ? PrimaryColors.blue100 : '#333D4B'}
       >
         {text}
       </CustomText>
-      <Icon
-        name='checkFill'
-        size={24}
-        color={active ? PrimaryColors.blue100 : '#CCD2E3'}
-      />
     </Pressable>
   );
 };
 
-export default SquareButton;
+export default StatusButton;
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
+    width: 168,
     alignSelf: 'flex-start',
     paddingVertical: 16,
     borderWidth: 2,
     borderRadius: 12,
-    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   active: {
+    fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue300,
     borderColor: PrimaryColors.blue100,
+    color: PrimaryColors.blue100,
   },
   unActive: {
     borderColor: 'rgba(0,0,0,0)',

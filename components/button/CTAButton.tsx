@@ -5,17 +5,29 @@ import { CustomText } from '../CustomText';
 type Props = {
   text: string;
   active?: boolean;
+  disabled?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
-const CTAButton = ({ text, active, onPress, style }: Props) => {
+const CTAButton = ({
+  text,
+  active,
+  onPress,
+  style,
+  disabled = false,
+}: Props) => {
   return (
     <Pressable
-      style={[style, styles.button, active ? styles.active : styles.unActive]}
-      onPress={onPress}
+      style={[
+        style,
+        styles.button,
+        active ? styles.active : styles.unActive,
+        disabled ? styles.disabled : null,
+      ]}
+      onPress={disabled ? undefined : onPress}
       accessibilityRole='button'
-      accessibilityState={{ selected: active }}
+      accessibilityState={{ selected: active, disabled }}
     >
       <CustomText
         style={[styles.text, active ? styles.active : styles.unActive]}
@@ -48,5 +60,8 @@ const styles = StyleSheet.create({
   },
   unActive: {
     backgroundColor: '#ffffff',
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

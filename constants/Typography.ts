@@ -17,6 +17,14 @@ export const TypographySizes = {
   body4: 11,
 } as const;
 
+export type FontWeight = 'bold' | 'semibold' | 'medium';
+
+export const FontWeightToFamily = {
+  bold: 'Pretendard-Bold',
+  semibold: 'Pretendard-SemiBold',
+  medium: 'Pretendard-Medium',
+} as const;
+
 // Font weights mapping
 export const FontWeights = {
   regular: '400',

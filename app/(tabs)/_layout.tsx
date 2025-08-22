@@ -3,14 +3,12 @@ import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { LOGO_URL } from '@/constants/imageUri';
 import { Typography } from '@/constants/Typography';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { Tabs, router } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
-
-const LOGO =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
 
 // 공통 탭 아이콘 생성 함수
 const createTabIcon =
@@ -62,7 +60,7 @@ export default function TabLayout() {
           options={{
             title: '홈',
             headerTitle: () => (
-              <Image source={{ uri: LOGO }} style={styles.logo} />
+              <Image source={{ uri: LOGO_URL }} style={styles.logo} />
             ),
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,

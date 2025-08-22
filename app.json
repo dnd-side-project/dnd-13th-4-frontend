@@ -4,7 +4,7 @@
     "slug": "dnd-13th-4-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app-icon.png",
     "scheme": "dnd13th4frontend",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -34,8 +34,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.svg",
-          "imageWidth": 200,
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 134,
           "resizeMode": "contain",
           "backgroundColor": "#5BA4FA"
         }

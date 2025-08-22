@@ -37,6 +37,12 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
+// Set the animation options. This is optional.
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+});
+
 // Keep the splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
 

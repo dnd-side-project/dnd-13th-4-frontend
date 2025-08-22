@@ -1,31 +1,41 @@
 // store/mindNoteStore.ts
+import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import { create } from 'zustand';
 
-export type NoteValue = {
-  id: number;
-  text: string;
-} | null;
-
-type NoteCreateStore = {
-  emotion: NoteValue;
-  situation1: NoteValue;
-  situation2: NoteValue;
-  promise: NoteValue;
-
-  setEmotion: (emotion: NoteValue) => void;
-  setSituation1: (situation: NoteValue) => void;
-  setSituation2: (situation: NoteValue) => void;
-  setPromise: (promise: NoteValue) => void;
-
-  reset: () => void;
-  getValues: () => string[];
-};
-
-export const useNoteCreateStore = create<NoteCreateStore>((set, get) => ({
-  emotion: null,
+const defaultNoteCreateValue = {
+  emotion: EMOTION_MOCK_LIST[0],
   situation1: null,
   situation2: null,
   promise: null,
+};
+
+type NoteValue = {
+  text: string;
+  id: number;
+};
+
+type Emotion = { graphicUrl: string } & NoteValue;
+
+type NoteCreateStore = {
+  emotion: Emotion;
+  situation1: NoteValue | null;
+  situation2: NoteValue | null;
+  promise: NoteValue | null;
+
+  setEmotion: (emotion: Emotion) => void;
+  setSituation1: (situation: NoteValue | null) => void;
+  setSituation2: (situation: NoteValue | null) => void;
+  setPromise: (promise: NoteValue | null) => void;
+
+  reset: () => void;
+  getPreview: () => string[];
+};
+
+export const useNoteCreateStore = create<NoteCreateStore>((set, get) => ({
+  emotion: defaultNoteCreateValue.emotion,
+  situation1: defaultNoteCreateValue.situation1,
+  situation2: defaultNoteCreateValue.situation2,
+  promise: defaultNoteCreateValue.promise,
 
   setEmotion: (emotion) => set({ emotion }),
   setSituation1: (situation1) => set({ situation1 }),
@@ -34,13 +44,13 @@ export const useNoteCreateStore = create<NoteCreateStore>((set, get) => ({
 
   reset: () =>
     set({
-      emotion: null,
-      situation1: null,
-      situation2: null,
-      promise: null,
+      emotion: defaultNoteCreateValue.emotion,
+      situation1: defaultNoteCreateValue.situation1,
+      situation2: defaultNoteCreateValue.situation2,
+      promise: defaultNoteCreateValue.promise,
     }),
 
-  getValues: () =>
+  getPreview: () =>
     [
       get().emotion?.text,
       get().situation1?.text,

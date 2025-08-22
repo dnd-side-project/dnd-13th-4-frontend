@@ -8,9 +8,8 @@ import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
@@ -20,8 +19,7 @@ const ActionFirst = () => {
   const [selectedType, setSelectedType] = useState(
     ACTION_LIST.negative[0].label,
   );
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
-  const { setSituation1 } = useNoteCreateStore();
+  const { situation1, setSituation1 } = useNoteCreateStore();
 
   // 현재 선택된 label(type)에 해당하는 카테고리 찾기
   const currentCategory = useMemo(() => {
@@ -32,25 +30,13 @@ const ActionFirst = () => {
   // 현재 카테고리의 액션 배열
   const actions = currentCategory?.actions ?? [];
 
-  const handleSelectAction = (newAction: string) => {
-    if (selectedAction === newAction) {
-      setSelectedAction(null);
+  const handleSelectAction = ({ id, text }: { id: number; text: string }) => {
+    if (situation1?.id === id) {
+      setSituation1(null);
     } else {
-      setSelectedAction(newAction);
+      setSituation1({ id, text });
     }
   };
-
-  useEffect(() => {
-    // TODO : mock data 생성하여 id 대신 채워넣어야함.
-    setSituation1(selectedAction ? { id: 1, text: selectedAction } : null);
-  }, [selectedAction]);
-
-  useUnmount({
-    onUnmount: () => {
-      setSelectedType(ACTION_LIST.negative[0].label);
-      setSelectedAction(null);
-    },
-  });
 
   return (
     <SafeScreenLayout
@@ -62,7 +48,7 @@ const ActionFirst = () => {
             </CustomText>
             <View style={styles.selectItemBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {selectedAction ?? EMPTY_ACTION_TEXT}
+                {situation1?.text ?? EMPTY_ACTION_TEXT}
               </CustomText>
             </View>
           </View>
@@ -86,12 +72,12 @@ const ActionFirst = () => {
           style={styles.actionContainer}
           contentContainerStyle={{ rowGap: 12 }}
         >
-          {actions.map((action, index) => (
+          {actions.map(({ id, text }, index) => (
             <RoundButton
-              key={action}
-              text={action}
-              active={selectedAction === action}
-              onPress={() => handleSelectAction(action)}
+              key={id}
+              text={text}
+              active={situation1?.id === id}
+              onPress={() => handleSelectAction({ id, text })}
             />
           ))}
         </ScrollView>
@@ -106,7 +92,7 @@ const ActionFirst = () => {
             text='다음'
             active
             onPress={() => router.navigate('/notes/action-second')}
-            disabled={!selectedAction}
+            disabled={!situation1}
           />
         </View>
       </View>

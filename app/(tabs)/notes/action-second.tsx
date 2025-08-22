@@ -7,17 +7,14 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
-  const { setSituation2 } = useNoteCreateStore();
+  const { situation2, setSituation2 } = useNoteCreateStore();
 
   const handleSelect = ({
     text,
@@ -29,19 +26,11 @@ const ActionSecond = () => {
     isActive: boolean;
   }) => {
     if (isActive) {
-      setSelectedAction(null);
       setSituation2(null);
     } else {
-      setSelectedAction(text);
       setSituation2({ text, id });
     }
   };
-
-  useUnmount({
-    onUnmount: () => {
-      setSelectedAction(null);
-    },
-  });
 
   return (
     <SafeScreenLayout
@@ -54,7 +43,7 @@ const ActionSecond = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {selectedAction ?? EMPTY_ACTION_TEXT}
+                  {situation2?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -85,9 +74,9 @@ const ActionSecond = () => {
               style={styles.gridItem}
               text={text}
               onPress={() =>
-                handleSelect({ id, text, isActive: text === selectedAction })
+                handleSelect({ id, text, isActive: id === situation2?.id })
               }
-              active={text === selectedAction}
+              active={id === situation2?.id}
             />
           ))}
         </View>
@@ -102,7 +91,7 @@ const ActionSecond = () => {
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!selectedAction}
+            disabled={!situation2}
           />
         </View>
       </View>

@@ -16,8 +16,8 @@ const NoteCreateHeaderLayout = ({
   children,
   progressPrecentage = 0,
 }: Props) => {
-  const { getValues } = useNoteCreateStore();
-  const noteData = getValues();
+  const { getPreview } = useNoteCreateStore();
+  const previewData = getPreview();
 
   return (
     <LinearGradient
@@ -31,7 +31,7 @@ const NoteCreateHeaderLayout = ({
         <ProgressBar percentage={progressPrecentage} />
       </View>
       <View style={styles.summaryContainer}>
-        {noteData.map((item) => (
+        {previewData.map((item) => (
           <View key={item} style={styles.summary}>
             <CustomText variant='body3' color={PrimaryColors.blue100}>
               {item}

@@ -7,9 +7,7 @@ import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT =
@@ -17,8 +15,7 @@ const EMPTY_ACTION_TEXT =
 
 const Promise = () => {
   const router = useRouter();
-  const [selectedPromise, setSelectedPromise] = useState<string | null>(null);
-  const { setPromise } = useNoteCreateStore();
+  const { promise, setPromise } = useNoteCreateStore();
 
   const handleSelect = ({
     id,
@@ -30,19 +27,11 @@ const Promise = () => {
     isActive: boolean;
   }): void => {
     if (isActive) {
-      setSelectedPromise(null);
       setPromise(null);
     } else {
-      setSelectedPromise(text);
       setPromise({ text, id });
     }
   };
-
-  useUnmount({
-    onUnmount: () => {
-      setSelectedPromise(null);
-    },
-  });
 
   return (
     <SafeScreenLayout
@@ -53,7 +42,7 @@ const Promise = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {selectedPromise ?? EMPTY_ACTION_TEXT}
+                  {promise?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
             </View>
@@ -78,9 +67,9 @@ const Promise = () => {
               key={id}
               text={text}
               onPress={() =>
-                handleSelect({ id, isActive: text === selectedPromise, text })
+                handleSelect({ id, isActive: id === promise?.id, text })
               }
-              active={text === selectedPromise}
+              active={id === promise?.id}
             />
           ))}
         </ScrollView>
@@ -95,7 +84,7 @@ const Promise = () => {
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!selectedPromise}
+            disabled={!promise}
           />
         </View>
       </View>

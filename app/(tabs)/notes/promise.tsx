@@ -1,6 +1,7 @@
 import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import { CustomText } from '@/components/CustomText';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -17,19 +18,23 @@ const Promise = () => {
   const [selectedPromise, setSelectedPromise] = useState<string | null>(null);
 
   return (
-    <View style={styles.container}>
-      <NoteCreateHeaderLayout progressPrecentage={100}>
-        <View style={styles.selectItemContainer}>
-          <CustomText variant='head3'> </CustomText>
-          <View style={styles.selectItemSecondRow}>
-            <View style={styles.selectItemBox}>
-              <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {selectedPromise ?? EMPTY_ACTION_TEXT}
-              </CustomText>
+    <SafeScreenLayout
+      header={
+        <NoteCreateHeaderLayout progressPrecentage={100}>
+          <View style={styles.selectItemContainer}>
+            <CustomText variant='head3'> </CustomText>
+            <View style={styles.selectItemSecondRow}>
+              <View style={styles.selectItemBox}>
+                <CustomText color={PrimaryColors.blue100} variant='head3'>
+                  {selectedPromise ?? EMPTY_ACTION_TEXT}
+                </CustomText>
+              </View>
             </View>
           </View>
-        </View>
-      </NoteCreateHeaderLayout>
+        </NoteCreateHeaderLayout>
+      }
+      style={styles.container}
+    >
       <View style={styles.contentContainer}>
         <View style={styles.guideContainer}>
           <NoteCreateGuide
@@ -65,7 +70,7 @@ const Promise = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeScreenLayout>
   );
 };
 
@@ -92,7 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,
-    paddingHorizontal: 20,
   },
 
   guideContainer: {

@@ -30,17 +30,19 @@ Notifications.setNotificationHandler({
 });
 
 // 공통 탭 아이콘 생성 함수
-const createTabIcon =
-  (iconName: IconName) =>
-  ({ focused }: { focused: boolean }) =>
-    (
-      <Icon
-        name={iconName}
-        size={20}
-        color={focused ? GreyColors.grey800 : GreyColors.grey400}
-        style={styles.tabIcon}
-      />
-    );
+const createTabIcon = (iconName: IconName) => {
+  const TabIcon = ({ focused }: { focused: boolean }) => (
+    <Icon
+      name={iconName}
+      size={20}
+      color={focused ? GreyColors.grey800 : GreyColors.grey400}
+      style={styles.tabIcon}
+    />
+  );
+
+  TabIcon.displayName = `TabIcon(${iconName})`;
+  return TabIcon;
+};
 
 // 중간 플러스 버튼 컴포넌트
 const CreateButton = (props: BottomTabBarButtonProps) => (

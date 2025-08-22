@@ -137,6 +137,19 @@ const AltFillIcon = ({ size = 24, color = '#000000' }: IconProps) => (
   </Svg>
 );
 
+const InfoIcon = ({ size = 24, color = '#000000' }: IconProps) => (
+  <Svg width={size} height={size} viewBox='0 0 24 24' fill='none'>
+    <Circle cx='12' cy='12' r='9' stroke={color} strokeWidth='1.33333' />
+    <Path
+      d='M12.502 7.5C12.502 7.77614 12.2781 8 12.002 8C11.7258 8 11.502 7.77614 11.502 7.5C11.502 7.22386 11.7258 7 12.002 7C12.2781 7 12.502 7.22386 12.502 7.5Z'
+      fill={color}
+      stroke={color}
+      strokeWidth='0.666667'
+    />
+    <Path d='M12 17V10' stroke={color} strokeWidth='1.33333' />
+  </Svg>
+);
+
 export const iconComponents = {
   home: HomeIcon,
   dashboard: DashBoardIcon,
@@ -148,6 +161,7 @@ export const iconComponents = {
   refresh: RefreshIcon,
   checkFill: CheckFillIcon,
   altFill: AltFillIcon,
+  info: InfoIcon,
 } as const;
 
 export type IconName = keyof typeof iconComponents;

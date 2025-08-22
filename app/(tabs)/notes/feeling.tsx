@@ -22,11 +22,13 @@ const Feeling = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [EMOTION_TEMPLATE_PATH, 'positive'], // NOTE : 여기는 담당 개발자 판단에 따라
     queryFn: async () => {
-      const { data } = await api.get<{
-        id: number;
-        emotionType: string;
-        text: string;
-      }>({
+      const { data } = await api.get<
+        {
+          id: number;
+          emotionType: string;
+          text: string;
+        }[]
+      >({
         path: EMOTION_TEMPLATE_PATH,
         params: { emotionType: 'positive' },
       });

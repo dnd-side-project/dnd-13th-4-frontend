@@ -1,5 +1,7 @@
 import { buildQuery } from '../buildQuery';
 
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
 // api.ts
 type RequestOptions = {
   path: string;
@@ -8,14 +10,12 @@ type RequestOptions = {
   body?: Record<string, unknown>;
 };
 
-const API_BASE_URL = 'http://wini.my';
-
 async function request<T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { path, params, headers, body }: RequestOptions,
 ): Promise<{ data: T; status: number }> {
-  const url = `${API_BASE_URL}${path}${buildQuery(params)}`;
-
+  const url = `${API_URL}${path}${buildQuery(params)}`;
+  console.log(API_URL);
   const res = await fetch(url, {
     method,
     headers: {

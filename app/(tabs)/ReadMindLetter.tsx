@@ -108,6 +108,10 @@ export default function ReadMindLetter() {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished) {
+          setShowJarMessage(true);
+        }
       }),
       Animated.delay(500),
       Animated.timing(flashOpacity, {

@@ -21,11 +21,7 @@ export const StatisticsSummary = () => (
         marginBottom: 24,
       }}
     >
-      <CustomText
-        variant='body1'
-        color={'white'}
-        style={{ fontWeight: 'bold' }}
-      >
+      <CustomText variant='body1' color='white' fontWeight='bold'>
         지난 우리의 로그
       </CustomText>
       <Pressable
@@ -72,7 +68,7 @@ export const StatisticsSummary = () => (
         <CustomText variant='body3' color={GreyColors.grey500}>
           이번 주 받은쪽지
         </CustomText>
-        <CustomText variant='body3' style={{ fontWeight: 600 }}>
+        <CustomText variant='body3' fontWeight='semibold'>
           11개
         </CustomText>
       </View>
@@ -97,7 +93,7 @@ export const StatisticsSummary = () => (
         <CustomText variant='body3' color={GreyColors.grey500}>
           이번 주 보낸쪽지
         </CustomText>
-        <CustomText variant='body3' style={{ fontWeight: 600 }}>
+        <CustomText variant='body3' fontWeight='semibold'>
           8개
         </CustomText>
       </View>
@@ -122,7 +118,7 @@ export const StatisticsSummary = () => (
         <CustomText variant='body3' color={GreyColors.grey500}>
           마음을 나눈지
         </CustomText>
-        <CustomText variant='body3' style={{ fontWeight: 600 }}>
+        <CustomText variant='body3' fontWeight='semibold'>
           168일째
         </CustomText>
       </View>

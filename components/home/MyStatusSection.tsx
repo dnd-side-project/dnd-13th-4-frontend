@@ -28,10 +28,18 @@ export const MyStatusSection = ({
   return (
     <View style={styles.myStatus}>
       <View style={styles.myStatusText}>
-        <CustomText variant='body2' style={{ fontWeight: 500, marginRight: 4 }}>
+        <CustomText
+          variant='body2'
+          fontWeight='medium'
+          style={{ marginRight: 4 }}
+        >
           나의 상태는
         </CustomText>
-        <CustomText variant='body2' style={{ fontWeight: 700, marginRight: 8 }}>
+        <CustomText
+          variant='body2'
+          fontWeight='bold'
+          style={{ marginRight: 8 }}
+        >
           {userStatus.emoji} {userStatus.text}
         </CustomText>
         <View
@@ -44,7 +52,8 @@ export const MyStatusSection = ({
         >
           <CustomText
             variant='body3'
-            style={{ fontWeight: 700, color: PrimaryColors.blue100 }}
+            fontWeight='bold'
+            color={PrimaryColors.blue100}
           >
             {formatEndTime(userStatus.endTime)}
           </CustomText>
@@ -53,10 +62,10 @@ export const MyStatusSection = ({
       <Pressable onPress={onStatusPress}>
         <CustomText
           variant='body3'
+          fontWeight='medium'
+          color={GreyColors.grey500}
           style={{
-            fontWeight: 500,
             textDecorationLine: 'underline',
-            color: GreyColors.grey500,
             paddingVertical: 10,
             paddingHorizontal: 8,
           }}

@@ -21,7 +21,6 @@ export const TimePickerModal = forwardRef<
   const snapPoints = ['55%'];
   const [selectedTime, setSelectedTime] = useState<Date | null>(null);
 
-  // 모달이 열릴 때 기본 시간을 1시간 후로 설정
   useEffect(() => {
     const baseTime = new Date();
     baseTime.setHours(1, 0, 0, 0); // 1시간 0분으로 설정 (duration용)
@@ -37,10 +36,9 @@ export const TimePickerModal = forwardRef<
 
       // 0-12시간, 분은 0 또는 30분으로 제한
       const limitedHours = Math.min(12, hours);
-      const limitedMinutes = minutes >= 30 ? 30 : 0;
 
       const newTime = new Date();
-      newTime.setHours(limitedHours, limitedMinutes, 0, 0);
+      newTime.setHours(limitedHours, minutes, 0, 0);
       setSelectedTime(newTime);
     }
   };
@@ -67,7 +65,7 @@ export const TimePickerModal = forwardRef<
         {...props}
         disappearsOnIndex={-1}
         appearsOnIndex={0}
-        style={[props.style, { background: 'rgba(107, 118, 132, 0.50)' }]}
+        style={[props.style, { backgroundColor: 'rgba(107, 118, 132, 0.50)' }]}
       />
     ),
     [],

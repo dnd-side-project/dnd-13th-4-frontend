@@ -130,7 +130,7 @@ export const StatusSettingModal = forwardRef<
         {...props}
         disappearsOnIndex={-1}
         appearsOnIndex={0}
-        style={[props.style, { background: 'rgba(107, 118, 132, 0.50)' }]}
+        style={[props.style, { backgroundColor: 'rgba(107, 118, 132, 0.50)' }]}
       />
     );
 
@@ -264,7 +264,7 @@ export const StatusSettingModal = forwardRef<
                     }
                   }}
                   text={item.text}
-                ></SquareButton>
+                />
               )}
               keyExtractor={(item) => item.id}
             />

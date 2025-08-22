@@ -6,7 +6,7 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -14,7 +14,7 @@ const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const { situation2, setSituation2 } = useNoteCreateStore();
+  const { situationState, setSituationState } = useNoteCreateStore();
 
   const handleSelect = ({
     text,
@@ -26,14 +26,14 @@ const ActionSecond = () => {
     isActive: boolean;
   }) => {
     if (isActive) {
-      setSituation2(null);
+      setSituationState(null);
     } else {
-      setSituation2({ text, id });
+      setSituationState({ text, id });
     }
   };
 
   const handleSkip = (): void => {
-    setSituation2(null);
+    setSituationState(null);
     router.navigate('/notes/promise');
   };
 
@@ -48,7 +48,7 @@ const ActionSecond = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {situation2?.text ?? EMPTY_ACTION_TEXT}
+                  {situationState?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -79,15 +79,15 @@ const ActionSecond = () => {
               style={styles.gridItem}
               text={text}
               onPress={() =>
-                handleSelect({ id, text, isActive: id === situation2?.id })
+                handleSelect({ id, text, isActive: id === situationState?.id })
               }
-              active={id === situation2?.id}
+              active={id === situationState?.id}
             />
           ))}
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.navigate('/notes/action-first')}
+            onPress={() => router.navigate('/notes/ActionFirst')}
             style={styles.ctaButton}
             text='이전'
           />
@@ -96,7 +96,7 @@ const ActionSecond = () => {
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!situation2}
+            disabled={!situationState}
           />
         </View>
       </View>

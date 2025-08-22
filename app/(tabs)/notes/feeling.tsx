@@ -8,7 +8,7 @@ import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
@@ -74,7 +74,7 @@ const Feeling = () => {
           <CTAButton
             text='다음'
             active
-            onPress={() => router.navigate('/notes/action-first')}
+            onPress={() => router.navigate('/notes/ActionFirst')}
           />
         </View>
       </View>

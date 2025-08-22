@@ -7,7 +7,7 @@ import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -19,7 +19,7 @@ const ActionFirst = () => {
   const [selectedType, setSelectedType] = useState(
     ACTION_LIST.negative[0].label,
   );
-  const { situation1, setSituation1 } = useNoteCreateStore();
+  const { situationAction, setSituationAction } = useNoteCreateStore();
 
   // 현재 선택된 label(type)에 해당하는 카테고리 찾기
   const currentCategory = useMemo(() => {
@@ -31,10 +31,10 @@ const ActionFirst = () => {
   const actions = currentCategory?.actions ?? [];
 
   const handleSelectAction = ({ id, text }: { id: number; text: string }) => {
-    if (situation1?.id === id) {
-      setSituation1(null);
+    if (situationAction?.id === id) {
+      setSituationAction(null);
     } else {
-      setSituation1({ id, text });
+      setSituationAction({ id, text });
     }
   };
 
@@ -48,7 +48,7 @@ const ActionFirst = () => {
             </CustomText>
             <View style={styles.selectItemBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {situation1?.text ?? EMPTY_ACTION_TEXT}
+                {situationAction?.text ?? EMPTY_ACTION_TEXT}
               </CustomText>
             </View>
           </View>
@@ -76,7 +76,7 @@ const ActionFirst = () => {
             <RoundButton
               key={id}
               text={text}
-              active={situation1?.id === id}
+              active={situationAction?.id === id}
               onPress={() => handleSelectAction({ id, text })}
             />
           ))}
@@ -91,8 +91,8 @@ const ActionFirst = () => {
             style={styles.ctaButton}
             text='다음'
             active
-            onPress={() => router.navigate('/notes/action-second')}
-            disabled={!situation1}
+            onPress={() => router.navigate('/notes/ActionSecond')}
+            disabled={!situationAction}
           />
         </View>
       </View>

@@ -48,7 +48,6 @@ export default function TabLayout() {
           tabBarInactiveTintColor: GreyColors.grey400,
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarStyle: styles.tabBarStyle,
-
           // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
           tabBarButton: () => null,
           tabBarItemStyle: { display: 'none' },

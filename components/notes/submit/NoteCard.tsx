@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
@@ -15,6 +16,8 @@ type NoteCardProps = {
 };
 
 const NoteCard = ({ style }: NoteCardProps) => {
+  const { emotion, promise, situation1, situation2 } = useNoteCreateStore();
+
   return (
     <View style={[styles.container]}>
       <View style={[styles.card, style]}>
@@ -23,13 +26,16 @@ const NoteCard = ({ style }: NoteCardProps) => {
         </View>
         <View style={{ paddingHorizontal: 16 }}>
           <View style={{ marginTop: 20, marginBottom: 24 }}>
-            <FeelingText />
+            <FeelingText text={emotion?.text ?? ''} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <SituationText />
+            <SituationText
+              topText={situation1?.text ?? ''}
+              bottomText={situation2?.text ?? ''}
+            />
           </View>
           <View style={{ marginBottom: 24 }}>
-            <PromiseText />
+            <PromiseText text={promise?.text ?? ''} />
           </View>
           <View style={{ marginBottom: 24 }}>
             <RandomMessage />

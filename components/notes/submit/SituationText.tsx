@@ -4,7 +4,12 @@ import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 import NoteBadge from './NoteBadge';
 
-const SituationText = () => {
+type Props = {
+  topText: string;
+  bottomText: string;
+};
+
+const SituationText = ({ topText, bottomText }: Props) => {
   return (
     <View style={styles.situationContainer}>
       <NoteBadge text='상황' />
@@ -17,7 +22,7 @@ const SituationText = () => {
               variant='body2'
               color={PrimaryColors.blueText}
             >
-              큰소리로 노래했어요
+              {topText}
             </CustomText>
           </CustomText>
           <DashedBottomLine />
@@ -30,7 +35,7 @@ const SituationText = () => {
               variant='body2'
               color={PrimaryColors.blueText}
             >
-              중요한 업무중
+              {bottomText}
             </CustomText>
             이었어요
           </CustomText>

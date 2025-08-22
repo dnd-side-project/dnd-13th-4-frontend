@@ -4,7 +4,11 @@ import { PrimaryColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 import NoteBadge from './NoteBadge';
 
-const PromiseText = () => {
+type Props = {
+  text: string;
+};
+
+const PromiseText = ({ text }: Props) => {
   return (
     <View style={styles.promiseContainer}>
       <View style={{ paddingRight: 11 }}>
@@ -16,7 +20,7 @@ const PromiseText = () => {
           variant='body2'
           color={PrimaryColors.blueText}
         >
-          배려해주면 집이 더 따뜻해질 거예요👍
+          {text}
         </CustomText>
         <DashedBottomLine />
       </View>

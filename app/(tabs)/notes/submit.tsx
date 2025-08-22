@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
@@ -13,8 +14,11 @@ const BACKGROUND_IMAGE =
 
 const Submit = () => {
   const router = useRouter();
+  const { reset } = useNoteCreateStore();
 
   const handleSubmit = () => {
+    router.replace('/');
+    reset();
     // TODO: 제출동작 구현
   };
 

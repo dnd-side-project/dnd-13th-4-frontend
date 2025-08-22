@@ -1,7 +1,7 @@
 import { S3_IMAGE_URL } from '@/constants';
 import { Bodies, Body, Engine, World } from 'matter-js';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 interface StarPhysicsProps {
   width: number;
@@ -155,21 +155,22 @@ const StarPhysics: React.FC<StarPhysicsProps> = ({
   }, [width, height, starCount]);
 
   return (
-    <View style={{ width, height, overflow: 'hidden' }}>
+    <View style={[styles.container, { width, height }]}>
       {stars.map((star) => (
         // 별 이미지만 표시
         <Image
           key={star.id}
           source={{ uri: star.imageUrl }}
-          style={{
-            position: 'absolute',
-            width: star.size * 2,
-            height: star.size * 2,
-            left: star.body.position.x - star.size,
-            top: star.body.position.y - star.size,
-            resizeMode: 'contain',
-            transform: [{ rotate: `${star.body.angle * (180 / Math.PI)}deg` }], // 회전 효과
-          }}
+          style={[
+            styles.starImage,
+            {
+              width: star.size * 2,
+              height: star.size * 2,
+              left: star.body.position.x - star.size,
+              top: star.body.position.y - star.size,
+              transform: [{ rotate: `${star.body.angle * (180 / Math.PI)}deg` }],
+            },
+          ]}
           onError={(error) =>
             console.log('이미지 로드 에러:', error.nativeEvent.error)
           }
@@ -178,5 +179,15 @@ const StarPhysics: React.FC<StarPhysicsProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden',
+  },
+  starImage: {
+    position: 'absolute',
+    resizeMode: 'contain',
+  },
+});
 
 export default StarPhysics;

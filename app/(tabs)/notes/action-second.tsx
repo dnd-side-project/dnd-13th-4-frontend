@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import SquareButton from '@/components/button/SquareButton';
 import { CustomText } from '@/components/CustomText';
@@ -15,6 +16,25 @@ const EMPTY_ACTION_TEXT = '                               ';
 const ActionSecond = () => {
   const router = useRouter();
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const { setSituation2 } = useNoteCreateStore();
+
+  const handleSelect = ({
+    text,
+    id,
+    isActive,
+  }: {
+    text: string;
+    id: number;
+    isActive: boolean;
+  }) => {
+    if (isActive) {
+      setSelectedAction(null);
+      setSituation2(null);
+    } else {
+      setSelectedAction(text);
+      setSituation2({ text, id });
+    }
+  };
 
   return (
     <SafeScreenLayout
@@ -52,13 +72,15 @@ const ActionSecond = () => {
           </Pressable>
         </View>
         <View style={styles.grid}>
-          {MY_STATE_LIST.map((item) => (
+          {MY_STATE_LIST.map(({ text, id }) => (
             <SquareButton
-              key={item}
+              key={id}
               style={styles.gridItem}
-              text={item}
-              onPress={() => setSelectedAction(item)}
-              active={item === selectedAction}
+              text={text}
+              onPress={() =>
+                handleSelect({ id, text, isActive: text === selectedAction })
+              }
+              active={text === selectedAction}
             />
           ))}
         </View>

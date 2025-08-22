@@ -1,3 +1,4 @@
+import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import { CustomText } from '@/components/CustomText';
@@ -16,6 +17,25 @@ const EMPTY_ACTION_TEXT =
 const Promise = () => {
   const router = useRouter();
   const [selectedPromise, setSelectedPromise] = useState<string | null>(null);
+  const { setPromise } = useNoteCreateStore();
+
+  const handleSelect = ({
+    id,
+    text,
+    isActive,
+  }: {
+    id: number;
+    text: string;
+    isActive: boolean;
+  }): void => {
+    if (isActive) {
+      setSelectedPromise(null);
+      setPromise(null);
+    } else {
+      setSelectedPromise(text);
+      setPromise({ text, id });
+    }
+  };
 
   return (
     <SafeScreenLayout
@@ -46,12 +66,14 @@ const Promise = () => {
           contentContainerStyle={{ rowGap: 12 }}
           style={styles.listContainer}
         >
-          {PROMISE_LIST.map((item) => (
+          {PROMISE_LIST.map(({ id, text }) => (
             <LongSquareButton
-              key={item}
-              text={item}
-              onPress={() => setSelectedPromise(item)}
-              active={item === selectedPromise}
+              key={id}
+              text={text}
+              onPress={() =>
+                handleSelect({ id, isActive: text === selectedPromise, text })
+              }
+              active={text === selectedPromise}
             />
           ))}
         </ScrollView>

@@ -96,9 +96,9 @@ export const ACTION_LIST: ActionList = {
 };
 
 export const MY_STATE_LIST = [
-  '중요한 업무 중',
-  '쿨쿨 자는 중',
-  '열심히 공부 중',
-  '편하게 쉬는 중',
-  '맛있는 식사 중',
+  { id: 1, text: '중요한 업무 중' },
+  { id: 2, text: '쿨쿨 자는 중' },
+  { id: 3, text: '열심히 공부 중' },
+  { id: 4, text: '편하게 쉬는 중' },
+  { id: 5, text: '맛있는 식사 중' },
 ];

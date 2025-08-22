@@ -41,7 +41,7 @@ const ActionFirst = () => {
 
   useEffect(() => {
     // TODO : mock data 생성하여 id 대신 채워넣어야함.
-    setSituation1({ id: 1, text: selectedAction ?? '' });
+    setSituation1(selectedAction ? { id: 1, text: selectedAction } : null);
   }, [selectedAction]);
 
   return (

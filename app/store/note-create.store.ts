@@ -1,7 +1,7 @@
 // store/mindNoteStore.ts
 import { create } from 'zustand';
 
-type NoteValue = {
+export type NoteValue = {
   id: number;
   text: string;
 } | null;

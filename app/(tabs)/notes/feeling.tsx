@@ -3,6 +3,7 @@ import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { EMOTION_LIST } from '@/components/notes/constants/emotions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -20,30 +21,36 @@ const Feeling = () => {
   const changeIndex = (newIndex: number): void => setIndex(newIndex);
 
   return (
-    <View style={styles.container}>
-      <NoteCreateFeelingHeader>
-        <View style={styles.previewDescription}>
-          <Icon size={15} name='altFill' color={GreyColors.grey500} />
-          <CustomText variant='body3' color={GreyColors.grey500}>
-            룸메에게 보낼 내용 미리보기
-          </CustomText>
-        </View>
-        <View style={styles.preview}>
-          <View style={styles.feelingBox}>
-            <CustomText color={PrimaryColors.blue100} variant='head3'>
-              {emotion.label}
+    <SafeScreenLayout
+      header={
+        <NoteCreateFeelingHeader>
+          <View style={styles.previewDescription}>
+            <Icon size={15} name='altFill' color={GreyColors.grey500} />
+            <CustomText variant='body3' color={GreyColors.grey500}>
+              룸메에게 보낼 내용 미리보기
             </CustomText>
           </View>
-          <CustomText color={PrimaryColors.blue100} variant='head3'>
-            마음을 전해요.
-          </CustomText>
-        </View>
-      </NoteCreateFeelingHeader>
+          <View style={styles.preview}>
+            <View style={styles.feelingBox}>
+              <CustomText color={PrimaryColors.blue100} variant='head3'>
+                {emotion.label}
+              </CustomText>
+            </View>
+            <CustomText color={PrimaryColors.blue100} variant='head3'>
+              마음을 전해요.
+            </CustomText>
+          </View>
+        </NoteCreateFeelingHeader>
+      }
+      style={styles.container}
+    >
       <View style={styles.contentContainer}>
-        <NoteCreateGuide
-          leftText='감정.'
-          rightText='룸메에게 어떤 마음을 전하고 싶나요?'
-        />
+        <View style={styles.guideContainer}>
+          <NoteCreateGuide
+            leftText='감정.'
+            rightText='룸메에게 어떤 마음을 전하고 싶나요?'
+          />
+        </View>
         <View style={styles.carouselContainer}>
           <Carousel
             width={screenWidth}
@@ -70,7 +77,7 @@ const Feeling = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeScreenLayout>
   );
 };
 
@@ -81,7 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    paddingBottom: 16,
     backgroundColor: '#FFFFFF',
   },
   previewDescription: {
@@ -115,8 +121,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,
-    paddingHorizontal: 20,
   },
+  guideContainer: { paddingHorizontal: 20 },
   carouselContainer: { marginTop: 50 },
   shadowContainer: {
     display: 'flex',

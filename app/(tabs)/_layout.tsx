@@ -1,35 +1,21 @@
-import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import { HapticTab } from '@/components/HapticTab';
 import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { ROUTE_NAMES } from '@/constants/Routes';
 import { Typography } from '@/constants/Typography';
-
-import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
-import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 const LOGO =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/logo.png';
 
-// 알림수신 시 포그라운드에서의 동작 정의
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
-
 // 공통 탭 아이콘 생성 함수
 const createTabIcon =
   (iconName: IconName) =>
+  // eslint-disable-next-line react/display-name
   ({ focused }: { focused: boolean }) =>
     (
       <Icon
@@ -43,7 +29,7 @@ const createTabIcon =
 // 중간 플러스 버튼 컴포넌트
 const CreateButton = (props: BottomTabBarButtonProps) => (
   <Pressable
-    onPress={() => router.push(`/${ROUTE_NAMES.CREATE_MIND_LETTER}`)}
+    onPress={() => router.push(`/notes/feeling`)}
     style={[props.style]}
   >
     <View style={styles.createButton}>
@@ -53,50 +39,21 @@ const CreateButton = (props: BottomTabBarButtonProps) => (
 );
 
 export default function TabLayout() {
-  const [expoPushToken, setExpoPushToken] = useState<string>('');
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
-
-  useEffect(() => {
-    // 토큰을 받아 상태로 저장. 이 토큰으로 특정사용자에게 푸시가 가능해짐.
-    // 보통은 백엔드에게 token을 전달. 백엔드는 이 token으로 푸시를 보냄.
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
-      .catch((error: any) => setExpoPushToken(`${error}`));
-
-    // 알림 수신 리스너 등록
-    const notificationListener = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        setNotification(notification);
-      },
-    );
-
-    // 사용자가 백그라운드에서 알림을 탭해서 앱을 열었을때를 감지하는 리스너
-    // 여기서 특정화면으로 넘기는 등의 동작 삽입 필요
-    const responseListener =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      notificationListener.remove();
-      responseListener.remove();
-    };
-  }, []);
-
   return (
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          headerShown: true,
+          headerShown: false,
           headerShadowVisible: false,
-          tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
           tabBarActiveTintColor: GreyColors.grey800,
           tabBarInactiveTintColor: GreyColors.grey400,
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarStyle: styles.tabBarStyle,
+
+          // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' },
         }}
       >
         {/* 홈 탭 */}
@@ -109,6 +66,8 @@ export default function TabLayout() {
             ),
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,
+            tabBarItemStyle: { display: 'flex' },
+            tabBarButton: HapticTab,
             tabBarIcon: createTabIcon('home'),
           }}
         />
@@ -121,6 +80,8 @@ export default function TabLayout() {
             headerTitle: '보관함',
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,
+            tabBarItemStyle: { display: 'flex' },
+            tabBarButton: HapticTab,
             tabBarIcon: createTabIcon('dashboard'),
           }}
         />
@@ -131,6 +92,7 @@ export default function TabLayout() {
           options={{
             title: '',
             headerShown: false,
+            tabBarItemStyle: { display: 'flex' },
             tabBarButton: CreateButton,
           }}
         />
@@ -143,6 +105,8 @@ export default function TabLayout() {
             headerTitle: '통계',
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,
+            tabBarItemStyle: { display: 'flex' },
+            tabBarButton: HapticTab,
             tabBarIcon: createTabIcon('graph'),
           }}
         />
@@ -155,12 +119,12 @@ export default function TabLayout() {
             headerTitle: '마이페이지',
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle,
+            tabBarItemStyle: { display: 'flex' },
+            tabBarButton: HapticTab,
             tabBarIcon: createTabIcon('user'),
           }}
         />
       </Tabs>
-
-      <DebugFloatingTokenButton token={expoPushToken} />
     </View>
   );
 }

@@ -2,6 +2,7 @@ import CTAButton from '@/components/button/CTAButton';
 import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
+import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -37,19 +38,23 @@ const ActionFirst = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <NoteCreateHeaderLayout progressPrecentage={33}>
-        <View style={styles.selectItemContainer}>
-          <CustomText color={PrimaryColors.blue100} variant='head3'>
-            룸메님이
-          </CustomText>
-          <View style={styles.selectItemBox}>
+    <SafeScreenLayout
+      header={
+        <NoteCreateHeaderLayout progressPrecentage={33}>
+          <View style={styles.selectItemContainer}>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
-              {selectedAction ?? EMPTY_ACTION_TEXT}
+              룸메님이
             </CustomText>
+            <View style={styles.selectItemBox}>
+              <CustomText color={PrimaryColors.blue100} variant='head3'>
+                {selectedAction ?? EMPTY_ACTION_TEXT}
+              </CustomText>
+            </View>
           </View>
-        </View>
-      </NoteCreateHeaderLayout>
+        </NoteCreateHeaderLayout>
+      }
+      style={styles.container}
+    >
       <View style={styles.contentContainer}>
         <NoteCreateGuide
           leftText='상황1.'
@@ -90,14 +95,14 @@ const ActionFirst = () => {
           />
         </View>
       </View>
-    </View>
+    </SafeScreenLayout>
   );
 };
 
 export default ActionFirst;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff', paddingBottom: 16 },
+  container: { flex: 1, backgroundColor: '#ffffff' },
 
   selectItemContainer: {
     gap: 2,
@@ -116,7 +121,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,
-    paddingHorizontal: 20,
   },
 
   actionTypeContainer: {

@@ -39,7 +39,7 @@ function onAppStateChange(status: AppStateStatus) {
 
 // Set the animation options. This is optional.
 SplashScreen.setOptions({
-  duration: 1000,
+  duration: 500,
   fade: true,
 });
 

@@ -5,10 +5,22 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { LOGO_URL } from '@/constants/imageUri';
 import { Typography } from '@/constants/Typography';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { Tabs, router } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+// 알림수신 시 포그라운드에서의 동작 정의
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
 // 공통 탭 아이콘 생성 함수
 const createTabIcon =
@@ -38,92 +50,94 @@ const CreateButton = (props: BottomTabBarButtonProps) => (
 
 export default function TabLayout() {
   return (
-    <View style={styles.container}>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          headerShadowVisible: false,
-          tabBarBackground: TabBarBackground,
-          tabBarActiveTintColor: GreyColors.grey800,
-          tabBarInactiveTintColor: GreyColors.grey400,
-          tabBarLabelStyle: styles.tabBarLabel,
-          tabBarStyle: styles.tabBarStyle,
-
-          // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
-          tabBarButton: () => null,
-          tabBarItemStyle: { display: 'none' },
-        }}
-      >
-        {/* 홈 탭 */}
-        <Tabs.Screen
-          name='index'
-          options={{
-            title: '홈',
-            headerTitle: () => (
-              <Image source={{ uri: LOGO_URL }} style={styles.logo} />
-            ),
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarItemStyle: { display: 'flex' },
-            tabBarButton: HapticTab,
-            tabBarIcon: createTabIcon('home'),
-          }}
-        />
-
-        {/* 보관함 탭 */}
-        <Tabs.Screen
-          name='Storage'
-          options={{
-            title: '보관함',
-            headerTitle: '보관함',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarItemStyle: { display: 'flex' },
-            tabBarButton: HapticTab,
-            tabBarIcon: createTabIcon('dashboard'),
-          }}
-        />
-
-        {/* 편지 쓰기 버튼 (실제 탭이 아님) */}
-        <Tabs.Screen
-          name='MindLetter'
-          options={{
-            title: '',
+    <GestureHandlerRootView style={styles.container}>
+      <BottomSheetModalProvider>
+        <Tabs
+          screenOptions={{
             headerShown: false,
-            tabBarItemStyle: { display: 'flex' },
-            tabBarButton: CreateButton,
-          }}
-        />
+            headerShadowVisible: false,
+            tabBarBackground: TabBarBackground,
+            tabBarActiveTintColor: GreyColors.grey800,
+            tabBarInactiveTintColor: GreyColors.grey400,
+            tabBarLabelStyle: styles.tabBarLabel,
+            tabBarStyle: styles.tabBarStyle,
 
-        {/* 통계 탭 */}
-        <Tabs.Screen
-          name='Statistics'
-          options={{
-            title: '통계',
-            headerTitle: '통계',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarItemStyle: { display: 'flex' },
-            tabBarButton: HapticTab,
-            tabBarIcon: createTabIcon('graph'),
+            // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
+            tabBarButton: () => null,
+            tabBarItemStyle: { display: 'none' },
           }}
-        />
+        >
+          {/* 홈 탭 */}
+          <Tabs.Screen
+            name='index'
+            options={{
+              title: '홈',
+              headerTitle: () => (
+                <Image source={{ uri: LOGO_URL }} style={styles.logo} />
+              ),
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: HapticTab,
+              tabBarIcon: createTabIcon('home'),
+            }}
+          />
 
-        {/* 마이페이지 탭 */}
-        <Tabs.Screen
-          name='MyPage'
-          options={{
-            title: '마이페이지',
-            headerTitle: '마이페이지',
-            headerStyle: styles.headerStyle,
-            headerTitleStyle: styles.headerTitleStyle,
-            tabBarItemStyle: { display: 'flex' },
-            tabBarButton: HapticTab,
-            tabBarIcon: createTabIcon('user'),
-          }}
-        />
-      </Tabs>
-    </View>
+          {/* 보관함 탭 */}
+          <Tabs.Screen
+            name='Storage'
+            options={{
+              title: '보관함',
+              headerTitle: '보관함',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: HapticTab,
+              tabBarIcon: createTabIcon('dashboard'),
+            }}
+          />
+
+          {/* 편지 쓰기 버튼 (실제 탭이 아님) */}
+          <Tabs.Screen
+            name='MindLetter'
+            options={{
+              title: '',
+              headerShown: false,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: CreateButton,
+            }}
+          />
+
+          {/* 통계 탭 */}
+          <Tabs.Screen
+            name='Statistics'
+            options={{
+              title: '통계',
+              headerTitle: '통계',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: HapticTab,
+              tabBarIcon: createTabIcon('graph'),
+            }}
+          />
+
+          {/* 마이페이지 탭 */}
+          <Tabs.Screen
+            name='MyPage'
+            options={{
+              title: '마이페이지',
+              headerTitle: '마이페이지',
+              headerStyle: styles.headerStyle,
+              headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: HapticTab,
+              tabBarIcon: createTabIcon('user'),
+            }}
+          />
+        </Tabs>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -137,7 +151,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   headerStyle: {
-    backgroundColor: 'white',
     paddingVertical: 16,
     elevation: 0,
     shadowOpacity: 0,

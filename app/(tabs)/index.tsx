@@ -1,32 +1,25 @@
-
+import { HomeHeader } from '@/components/home/HomeHeader';
+import { RoommateStatus } from '@/components/home/RoommateStatus';
+import { StatisticsSummary } from '@/components/home/StatisticsSummary';
+import { StatusManager } from '@/components/home/StatusManager';
+import { TodayLetters } from '@/components/home/TodayLetters';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { StyleSheet, Text, View } from 'react-native';
 
 export default function Home() {
+
   return (
-    <SafeScreenLayout>
-      <Text style={styles.title}>홈</Text>
-      <View style={styles.contentArea}>
-        <Text style={styles.content}>메인 콘텐츠 영역</Text>
-      </View>
+    <SafeScreenLayout
+      header={<HomeHeader />}
+      background={{
+        type: 'gradient',
+        colors: ['#ECF5FF', '#FFFFFF'] as const,
+        locations: [0.149, 0.4087] as const,
+      }}
+    >
+      <TodayLetters />
+      <RoommateStatus />
+      <StatisticsSummary />
+      <StatusManager />
     </SafeScreenLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontFamily: 'Pretendard-Bold',
-    color: '#000',
-  },
-  contentArea: {
-    backgroundColor: '#f5f5f5',
-    padding: 20,
-    borderRadius: 12,
-  },
-  content: {
-    fontSize: 16,
-    fontFamily: 'Pretendard',
-    color: '#333',
-  },
-});

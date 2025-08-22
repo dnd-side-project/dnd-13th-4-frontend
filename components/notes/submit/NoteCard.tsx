@@ -1,3 +1,4 @@
+import { S3_IMAGE_URL } from '@/constants';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
 import { useNoteCreateStore } from '@/store/note-create.store';

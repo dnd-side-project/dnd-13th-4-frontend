@@ -1,4 +1,3 @@
-import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
@@ -6,6 +5,8 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/note-create.store';
+import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -18,6 +19,7 @@ const Submit = () => {
 
   const handleSubmit = () => {
     router.replace('/');
+    toast.show('제출완료');
     reset();
     // TODO: 제출동작 구현
   };

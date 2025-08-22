@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
+import ToastHost from '@/components/ToastHost';
 import { useAppState } from '@/hooks/useAppState';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
@@ -110,6 +111,7 @@ export default function RootLayout() {
           ))}
         </Stack>
         <StatusBar style='auto' />
+        <ToastHost />
       </QueryClientProvider>
       <DebugFloatingTokenButton token={expoPushToken} />
     </SafeAreaProvider>

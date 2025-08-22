@@ -1,6 +1,6 @@
-import { useNoteCreateStore } from '@/app/store/note-create.store';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/note-create.store';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';

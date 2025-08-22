@@ -5,6 +5,7 @@ import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
 import StatusButton from '@/components/button/StatusButton';
 import Header from '@/components/header/Header';
+import { toast } from '@/store/toast.store';
 import { StyleSheet, View } from 'react-native';
 
 const UiTest = () => {
@@ -24,7 +25,11 @@ const UiTest = () => {
       <StatusButton text='30분 후' active />
 
       <CTAButton text='이전' />
-      <CTAButton text='다음' active />
+      <CTAButton
+        text='다음'
+        active
+        onPress={() => toast.show('asdsadasdsdadadsad')}
+      />
       <CTAButton text='다음' active disabled />
 
       <ToastBar text='마음쪽지를 보관함에 저장했어요' />

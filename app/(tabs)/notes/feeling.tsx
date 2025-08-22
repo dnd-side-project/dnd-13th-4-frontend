@@ -1,4 +1,3 @@
-import { useNoteCreateStore } from '@/app/store/note-create.store';
 import CTAButton from '@/components/button/CTAButton';
 import Carousel from '@/components/carousel/Carousel';
 import { CustomText } from '@/components/CustomText';
@@ -9,6 +8,7 @@ import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/note-create.store';
 import { useRouter } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 

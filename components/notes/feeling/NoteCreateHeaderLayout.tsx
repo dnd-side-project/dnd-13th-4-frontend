@@ -1,8 +1,8 @@
-import { useNoteCreateStore } from '@/app/store/note-create.store';
 import ProgressBar from '@/components/bar/ProgressBar';
 import { CustomText } from '@/components/CustomText';
 import Header from '@/components/header/Header';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/note-create.store';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';

@@ -52,13 +52,8 @@ export default function Statistics() {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
-    zIndex: -1,
   },
   scrollContainer: {
     paddingTop: 44,

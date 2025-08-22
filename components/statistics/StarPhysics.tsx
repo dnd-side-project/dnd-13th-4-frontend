@@ -7,7 +7,6 @@ interface StarPhysicsProps {
   width: number;
   height: number;
   starCount?: number;
-  onRefresh?: () => void;
 }
 
 interface Star {
@@ -31,13 +30,17 @@ const StarPhysics: React.FC<StarPhysicsProps> = ({
   width,
   height,
   starCount = 35,
-  onRefresh,
 }) => {
   const engineRef = useRef<Engine | null>(null);
   const [stars, setStars] = useState<Star[]>([]);
   const animationRef = useRef<number>(null);
+  const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
+    // 기존 타이머들 정리
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+
     // Matter.js 엔진 생성
     const engine = Engine.create();
     engine.world.gravity.y = 0.6; // 중력 줄여서 천천히 떨어뜨림
@@ -122,12 +125,14 @@ const StarPhysics: React.FC<StarPhysicsProps> = ({
 
       // 다음 별들 생성 스케줄링 (간격 줄여서 빠르게 채움)
       if (createdStars < starCount) {
-        setTimeout(createStars, 150 + Math.random() * 200);
+        const timeoutId = setTimeout(createStars, 150 + Math.random() * 200);
+        timeoutsRef.current.push(timeoutId);
       }
     };
 
     // 첫 별들 생성 시작
-    setTimeout(createStars, 500);
+    const initialTimeoutId = setTimeout(createStars, 500);
+    timeoutsRef.current.push(initialTimeoutId);
 
     // 애니메이션 루프
     const animate = () => {
@@ -146,6 +151,10 @@ const StarPhysics: React.FC<StarPhysicsProps> = ({
     animate();
 
     return () => {
+      // 모든 타이머 정리
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+      
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }

@@ -5,11 +5,7 @@ import { CustomText } from '../CustomText';
 export default function Header() {
   return (
     <View style={styles.headerWrapper}>
-      <CustomText
-        variant='body1'
-        style={styles.headerText}
-        color={GreyColors.grey700}
-      >
+      <CustomText variant='body1' color={GreyColors.grey700}>
         통계
       </CustomText>
     </View>
@@ -19,9 +15,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   headerWrapper: {
     height: 56,
-    textAlign: 'center',
-  },
-  headerText: {
-    margin: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

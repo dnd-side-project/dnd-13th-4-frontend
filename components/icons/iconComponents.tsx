@@ -147,6 +147,8 @@ const InfoIcon = ({ size = 24, color = '#000000' }: IconProps) => (
     />
     <Path d='M12 17V10' stroke={color} strokeWidth='1.33333' />
   </Svg>
+);
+
 const MessageFillIcon = ({ color = '#000000', size = 24 }: IconProps) => (
   <Svg width={size} height={size} viewBox='0 0 31 31' fill='none'>
     <Path

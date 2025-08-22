@@ -3,11 +3,12 @@ import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { LOGO_URL } from '@/constants/imageUri';
+import { LOGO } from '@/constants';
 import { Typography } from '@/constants/Typography';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
@@ -75,7 +76,7 @@ export default function TabLayout() {
             options={{
               title: '홈',
               headerTitle: () => (
-                <Image source={{ uri: LOGO_URL }} style={styles.logo} />
+                <Image source={{ uri: LOGO }} style={styles.logo} />
               ),
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,

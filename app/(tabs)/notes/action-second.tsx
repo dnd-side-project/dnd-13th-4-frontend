@@ -7,6 +7,7 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -35,6 +36,12 @@ const ActionSecond = () => {
       setSituation2({ text, id });
     }
   };
+
+  useUnmount({
+    onUnmount: () => {
+      setSelectedAction(null);
+    },
+  });
 
   return (
     <SafeScreenLayout
@@ -65,7 +72,7 @@ const ActionSecond = () => {
             leftText='상황2.'
             rightText='당시 어떤 상태였나요?'
           />
-          <Pressable onPress={() => router.push('/')}>
+          <Pressable onPress={() => router.navigate('/notes/promise')}>
             <CustomText style={styles.skip} color={PrimaryColors.blue100}>
               SKIP
             </CustomText>
@@ -86,12 +93,12 @@ const ActionSecond = () => {
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.push('/notes/action-first')}
+            onPress={() => router.navigate('/notes/action-first')}
             style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/notes/promise')}
+            onPress={() => router.navigate('/notes/promise')}
             style={styles.ctaButton}
             text='다음'
             active

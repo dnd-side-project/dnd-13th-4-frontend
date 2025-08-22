@@ -9,6 +9,7 @@ import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -28,6 +29,12 @@ const Feeling = () => {
     const { id, text } = EMOTION_MOCK_LIST[index];
     setEmotion({ id, text });
   }, [index]);
+
+  useUnmount({
+    onUnmount: () => {
+      setIndex(0);
+    },
+  });
 
   return (
     <SafeScreenLayout
@@ -82,7 +89,7 @@ const Feeling = () => {
           <CTAButton
             text='다음'
             active
-            onPress={() => router.push('/notes/action-first')}
+            onPress={() => router.navigate('/notes/action-first')}
           />
         </View>
       </View>

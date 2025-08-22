@@ -8,6 +8,7 @@ import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -43,6 +44,13 @@ const ActionFirst = () => {
     // TODO : mock data 생성하여 id 대신 채워넣어야함.
     setSituation1(selectedAction ? { id: 1, text: selectedAction } : null);
   }, [selectedAction]);
+
+  useUnmount({
+    onUnmount: () => {
+      setSelectedType(ACTION_LIST.negative[0].label);
+      setSelectedAction(null);
+    },
+  });
 
   return (
     <SafeScreenLayout
@@ -91,13 +99,13 @@ const ActionFirst = () => {
           <CTAButton
             style={styles.ctaButton}
             text='이전'
-            onPress={() => router.push('/notes/feeling')}
+            onPress={() => router.navigate('/notes/feeling')}
           />
           <CTAButton
             style={styles.ctaButton}
             text='다음'
             active
-            onPress={() => router.push('/notes/action-second')}
+            onPress={() => router.navigate('/notes/action-second')}
             disabled={!selectedAction}
           />
         </View>

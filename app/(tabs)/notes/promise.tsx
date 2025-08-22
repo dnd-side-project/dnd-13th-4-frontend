@@ -7,6 +7,7 @@ import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import useUnmount from '@/hooks/useUnmount';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -36,6 +37,12 @@ const Promise = () => {
       setPromise({ text, id });
     }
   };
+
+  useUnmount({
+    onUnmount: () => {
+      setSelectedPromise(null);
+    },
+  });
 
   return (
     <SafeScreenLayout
@@ -79,12 +86,12 @@ const Promise = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.push('/notes/action-second')}
+            onPress={() => router.navigate('/notes/action-second')}
             style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/notes/submit')}
+            onPress={() => router.navigate('/notes/submit')}
             style={styles.ctaButton}
             text='다음'
             active

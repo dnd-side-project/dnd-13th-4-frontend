@@ -3,6 +3,7 @@ import { getGraphicUrl } from '@/constants/graphic';
 import { ImageBackground, Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 import GridList from '../ui/gridList';
+import EmptyCardList from './EmptyCardList';
 import { useSavedNotesQuery } from './module/useSavedNotesQuery';
 
 const EmotionCardList = () => {
@@ -11,8 +12,8 @@ const EmotionCardList = () => {
   if (isLoading) {
     return null;
   }
-  if (isError || !data) {
-    return null;
+  if (isError || !data || data.length === 0) {
+    return <EmptyCardList />;
   }
 
   return (

@@ -7,6 +7,7 @@ import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -18,7 +19,7 @@ const ActionFirst = () => {
   const [selectedType, setSelectedType] = useState(
     ACTION_LIST.negative[0].label,
   );
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const { situationAction, setSituationAction } = useNoteCreateStore();
 
   // 현재 선택된 label(type)에 해당하는 카테고리 찾기
   const currentCategory = useMemo(() => {
@@ -29,11 +30,11 @@ const ActionFirst = () => {
   // 현재 카테고리의 액션 배열
   const actions = currentCategory?.actions ?? [];
 
-  const handleSelectAction = (newAction: string) => {
-    if (selectedAction === newAction) {
-      setSelectedAction(null);
+  const handleSelectAction = ({ id, text }: { id: number; text: string }) => {
+    if (situationAction?.id === id) {
+      setSituationAction(null);
     } else {
-      setSelectedAction(newAction);
+      setSituationAction({ id, text });
     }
   };
 
@@ -47,7 +48,7 @@ const ActionFirst = () => {
             </CustomText>
             <View style={styles.selectItemBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {selectedAction ?? EMPTY_ACTION_TEXT}
+                {situationAction?.text ?? EMPTY_ACTION_TEXT}
               </CustomText>
             </View>
           </View>
@@ -71,12 +72,12 @@ const ActionFirst = () => {
           style={styles.actionContainer}
           contentContainerStyle={{ rowGap: 12 }}
         >
-          {actions.map((action, index) => (
+          {actions.map(({ id, text }, index) => (
             <RoundButton
-              key={action}
-              text={action}
-              active={selectedAction === action}
-              onPress={() => handleSelectAction(action)}
+              key={id}
+              text={text}
+              active={situationAction?.id === id}
+              onPress={() => handleSelectAction({ id, text })}
             />
           ))}
         </ScrollView>
@@ -84,14 +85,14 @@ const ActionFirst = () => {
           <CTAButton
             style={styles.ctaButton}
             text='이전'
-            onPress={() => router.push('/notes/feeling')}
+            onPress={() => router.navigate('/notes/feeling')}
           />
           <CTAButton
             style={styles.ctaButton}
             text='다음'
             active
-            onPress={() => router.push('/notes/action-second')}
-            disabled={!selectedAction}
+            onPress={() => router.navigate('/notes/ActionSecond')}
+            disabled={!situationAction}
           />
         </View>
       </View>

@@ -6,8 +6,8 @@ import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT =
@@ -15,7 +15,23 @@ const EMPTY_ACTION_TEXT =
 
 const Promise = () => {
   const router = useRouter();
-  const [selectedPromise, setSelectedPromise] = useState<string | null>(null);
+  const { promise, setPromise } = useNoteCreateStore();
+
+  const handleSelect = ({
+    id,
+    text,
+    isActive,
+  }: {
+    id: number;
+    text: string;
+    isActive: boolean;
+  }): void => {
+    if (isActive) {
+      setPromise(null);
+    } else {
+      setPromise({ text, id });
+    }
+  };
 
   return (
     <SafeScreenLayout
@@ -26,7 +42,7 @@ const Promise = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {selectedPromise ?? EMPTY_ACTION_TEXT}
+                  {promise?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
             </View>
@@ -46,27 +62,29 @@ const Promise = () => {
           contentContainerStyle={{ rowGap: 12 }}
           style={styles.listContainer}
         >
-          {PROMISE_LIST.map((item) => (
+          {PROMISE_LIST.map(({ id, text }) => (
             <LongSquareButton
-              key={item}
-              text={item}
-              onPress={() => setSelectedPromise(item)}
-              active={item === selectedPromise}
+              key={id}
+              text={text}
+              onPress={() =>
+                handleSelect({ id, isActive: id === promise?.id, text })
+              }
+              active={id === promise?.id}
             />
           ))}
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.push('/notes/action-second')}
+            onPress={() => router.navigate('/notes/ActionSecond')}
             style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/notes/submit')}
+            onPress={() => router.navigate('/notes/submit')}
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!selectedPromise}
+            disabled={!promise}
           />
         </View>
       </View>

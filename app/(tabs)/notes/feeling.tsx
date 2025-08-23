@@ -32,7 +32,7 @@ const Feeling = () => {
 
   useEffect(() => {
     if (!isMatched) {
-      setTimeout(
+      const timerId = setTimeout(
         () =>
           modal.show({
             title: '잠깐!',
@@ -41,6 +41,8 @@ const Feeling = () => {
           }),
         1000,
       );
+
+      return () => clearTimeout(timerId);
     }
   }, []);
 

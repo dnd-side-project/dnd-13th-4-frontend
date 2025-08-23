@@ -5,6 +5,7 @@ import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
+import useEmotionTemplatesQuery from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -16,10 +17,24 @@ const Feeling = () => {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const { emotion, setEmotion } = useNoteCreateStore();
+  const { data, isLoading, isError } = useEmotionTemplatesQuery({
+    emotionType: 'positive',
+  });
 
   const changeEmotion = (newIndex: number): void => {
     setEmotion(EMOTION_MOCK_LIST[newIndex]);
   };
+
+  if (isLoading) {
+    /** 로딩 UI */
+    return null;
+  }
+  if (isError || !data) {
+    /** 에러 UI */
+    return null;
+  }
+
+  console.log(data);
 
   return (
     <SafeScreenLayout

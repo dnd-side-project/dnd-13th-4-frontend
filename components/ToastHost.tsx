@@ -27,7 +27,7 @@ export default function ToastHost({ containerStyle, gap = 8 }: Props) {
 
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(10)).current;
-  const timer = useRef<NodeJS.Timeout | null>(null);
+  const timer = useRef<number | null>(null);
 
   const insets = useSafeAreaInsets();
 

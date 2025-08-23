@@ -1,9 +1,5 @@
 import { GreyColors, PrimaryColors, SecondaryColors } from '@/constants/Colors';
-import {
-  FontWeight,
-  FontWeightToFamily,
-  Typography,
-} from '@/constants/Typography';
+import { FontWeights, Typography } from '@/constants/Typography';
 import React from 'react';
 import { Text, type TextProps } from 'react-native';
 
@@ -17,7 +13,7 @@ type ColorVariant =
 export interface CustomTextProps extends TextProps {
   variant?: TypographyVariant;
   color?: ColorVariant | string;
-  fontWeight?: FontWeight;
+  fontWeight?: keyof typeof FontWeights;
   children: React.ReactNode;
 }
 
@@ -45,12 +41,14 @@ export function CustomText({
     ? allColors[color as keyof typeof allColors]
     : color;
 
+  const fontWeightValue = fontWeight ? FontWeights[fontWeight] : undefined;
+
   return (
     <Text
       style={[
         typographyStyle,
         { color: textColor },
-        fontWeight && { fontFamily: FontWeightToFamily[fontWeight] },
+        fontWeightValue && { fontWeight: fontWeightValue },
         style,
       ]}
       {...rest}

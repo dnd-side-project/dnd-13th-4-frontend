@@ -6,9 +6,13 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 
 type ProgressBarProps = {
   percentage?: number; // 0~100
+  backgroundColor?: string;
 };
 
-const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
+const ProgressBar = ({
+  percentage = 0,
+  backgroundColor = PrimaryColors.blue100,
+}: ProgressBarProps) => {
   const clamped = Math.min(100, Math.max(0, percentage));
   const target = clamped / 100;
 
@@ -35,7 +39,7 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
       accessibilityRole='progressbar'
       accessibilityValue={{ min: 0, max: 100, now: clamped }}
     >
-      <Animated.View style={[styles.bar, { width }]} />
+      <Animated.View style={[styles.bar, { backgroundColor }, { width }]} />
     </View>
   );
 };
@@ -51,7 +55,6 @@ const styles = StyleSheet.create({
   bar: {
     height: '100%',
     borderRadius: 8,
-    backgroundColor: PrimaryColors.blue100,
   },
 });
 

@@ -3,10 +3,12 @@ import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { LOGO_URL } from '@/constants/imageUri';
+import { LOGO } from '@/constants';
 import { Typography } from '@/constants/Typography';
+import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import * as Notifications from 'expo-notifications';
 import { Tabs, router } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
@@ -23,18 +25,19 @@ Notifications.setNotificationHandler({
 });
 
 // 공통 탭 아이콘 생성 함수
-const createTabIcon =
-  (iconName: IconName) =>
-  // eslint-disable-next-line react/display-name
-  ({ focused }: { focused: boolean }) =>
-    (
-      <Icon
-        name={iconName}
-        size={20}
-        color={focused ? GreyColors.grey800 : GreyColors.grey400}
-        style={styles.tabIcon}
-      />
-    );
+const createTabIcon = (iconName: IconName) => {
+  const TabIcon = ({ focused }: { focused: boolean }) => (
+    <Icon
+      name={iconName}
+      size={20}
+      color={focused ? GreyColors.grey800 : GreyColors.grey400}
+      style={styles.tabIcon}
+    />
+  );
+
+  TabIcon.displayName = `TabIcon(${iconName})`;
+  return TabIcon;
+};
 
 // 중간 플러스 버튼 컴포넌트
 const CreateButton = (props: BottomTabBarButtonProps) => (
@@ -73,7 +76,7 @@ export default function TabLayout() {
             options={{
               title: '홈',
               headerTitle: () => (
-                <Image source={{ uri: LOGO_URL }} style={styles.logo} />
+                <Image source={{ uri: LOGO }} style={styles.logo} />
               ),
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
@@ -91,8 +94,6 @@ export default function TabLayout() {
               headerTitle: '보관함',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
-              tabBarItemStyle: { display: 'flex' },
-              tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('dashboard'),
             }}
           />
@@ -103,7 +104,6 @@ export default function TabLayout() {
             options={{
               title: '',
               headerShown: false,
-              tabBarItemStyle: { display: 'flex' },
               tabBarButton: CreateButton,
             }}
           />
@@ -116,7 +116,6 @@ export default function TabLayout() {
               headerTitle: '통계',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
-              tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('graph'),
             }}
@@ -130,7 +129,6 @@ export default function TabLayout() {
               headerTitle: '마이페이지',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
-              tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('user'),
             }}

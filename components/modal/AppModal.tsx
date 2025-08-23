@@ -129,7 +129,7 @@ export default function AppModal({
               </Pressable>
             ) : null}
 
-            <CTAButton text={confirmText} active />
+            <CTAButton onPress={onConfirm} text={confirmText} active />
           </View>
         </Animated.View>
       </View>

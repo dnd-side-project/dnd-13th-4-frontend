@@ -4,11 +4,12 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
-import { GreyColors } from '@/constants/Colors';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useNoteCreateStore } from '@/store/note-create.store';
 import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { isMatched } from './feeling';
 
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
@@ -64,11 +65,22 @@ const Submit = () => {
           <NoteCard style={{ zIndex: 100 }} />
         </View>
         <View style={styles.buttonContainer}>
+          {!isMatched && (
+            <CustomText
+              variant='body3'
+              fontWeight='bold'
+              color={PrimaryColors.blueText}
+            >
+              👀 미리 체험 중
+            </CustomText>
+          )}
+
           <CTAButton
             onPress={handleSubmit}
             style={{ alignSelf: 'flex-end' }}
             text='마음쪽지 보내기'
             active
+            disabled={!isMatched}
           />
         </View>
       </View>
@@ -101,6 +113,8 @@ const styles = StyleSheet.create({
   },
   headerText: {},
   buttonContainer: {
+    alignItems: 'center',
+    gap: 8,
     marginTop: 'auto',
     alignSelf: 'stretch',
   },

@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
+import GlobalModalHost from '@/components/modal/GlobalModalHost';
 import ToastHost from '@/components/ToastHost';
 import { useAppState } from '@/hooks/useAppState';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
@@ -112,6 +113,7 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style='auto' />
         <ToastHost />
+        <GlobalModalHost />
       </QueryClientProvider>
       <DebugFloatingTokenButton token={expoPushToken} />
     </SafeAreaProvider>

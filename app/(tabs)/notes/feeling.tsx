@@ -4,6 +4,7 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { modal } from '@/components/modal/modal';
 import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import useEmotionTemplatesQuery from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
@@ -11,7 +12,11 @@ import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeader
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useNoteCreateStore } from '@/store/note-create.store';
 import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
+
+// TODO : isMatched는 API연동을 해야함.
+export const isMatched = false;
 
 const Feeling = () => {
   const router = useRouter();
@@ -25,6 +30,20 @@ const Feeling = () => {
     setEmotion(EMOTION_MOCK_LIST[newIndex]);
   };
 
+  useEffect(() => {
+    if (!isMatched) {
+      setTimeout(
+        () =>
+          modal.show({
+            title: '잠깐!',
+            description: `룸메가 초대에 응하면\n마음쪽지를 보낼 수 있어요.\n지금은 미리 체험만 가능해요!`,
+            confirmText: '확인',
+          }),
+        1000,
+      );
+    }
+  }, []);
+
   if (isLoading) {
     /** 로딩 UI */
     return null;
@@ -33,8 +52,6 @@ const Feeling = () => {
     /** 에러 UI */
     return null;
   }
-
-  console.log(data);
 
   return (
     <SafeScreenLayout

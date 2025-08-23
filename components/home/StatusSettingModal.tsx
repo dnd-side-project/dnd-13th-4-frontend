@@ -204,6 +204,7 @@ export const StatusSettingModal = forwardRef<
                     }
                     onPress={() => handleStatusSelect(item.emoji, item.text)}
                     text={`${item.emoji} ${item.text}`}
+                    showIcon={false}
                   />
                 )}
                 keyExtractor={(item) => item.id}
@@ -227,6 +228,7 @@ export const StatusSettingModal = forwardRef<
                       }
                       onPress={() => handleStatusSelect(item.emoji, item.text)}
                       text={`${item.emoji} ${item.text}`}
+                      showIcon={false}
                     />
                   ) : (
                     <View style={{ flex: 1 }} />
@@ -264,6 +266,7 @@ export const StatusSettingModal = forwardRef<
                     }
                   }}
                   text={item.text}
+                  showIcon={false}
                 />
               )}
               keyExtractor={(item) => item.id}

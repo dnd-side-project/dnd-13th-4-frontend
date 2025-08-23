@@ -2,11 +2,15 @@ import { CustomText } from '@/components/CustomText';
 import { PrimaryColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
-const FeelingText = () => {
+type Props = {
+  text: string;
+};
+
+const FeelingText = ({ text }: Props) => {
   return (
     <View style={styles.feelingContainer}>
       <CustomText style={styles.feelingText}>
-        <CustomText style={styles.feeling}>불편했던</CustomText> 마음을 전해요
+        <CustomText style={styles.feeling}>{text}</CustomText> 마음을 전해요
       </CustomText>
     </View>
   );

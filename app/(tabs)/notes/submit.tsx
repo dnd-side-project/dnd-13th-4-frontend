@@ -5,6 +5,8 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
+import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -13,8 +15,12 @@ const BACKGROUND_IMAGE =
 
 const Submit = () => {
   const router = useRouter();
+  const { reset } = useNoteCreateStore();
 
   const handleSubmit = () => {
+    router.replace('/');
+    toast.show('마음쪽지를 룸메이트에게 전달했어요');
+    reset();
     // TODO: 제출동작 구현
   };
 

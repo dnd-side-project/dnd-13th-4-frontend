@@ -6,15 +6,36 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const { situationState, setSituationState } = useNoteCreateStore();
+
+  const handleSelect = ({
+    text,
+    id,
+    isActive,
+  }: {
+    text: string;
+    id: number;
+    isActive: boolean;
+  }) => {
+    if (isActive) {
+      setSituationState(null);
+    } else {
+      setSituationState({ text, id });
+    }
+  };
+
+  const handleSkip = (): void => {
+    setSituationState(null);
+    router.navigate('/notes/promise');
+  };
 
   return (
     <SafeScreenLayout
@@ -27,7 +48,7 @@ const ActionSecond = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {selectedAction ?? EMPTY_ACTION_TEXT}
+                  {situationState?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -45,35 +66,37 @@ const ActionSecond = () => {
             leftText='상황2.'
             rightText='당시 어떤 상태였나요?'
           />
-          <Pressable onPress={() => router.push('/')}>
+          <Pressable onPress={handleSkip}>
             <CustomText style={styles.skip} color={PrimaryColors.blue100}>
               SKIP
             </CustomText>
           </Pressable>
         </View>
         <View style={styles.grid}>
-          {MY_STATE_LIST.map((item) => (
+          {MY_STATE_LIST.map(({ text, id }) => (
             <SquareButton
-              key={item}
+              key={id}
               style={styles.gridItem}
-              text={item}
-              onPress={() => setSelectedAction(item)}
-              active={item === selectedAction}
+              text={text}
+              onPress={() =>
+                handleSelect({ id, text, isActive: id === situationState?.id })
+              }
+              active={id === situationState?.id}
             />
           ))}
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.push('/notes/action-first')}
+            onPress={() => router.navigate('/notes/ActionFirst')}
             style={styles.ctaButton}
             text='이전'
           />
           <CTAButton
-            onPress={() => router.push('/notes/promise')}
+            onPress={() => router.navigate('/notes/promise')}
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!selectedAction}
+            disabled={!situationState}
           />
         </View>
       </View>

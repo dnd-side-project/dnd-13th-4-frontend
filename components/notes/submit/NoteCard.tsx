@@ -1,6 +1,6 @@
-import { S3_IMAGE_URL } from '@/constants';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';
@@ -16,6 +16,9 @@ type NoteCardProps = {
 };
 
 const NoteCard = ({ style }: NoteCardProps) => {
+  const { emotion, promise, situationAction, situationState } =
+    useNoteCreateStore();
+
   return (
     <View style={[styles.container]}>
       <View style={[styles.card, style]}>
@@ -24,13 +27,16 @@ const NoteCard = ({ style }: NoteCardProps) => {
         </View>
         <View style={{ paddingHorizontal: 16 }}>
           <View style={{ marginTop: 20, marginBottom: 24 }}>
-            <FeelingText />
+            <FeelingText text={emotion?.text ?? ''} />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <SituationText />
+            <SituationText
+              topText={situationAction?.text ?? ''}
+              bottomText={situationState?.text ?? ''}
+            />
           </View>
           <View style={{ marginBottom: 24 }}>
-            <PromiseText />
+            <PromiseText text={promise?.text ?? ''} />
           </View>
           <View style={{ marginBottom: 24 }}>
             <RandomMessage />

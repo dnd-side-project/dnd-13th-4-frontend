@@ -20,6 +20,7 @@ const SquareButton = ({ active = false, text, onPress, style }: Props) => {
     >
       <CustomText
         variant='body2'
+        fontWeight={active ? 'bold' : 'medium'}
         style={active ? styles.active : styles.unActive}
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
@@ -38,17 +39,14 @@ export default SquareButton;
 
 const styles = StyleSheet.create({
   button: {
+    flex: 1,
     alignSelf: 'flex-start',
     paddingVertical: 16,
-    paddingHorizontal: 20,
     borderWidth: 2,
     borderRadius: 12,
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
+    alignItems: 'center',
   },
   active: {
-    fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue300,
     borderColor: PrimaryColors.blue100,
   },

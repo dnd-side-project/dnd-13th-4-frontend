@@ -5,6 +5,7 @@ import RoundButton from '@/components/button/RoundButton';
 import SquareButton from '@/components/button/SquareButton';
 import StatusButton from '@/components/button/StatusButton';
 import Header from '@/components/header/Header';
+import AppModal from '@/components/modal/AppModal';
 import { toast } from '@/store/toast.store';
 import { StyleSheet, View } from 'react-native';
 
@@ -33,6 +34,11 @@ const UiTest = () => {
       <CTAButton text='다음' active disabled />
 
       <ToastBar text='마음쪽지를 보관함에 저장했어요' />
+      <AppModal
+        visible
+        title='잠깐!'
+        description={`아직 룸메가 초대에 응하지 않아\n둘러보기만 가능해요.`}
+      />
     </View>
   );
 };

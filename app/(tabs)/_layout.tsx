@@ -2,10 +2,9 @@ import { HapticTab } from '@/components/HapticTab';
 import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { LOGO } from '@/constants';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { Typography } from '@/constants/Typography';
-import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import * as Notifications from 'expo-notifications';
@@ -94,6 +93,8 @@ export default function TabLayout() {
               headerTitle: '보관함',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
+              tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('dashboard'),
             }}
           />
@@ -104,6 +105,7 @@ export default function TabLayout() {
             options={{
               title: '',
               headerShown: false,
+              tabBarItemStyle: { display: 'flex' },
               tabBarButton: CreateButton,
             }}
           />
@@ -116,6 +118,7 @@ export default function TabLayout() {
               headerTitle: '통계',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('graph'),
             }}
@@ -129,6 +132,7 @@ export default function TabLayout() {
               headerTitle: '마이페이지',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
+              tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('user'),
             }}

@@ -88,7 +88,7 @@ const FloatingStar = ({ onFlash }: { onFlash: () => void }) => {
           source={{
             uri: `${S3_IMAGE_URL}/statistics/uncomfortable_star.png`,
           }}
-          style={{ width: 60, height: 60, transform: [{ rotate: '18deg' }] }}
+          style={{ width: 40, height: 40 }}
         />
       </Animated.View>
     </TouchableOpacity>
@@ -108,10 +108,6 @@ export default function ReadMindLetter() {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
-      }).start(({ finished }) => {
-        if (finished) {
-          setShowJarMessage(true);
-        }
       }),
       Animated.delay(500),
       Animated.timing(flashOpacity, {
@@ -119,7 +115,11 @@ export default function ReadMindLetter() {
         duration: 500,
         useNativeDriver: true,
       }),
-    ]).start();
+    ]).start(({ finished }) => {
+      if (finished) {
+        setShowJarMessage(true);
+      }
+    });
 
     // 플래시 효과 중간에 유리병 메시지로 교체 (화면이 완전히 하얘진 순간)
     setTimeout(() => {

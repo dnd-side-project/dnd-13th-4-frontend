@@ -1,5 +1,3 @@
-// components/common/GridList.tsx
-import React from 'react';
 import { FlatList, FlatListProps, StyleProp, ViewStyle } from 'react-native';
 
 type GridListProps<T> = {

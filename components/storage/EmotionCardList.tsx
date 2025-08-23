@@ -24,7 +24,12 @@ const EmotionCardList = () => {
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.gridContent}
       renderItem={({ item }) => (
-        <Pressable style={styles.cardContainer}>
+        <Pressable
+          style={styles.cardContainer}
+          onPress={() => {
+            /* TODO : 마음편지 상세 페이지 이동 로직 */
+          }}
+        >
           <ImageBackground
             source={{
               uri: getGraphicUrl({ kind: item.kind, page: 'storage' }),

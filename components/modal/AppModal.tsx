@@ -129,7 +129,7 @@ export default function AppModal({
               </Pressable>
             ) : null}
 
-            <CTAButton text='다음' active />
+            <CTAButton text={confirmText} active />
           </View>
         </Animated.View>
       </View>
@@ -151,9 +151,8 @@ const styles = StyleSheet.create({
   card: {
     width: 270,
     borderRadius: 14,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
+    paddingHorizontal: 32,
+    paddingVertical: 20,
     backgroundColor: '#FFFFFF',
     // iOS shadow
     shadowColor: '#000',
@@ -166,14 +165,14 @@ const styles = StyleSheet.create({
   title: { textAlign: 'center' },
   content: { marginTop: 10, alignItems: 'center' },
   description: {
-    marginTop: 10,
+    marginTop: 8,
     fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
     color: '#6B7280',
   },
   footer: {
-    marginTop: 24,
+    marginTop: 16,
     gap: 10,
     flexDirection: 'column', // 버튼 세로 스택 (스크린샷 느낌)
   },

@@ -1,10 +1,15 @@
 export const ROUTE_NAMES = {
   TABS: '(tabs)',
   CREATE_MIND_LETTER: 'CreateMindLetter',
+  ONBOARDING: 'Onboarding',
   NOT_FOUND: '+not-found',
 } as const;
 
 export const STACK_SCREENS = [
+  {
+    name: ROUTE_NAMES.ONBOARDING,
+    options: { headerShown: false },
+  },
   {
     name: ROUTE_NAMES.TABS,
     options: { headerShown: false },

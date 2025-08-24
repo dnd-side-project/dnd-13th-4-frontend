@@ -1,7 +1,7 @@
 import { STACK_SCREENS } from '@/constants/Routes';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
@@ -52,6 +52,7 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
+  const router = useRouter();
   const [fontsLoaded] = useFonts({
     Pretendard: require('../assets/fonts/Pretendard-Regular.ttf'),
     'Pretendard-Medium': require('../assets/fonts/Pretendard-Medium.ttf'),
@@ -63,6 +64,32 @@ export default function RootLayout() {
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  useEffect(() => {
+    // 앱 초기화 시 인증 상태 체크
+    const checkAuthStatus = async () => {
+      try {
+        // TODO: 실제로는 AsyncStorage나 SecureStore에서 토큰 체크
+        // const token = await AsyncStorage.getItem('authToken');
+        // const onboardingCompleted = await AsyncStorage.getItem('onboardingCompleted');
+        
+        // 임시로 false로 설정 (실제로는 저장된 값 체크)
+        setIsAuthenticated(false);
+        setHasSeenOnboarding(false);
+        
+        setIsInitializing(false);
+      } catch (error) {
+        console.log('Auth check error:', error);
+        setIsInitializing(false);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
 
   useEffect(() => {
     // 토큰을 받아 상태로 저장. 이 토큰으로 특정사용자에게 푸시가 가능해짐.
@@ -96,12 +123,17 @@ export default function RootLayout() {
   useAppState(onAppStateChange);
 
   useEffect(() => {
-    if (fontsLoaded) {
+    if (fontsLoaded && !isInitializing) {
       SplashScreen.hideAsync();
+      
+      // 온보딩이나 로그인이 필요한 경우 해당 화면으로 이동
+      if (!hasSeenOnboarding || !isAuthenticated) {
+        router.replace('/Onboarding');
+      }
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, isInitializing, hasSeenOnboarding, isAuthenticated]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || isInitializing) {
     return null;
   }
 

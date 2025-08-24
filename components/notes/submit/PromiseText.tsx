@@ -14,15 +14,17 @@ const PromiseText = ({ text }: Props) => {
       <View style={{ paddingRight: 11 }}>
         <NoteBadge text='약속' />
       </View>
-      <View>
-        <CustomText
-          style={{ fontFamily: 'Pretendard-Bold' }}
-          variant='body2'
-          color={PrimaryColors.blueText}
-        >
-          {text}
-        </CustomText>
-        <DashedBottomLine />
+      <View style={{ flex: 1 }}>
+        <View>
+          <CustomText
+            variant='body2'
+            fontWeight='bold'
+            color={PrimaryColors.blueText}
+          >
+            {text}
+          </CustomText>
+          <DashedBottomLine />
+        </View>
       </View>
     </View>
   );

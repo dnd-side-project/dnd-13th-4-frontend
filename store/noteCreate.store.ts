@@ -1,7 +1,7 @@
 import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import { create, StateCreator } from 'zustand';
 
-type NoteValue = {
+export type NoteValue = {
   id: number;
   text: string;
 };

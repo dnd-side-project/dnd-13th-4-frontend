@@ -6,15 +6,17 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/noteCreate.store';
+import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const { situationState, setSituationState } = useNoteCreateStore();
+  const { setSituationState } = useNoteCreateStore();
+  const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
 
   const handleSelect = ({
     text,
@@ -26,14 +28,18 @@ const ActionSecond = () => {
     isActive: boolean;
   }) => {
     if (isActive) {
-      setSituationState(null);
+      setSelectedItem(null);
     } else {
-      setSituationState({ text, id });
+      setSelectedItem({ text, id });
     }
   };
 
   const handleSkip = (): void => {
-    setSituationState(null);
+    router.navigate('/notes/promise');
+  };
+
+  const handleSubmit = (): void => {
+    setSituationState(selectedItem);
     router.navigate('/notes/promise');
   };
 
@@ -48,7 +54,7 @@ const ActionSecond = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {situationState?.text ?? EMPTY_ACTION_TEXT}
+                  {selectedItem?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -79,9 +85,9 @@ const ActionSecond = () => {
               style={styles.gridItem}
               text={text}
               onPress={() =>
-                handleSelect({ id, text, isActive: id === situationState?.id })
+                handleSelect({ id, text, isActive: id === selectedItem?.id })
               }
-              active={id === situationState?.id}
+              active={id === selectedItem?.id}
             />
           ))}
         </View>
@@ -92,11 +98,11 @@ const ActionSecond = () => {
             text='이전'
           />
           <CTAButton
-            onPress={() => router.navigate('/notes/promise')}
+            onPress={handleSubmit}
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!situationState}
+            disabled={!selectedItem}
           />
         </View>
       </View>

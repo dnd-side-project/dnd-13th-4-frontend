@@ -1,31 +1,76 @@
+import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { StyleSheet, Text, View } from 'react-native';
+import BottleSection from '@/components/statistics/BottleSection';
+import GrowthSection from '@/components/statistics/GrowthSection';
+import Header from '@/components/statistics/Header';
+import KeywordSection from '@/components/statistics/KeywordSection';
+import { S3_IMAGE_URL } from '@/constants';
+import { GreyColors } from '@/constants/Colors';
+import React, { useState } from 'react';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function Statistics() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
+
   return (
     <SafeScreenLayout>
-      <Text style={styles.title}>통계</Text>
-      <View style={styles.contentArea}>
-        <Text style={styles.content}>통계 데이터</Text>
-      </View>
+      {/* 배경 이미지 */}
+      <Image
+        source={{
+          uri: `${S3_IMAGE_URL}/statistics/statistics_main_background.png`,
+        }}
+        style={styles.backgroundImage}
+      />
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
+        <Header />
+        <CustomText
+          variant='head1'
+          color={GreyColors.grey800}
+          fontWeight='bold'
+          style={styles.headerMessage}
+        >
+          지금까지 총 84개의{'\n'}마음을 주고 받았어요
+        </CustomText>
+        <BottleSection refreshKey={refreshKey} onRefresh={handleRefresh} />
+
+        <View style={styles.contentArea}>
+          <GrowthSection />
+          <KeywordSection />
+        </View>
+      </ScrollView>
     </SafeScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontFamily: 'Pretendard-Bold',
-    color: '#000',
+  backgroundImage: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+  },
+  scrollContainer: {
+    paddingTop: 44,
+    flex: 1,
+    marginHorizontal: -20,
+    paddingHorizontal: 20,
+  },
+  headerMessage: {
+    textAlign: 'center',
+    marginBottom: 25,
   },
   contentArea: {
-    backgroundColor: '#f5f5f5',
-    padding: 20,
-    borderRadius: 12,
-  },
-  content: {
-    fontSize: 16,
-    fontFamily: 'Pretendard',
-    color: '#333',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    marginHorizontal: -20,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    overflow: 'hidden',
   },
 });

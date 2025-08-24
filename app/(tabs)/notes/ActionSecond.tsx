@@ -6,7 +6,7 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { NoteValue, useNoteCreateStore } from '@/store/note-create.store';
+import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -15,7 +15,7 @@ const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const { setSituation2 } = useNoteCreateStore();
+  const { setSituationState } = useNoteCreateStore();
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
 
   const handleSelect = ({
@@ -39,7 +39,7 @@ const ActionSecond = () => {
   };
 
   const handleSubmit = (): void => {
-    setSituation2(selectedItem);
+    setSituationState(selectedItem);
     router.navigate('/notes/promise');
   };
 
@@ -93,7 +93,7 @@ const ActionSecond = () => {
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.navigate('/notes/action-first')}
+            onPress={() => router.navigate('/notes/ActionFirst')}
             style={styles.ctaButton}
             text='이전'
           />

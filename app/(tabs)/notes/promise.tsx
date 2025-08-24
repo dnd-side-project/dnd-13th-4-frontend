@@ -6,7 +6,7 @@ import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { NoteValue, useNoteCreateStore } from '@/store/note-create.store';
+import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -82,7 +82,7 @@ const Promise = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.navigate('/notes/action-second')}
+            onPress={() => router.navigate('/notes/ActionSecond')}
             style={styles.ctaButton}
             text='이전'
           />

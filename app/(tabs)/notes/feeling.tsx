@@ -10,7 +10,7 @@ import useEmotionTemplatesQuery from '@/components/notes/feeling/module/useEmoti
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -33,7 +33,7 @@ const Feeling = () => {
 
   const handleSubmit = (): void => {
     setEmotion(selectedItem);
-    router.navigate('/notes/action-first');
+    router.navigate('/notes/ActionFirst');
   };
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { NoteValue, useNoteCreateStore } from '@/store/note-create.store';
+import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -20,7 +20,7 @@ const ActionFirst = () => {
     ACTION_LIST.negative[0].label,
   );
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
-  const { setSituation1 } = useNoteCreateStore();
+  const { setSituationAction } = useNoteCreateStore();
 
   // 현재 선택된 label(type)에 해당하는 카테고리 찾기
   const currentCategory = useMemo(() => {
@@ -46,8 +46,8 @@ const ActionFirst = () => {
   };
 
   const handleSubmit = (): void => {
-    setSituation1(selectedItem);
-    router.navigate('/notes/action-second');
+    setSituationAction(selectedItem);
+    router.navigate('/notes/ActionSecond');
   };
 
   return (

@@ -5,7 +5,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';

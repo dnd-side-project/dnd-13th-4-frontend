@@ -8,9 +8,16 @@ type Props = {
   active?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  showIcon?: boolean;
 };
 
-const SquareButton = ({ active = false, text, onPress, style }: Props) => {
+const SquareButton = ({
+  active = false,
+  text,
+  onPress,
+  style,
+  showIcon = true,
+}: Props) => {
   return (
     <Pressable
       style={[style, styles.button, active ? styles.active : styles.unActive]}
@@ -20,16 +27,22 @@ const SquareButton = ({ active = false, text, onPress, style }: Props) => {
     >
       <CustomText
         variant='body2'
-        style={active ? styles.active : styles.unActive}
+        fontWeight={active ? 'bold' : 'medium'}
+        style={
+          (active ? styles.active : styles.unActive,
+          { flex: 1, textAlign: 'center' })
+        }
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >
         {text}
       </CustomText>
-      <Icon
-        name='checkFill'
-        size={24}
-        color={active ? PrimaryColors.blue100 : '#CCD2E3'}
-      />
+      {showIcon && (
+        <Icon
+          name='checkFill'
+          size={24}
+          color={active ? PrimaryColors.blue100 : '#CCD2E3'}
+        />
+      )}
     </Pressable>
   );
 };
@@ -38,17 +51,18 @@ export default SquareButton;
 
 const styles = StyleSheet.create({
   button: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignSelf: 'flex-start',
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderWidth: 2,
     borderRadius: 12,
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
+    alignItems: 'center',
   },
   active: {
-    fontFamily: 'Pretendard-Bold',
     backgroundColor: PrimaryColors.blue300,
     borderColor: PrimaryColors.blue100,
   },

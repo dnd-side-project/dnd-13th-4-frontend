@@ -5,10 +5,8 @@ import {
   Animated,
   Easing,
   Modal,
-  Platform,
   Pressable,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import CTAButton from '../button/CTAButton';
@@ -117,18 +115,7 @@ export default function AppModal({
           ) : null}
 
           <View style={styles.footer}>
-            {cancelText ? (
-              <Pressable
-                style={[styles.btn, styles.btnGhost]}
-                onPress={onCancel}
-                hitSlop={8}
-              >
-                <Text style={[styles.btnText, styles.btnGhostText]}>
-                  {cancelText}
-                </Text>
-              </Pressable>
-            ) : null}
-
+            {cancelText && <CTAButton onPress={onCancel} text={cancelText} />}
             <CTAButton onPress={onConfirm} text={confirmText} active />
           </View>
         </Animated.View>
@@ -169,26 +156,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
-    color: '#6B7280',
   },
   footer: {
     marginTop: 16,
     gap: 10,
     flexDirection: 'column', // 버튼 세로 스택 (스크린샷 느낌)
   },
-  btn: {
-    borderRadius: 12,
-    paddingVertical: Platform.select({ ios: 12, android: 10 }),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnPrimary: {
-    backgroundColor: '#4F8DF5', // Primary Blue
-  },
-  btnPrimaryText: { color: '#FFFFFF', fontWeight: '700', fontSize: 16 },
-  btnGhost: {
-    backgroundColor: '#F3F4F6',
-  },
-  btnGhostText: { color: '#111827', fontWeight: '600', fontSize: 15 },
-  btnText: { letterSpacing: 0.2 },
 });

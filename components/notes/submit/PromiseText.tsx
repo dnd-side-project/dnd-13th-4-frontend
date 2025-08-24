@@ -17,8 +17,8 @@ const PromiseText = ({ text }: Props) => {
       <View style={{ flex: 1 }}>
         <View>
           <CustomText
-            style={{ fontFamily: 'Pretendard-Bold' }}
             variant='body2'
+            fontWeight='bold'
             color={PrimaryColors.blueText}
           >
             {text}

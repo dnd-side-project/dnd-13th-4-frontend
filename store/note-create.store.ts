@@ -1,15 +1,14 @@
 // store/mindNoteStore.ts
-import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import { create } from 'zustand';
 
 const defaultNoteCreateValue = {
-  emotion: EMOTION_MOCK_LIST[0],
+  emotion: null,
   situation1: null,
   situation2: null,
   promise: null,
 };
 
-type NoteValue = {
+export type NoteValue = {
   text: string;
   id: number;
 };
@@ -17,7 +16,7 @@ type NoteValue = {
 type Emotion = { graphicUrl: string } & NoteValue;
 
 type NoteCreateStore = {
-  emotion: Emotion;
+  emotion: Emotion | null;
   situation1: NoteValue | null;
   situation2: NoteValue | null;
   promise: NoteValue | null;

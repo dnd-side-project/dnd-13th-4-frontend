@@ -6,15 +6,17 @@ import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { NoteValue, useNoteCreateStore } from '@/store/note-create.store';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const { situation2, setSituation2 } = useNoteCreateStore();
+  const { setSituation2 } = useNoteCreateStore();
+  const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
 
   const handleSelect = ({
     text,
@@ -26,14 +28,18 @@ const ActionSecond = () => {
     isActive: boolean;
   }) => {
     if (isActive) {
-      setSituation2(null);
+      setSelectedItem(null);
     } else {
-      setSituation2({ text, id });
+      setSelectedItem({ text, id });
     }
   };
 
   const handleSkip = (): void => {
-    setSituation2(null);
+    router.navigate('/notes/promise');
+  };
+
+  const handleSubmit = (): void => {
+    setSituation2(selectedItem);
     router.navigate('/notes/promise');
   };
 
@@ -48,7 +54,7 @@ const ActionSecond = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {situation2?.text ?? EMPTY_ACTION_TEXT}
+                  {selectedItem?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -79,9 +85,9 @@ const ActionSecond = () => {
               style={styles.gridItem}
               text={text}
               onPress={() =>
-                handleSelect({ id, text, isActive: id === situation2?.id })
+                handleSelect({ id, text, isActive: id === selectedItem?.id })
               }
-              active={id === situation2?.id}
+              active={id === selectedItem?.id}
             />
           ))}
         </View>
@@ -92,11 +98,11 @@ const ActionSecond = () => {
             text='이전'
           />
           <CTAButton
-            onPress={() => router.navigate('/notes/promise')}
+            onPress={handleSubmit}
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!situation2}
+            disabled={!selectedItem}
           />
         </View>
       </View>

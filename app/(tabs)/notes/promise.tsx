@@ -6,8 +6,9 @@ import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/note-create.store';
+import { NoteValue, useNoteCreateStore } from '@/store/note-create.store';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT =
@@ -15,7 +16,8 @@ const EMPTY_ACTION_TEXT =
 
 const Promise = () => {
   const router = useRouter();
-  const { promise, setPromise } = useNoteCreateStore();
+  const { setPromise } = useNoteCreateStore();
+  const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
 
   const handleSelect = ({
     id,
@@ -27,10 +29,15 @@ const Promise = () => {
     isActive: boolean;
   }): void => {
     if (isActive) {
-      setPromise(null);
+      setSelectedItem(null);
     } else {
-      setPromise({ text, id });
+      setSelectedItem({ text, id });
     }
+  };
+
+  const handleSubmit = (): void => {
+    setPromise(selectedItem);
+    router.navigate('/notes/submit');
   };
 
   return (
@@ -42,7 +49,7 @@ const Promise = () => {
             <View style={styles.selectItemSecondRow}>
               <View style={styles.selectItemBox}>
                 <CustomText color={PrimaryColors.blue100} variant='head3'>
-                  {promise?.text ?? EMPTY_ACTION_TEXT}
+                  {selectedItem?.text ?? EMPTY_ACTION_TEXT}
                 </CustomText>
               </View>
             </View>
@@ -67,9 +74,9 @@ const Promise = () => {
               key={id}
               text={text}
               onPress={() =>
-                handleSelect({ id, isActive: id === promise?.id, text })
+                handleSelect({ id, isActive: id === selectedItem?.id, text })
               }
-              active={id === promise?.id}
+              active={id === selectedItem?.id}
             />
           ))}
         </ScrollView>
@@ -80,11 +87,11 @@ const Promise = () => {
             text='이전'
           />
           <CTAButton
-            onPress={() => router.navigate('/notes/submit')}
+            onPress={handleSubmit}
             style={styles.ctaButton}
             text='다음'
             active
-            disabled={!promise}
+            disabled={!selectedItem}
           />
         </View>
       </View>

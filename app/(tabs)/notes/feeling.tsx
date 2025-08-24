@@ -12,7 +12,7 @@ import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeader
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { useNoteCreateStore } from '@/store/note-create.store';
 import { useRouter } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 // TODO : isMatched는 API연동을 해야함.
@@ -20,14 +20,20 @@ export const isMatched = false;
 
 const Feeling = () => {
   const router = useRouter();
+  const [selectedItem, setSelectedItem] = useState(EMOTION_MOCK_LIST[0]);
   const { width: screenWidth } = useWindowDimensions();
-  const { emotion, setEmotion } = useNoteCreateStore();
+  const { setEmotion } = useNoteCreateStore();
   const { data, isLoading, isError } = useEmotionTemplatesQuery({
     emotionType: 'positive',
   });
 
   const changeEmotion = (newIndex: number): void => {
-    setEmotion(EMOTION_MOCK_LIST[newIndex]);
+    setSelectedItem(EMOTION_MOCK_LIST[newIndex]);
+  };
+
+  const handleSubmit = (): void => {
+    setEmotion(selectedItem);
+    router.navigate('/notes/action-first');
   };
 
   useEffect(() => {
@@ -68,7 +74,7 @@ const Feeling = () => {
           <View style={styles.preview}>
             <View style={styles.feelingBox}>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                {emotion.text}
+                {selectedItem.text}
               </CustomText>
             </View>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
@@ -107,11 +113,7 @@ const Feeling = () => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <CTAButton
-            text='다음'
-            active
-            onPress={() => router.navigate('/notes/action-first')}
-          />
+          <CTAButton text='다음' active onPress={handleSubmit} />
         </View>
       </View>
     </SafeScreenLayout>

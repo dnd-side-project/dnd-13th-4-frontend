@@ -52,7 +52,6 @@ export default SituationText;
 
 const styles = StyleSheet.create({
   situationContainer: {
-    display: 'flex',
     gap: 11,
     flexDirection: 'row',
     alignItems: 'center',

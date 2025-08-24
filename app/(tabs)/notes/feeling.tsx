@@ -70,6 +70,8 @@ const Feeling = () => {
         <View style={styles.carouselContainer}>
           <Carousel
             width={screenWidth}
+            itemWidth={210}
+            itemGap={28}
             height={305}
             onChange={changeEmotion}
             itemList={EMOTION_MOCK_LIST.map(({ emotionType, graphicUrl }) => (

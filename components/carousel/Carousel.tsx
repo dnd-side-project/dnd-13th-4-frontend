@@ -10,11 +10,20 @@ import CarouselUi, {
 type CarouselProps = {
   itemList: ReactNode[];
   width: number;
+  itemWidth: number;
+  itemGap?: number;
   height: number;
   onChange?: (index: number) => void;
 };
 
-const Carousel = ({ itemList, height, width, onChange }: CarouselProps) => {
+const Carousel = ({
+  itemList,
+  height,
+  width,
+  itemWidth,
+  itemGap = 20,
+  onChange,
+}: CarouselProps) => {
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
 
@@ -42,7 +51,7 @@ const Carousel = ({ itemList, height, width, onChange }: CarouselProps) => {
         mode='parallax'
         modeConfig={{
           parallaxScrollingScale: 1,
-          parallaxScrollingOffset: 185,
+          parallaxScrollingOffset: width - itemWidth - itemGap,
           parallaxAdjacentItemScale: 1,
         }}
         onProgressChange={progress}

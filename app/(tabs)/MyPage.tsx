@@ -1,18 +1,38 @@
+import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { StyleSheet, Text, View } from 'react-native';
+import { PrimaryColors } from '@/constants/Colors';
+import { StyleSheet, View } from 'react-native';
 
 export default function MyPage() {
   return (
-    <SafeScreenLayout>
-      <Text style={styles.title}>마이페이지</Text>
-      <View style={styles.contentArea}>
-        <Text style={styles.content}>사용자 설정 및 정보</Text>
+    <SafeScreenLayout
+      header={
+        <View style={styles.header}>
+          <CustomText>마이페이지</CustomText>
+        </View>
+      }
+      background={{
+        type: 'gradient',
+        colors: [PrimaryColors.blue300, '#ffffff'],
+      }}
+    >
+      <View>
+        <View>
+          <CustomText>이미지</CustomText>
+          <CustomText>고지우</CustomText>
+        </View>
+        <View>
+          <View>
+            <CustomText>룸메이트 정보</CustomText>
+          </View>
+        </View>
       </View>
     </SafeScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
+  header: { alignSelf: 'center', paddingVertical: 16 },
   title: {
     fontSize: 24,
     fontFamily: 'Pretendard-Bold',

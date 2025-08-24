@@ -4,10 +4,15 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import EmotionCardList from '@/components/storage/EmotionCardList';
 import Filter from '@/components/storage/Filter';
 import { GreyColors } from '@/constants/Colors';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useRef } from 'react';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 export default function Storage() {
+  const listRef = useRef<FlatList>(null);
+
+  const handleScrollTop = (): void => {
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
   return (
     <SafeScreenLayout
       header={
@@ -34,7 +39,11 @@ export default function Storage() {
         </View>
       </View>
 
-      <EmotionCardList />
+      <EmotionCardList ref={listRef} />
+
+      <Pressable style={styles.topButton} onPress={handleScrollTop}>
+        <Icon name='arrowTop' size={24} color={GreyColors.grey500} />
+      </Pressable>
     </SafeScreenLayout>
   );
 }
@@ -55,5 +64,14 @@ const styles = StyleSheet.create({
     height: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  topButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    borderColor: GreyColors.grey200,
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    borderRadius: 12,
   },
 });

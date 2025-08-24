@@ -1,12 +1,17 @@
 import { GreyColors } from '@/constants/Colors';
 import { getGraphicUrl } from '@/constants/graphic';
-import { ImageBackground, Pressable, StyleSheet } from 'react-native';
+import { Ref } from 'react';
+import { FlatList, ImageBackground, Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 import GridList from '../ui/gridList';
 import EmptyCardList from './EmptyCardList';
 import { useSavedNotesQuery } from './module/useSavedNotesQuery';
 
-const EmotionCardList = () => {
+type Props = {
+  ref?: Ref<FlatList>;
+};
+
+const EmotionCardList = ({ ref }: Props) => {
   const { data, isLoading, isError } = useSavedNotesQuery();
 
   if (isLoading) {
@@ -18,6 +23,7 @@ const EmotionCardList = () => {
 
   return (
     <GridList
+      ref={ref}
       data={data}
       numColumns={2}
       gap={16}

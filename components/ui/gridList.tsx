@@ -1,3 +1,4 @@
+import { Ref } from 'react';
 import { FlatList, FlatListProps, StyleProp, ViewStyle } from 'react-native';
 
 type GridListProps<T> = {
@@ -7,6 +8,7 @@ type GridListProps<T> = {
   contentContainerStyle?: StyleProp<ViewStyle>;
   renderItem: FlatListProps<T>['renderItem'];
   keyExtractor: (item: T, index: number) => string;
+  ref?: Ref<FlatList>;
 };
 
 export default function GridList<T>({
@@ -16,9 +18,11 @@ export default function GridList<T>({
   contentContainerStyle,
   renderItem,
   keyExtractor,
+  ref,
 }: GridListProps<T>) {
   return (
     <FlatList
+      ref={ref}
       data={data}
       numColumns={numColumns}
       keyExtractor={keyExtractor}

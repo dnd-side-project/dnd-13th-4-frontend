@@ -3,6 +3,7 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -11,6 +12,7 @@ const Inviter = () => {
   const router = useRouter();
   const handleCopy = async (copyText: string): Promise<void> => {
     await Clipboard.setStringAsync(copyText);
+    toast.show('초대코드가 복사되었습니다.');
   };
 
   // TODO 연동

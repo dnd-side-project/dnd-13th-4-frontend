@@ -1,6 +1,8 @@
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { toast } from '@/store/toast.store';
+import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 
@@ -8,6 +10,11 @@ const PROFILE_IMAGE_WIDTH = 120;
 
 export default function MyPage() {
   const handleLogout = (): void => {};
+
+  const handleCopy = async (copyText: string): Promise<void> => {
+    await Clipboard.setStringAsync(copyText);
+    toast.show('초대코드가 복사되었습니다.');
+  };
 
   return (
     <SafeScreenLayout
@@ -65,12 +72,14 @@ export default function MyPage() {
         <View style={styles.infoItemContainer}>
           <View style={styles.infoItem}>
             <CustomText color={GreyColors.grey700}>초대코드 복사</CustomText>
-            <CustomText
-              color={GreyColors.grey400}
-              style={{ textDecorationLine: 'underline' }}
-            >
-              2HUM8G4
-            </CustomText>
+            <Pressable onPress={() => handleCopy('2HUM8G4')}>
+              <CustomText
+                color={GreyColors.grey400}
+                style={{ textDecorationLine: 'underline' }}
+              >
+                2HUM8G4
+              </CustomText>
+            </Pressable>
           </View>
         </View>
         <View style={styles.infoItemContainer}>

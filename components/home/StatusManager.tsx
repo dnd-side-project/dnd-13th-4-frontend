@@ -1,3 +1,5 @@
+import useMyStatusQuery from '@/hooks/api/useMyStatusQuery';
+import useUpdateMyStatusMutation from '@/hooks/api/useUpdateMyStatusMutation';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useRef, useState } from 'react';
 import { MyStatusSection } from './MyStatusSection';
@@ -15,16 +17,47 @@ interface StatusManagerProps {
   initialStatus?: UserStatus;
 }
 
-export const StatusManager = ({ 
-  initialStatus = { emoji: '🚌', text: '외출 중' }
+export const StatusManager = ({
+  initialStatus = { emoji: '🚌', text: '외출 중' },
 }: StatusManagerProps) => {
+  // API 훅들
+  const { data: myStatus, isLoading } = useMyStatusQuery();
+  const updateMyStatusMutation = useUpdateMyStatusMutation();
+
   // 바텀시트 ref
   const statusModalRef = useRef<BottomSheetModal>(null);
   const timePickerModalRef = useRef<BottomSheetModal>(null);
-  
+
   // 상태 관리
-  const [userStatus, setUserStatus] = useState<UserStatus>(initialStatus);
-  const [selectedCustomTime, setSelectedCustomTime] = useState<Date | null>(null);
+  const [selectedCustomTime, setSelectedCustomTime] = useState<Date | null>(
+    null,
+  );
+
+  // API 데이터를 로컬 상태 형식으로 변환
+  const getUserStatusFromApi = (): UserStatus => {
+    if (!myStatus?.emoji || !myStatus?.text) {
+      return initialStatus;
+    }
+
+    let endTime: Date | undefined;
+    if (myStatus.statusStartedAt && myStatus.reservedTimeInfo) {
+      const { hour, minute } = myStatus.reservedTimeInfo;
+      if (hour !== -1 && minute !== -1) {
+        const startDate = new Date(myStatus.statusStartedAt);
+        startDate.setHours(startDate.getHours() + hour);
+        startDate.setMinutes(startDate.getMinutes() + minute);
+        endTime = startDate;
+      }
+    }
+
+    return {
+      emoji: myStatus.emoji,
+      text: myStatus.text,
+      endTime,
+    };
+  };
+
+  const userStatus = getUserStatusFromApi();
 
   // 바텀시트 열기 함수
   const handleOpenStatusModal = () => {
@@ -52,15 +85,59 @@ export const StatusManager = ({
   };
 
   // 상태 저장 핸들러
-  const handleSaveStatus = (status: UserStatus, endTime?: Date) => {
-    setUserStatus({ ...status, endTime });
-    handleCloseStatusModal();
+  const handleSaveStatus = async (
+    status: UserStatus,
+    statusId: number,
+    endTime?: Date,
+  ) => {
+    try {
+      const now = new Date();
+      let reservedTimeInfo;
+
+      if (endTime) {
+        const diffMs = endTime.getTime() - now.getTime();
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffMinutes = Math.floor(
+          (diffMs % (1000 * 60 * 60)) / (1000 * 60),
+        );
+
+        reservedTimeInfo = {
+          hour: diffHours,
+          minute: diffMinutes,
+        };
+      } else {
+        // "계속 유지" 옵션
+        reservedTimeInfo = {
+          hour: -1,
+          minute: -1,
+        };
+      }
+
+      await updateMyStatusMutation.mutateAsync({
+        statusId,
+        startedAt: now.toISOString(),
+        reservedTimeInfo,
+      });
+
+      handleCloseStatusModal();
+    } catch (error) {
+      console.error('상태 업데이트 실패:', error);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <MyStatusSection
+        onStatusPress={() => {}}
+        userStatus={{ emoji: '⏳', text: '불러오는 중...' }}
+      />
+    );
+  }
 
   return (
     <>
-      <MyStatusSection 
-        onStatusPress={handleOpenStatusModal} 
+      <MyStatusSection
+        onStatusPress={handleOpenStatusModal}
         userStatus={userStatus}
       />
 

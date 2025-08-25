@@ -1,34 +1,90 @@
 import { CustomText } from '@/components/CustomText';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import useMateStatusQuery from '@/hooks/api/useMateStatusQuery';
 import { StyleSheet, View } from 'react-native';
 
-export const RoommateStatus = () => (
-  <View style={styles.container}>
-    <CustomText variant='body3' color={GreyColors.grey600}>
-      룸메는 지금
-    </CustomText>
-    <View style={styles.roommateState}>
-      <CustomText variant='body1' color={GreyColors.grey800} fontWeight='bold'>
-        💻 작업 중
+export const RoommateStatus = () => {
+  const { data: mateStatus, isLoading } = useMateStatusQuery();
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <CustomText variant='body3' color={GreyColors.grey600}>
+          룸메는 지금
+        </CustomText>
+        <View style={styles.roommateState}>
+          <CustomText variant='body1' color={GreyColors.grey500}>
+            불러오는 중...
+          </CustomText>
+        </View>
+      </View>
+    );
+  }
+
+  if (!mateStatus?.text) {
+    return (
+      <View style={styles.container}>
+        <CustomText variant='body3' color={GreyColors.grey600}>
+          룸메는 지금
+        </CustomText>
+        <View style={styles.roommateState}>
+          <CustomText variant='body1' color={GreyColors.grey500}>
+            상태를 설정하지 않았어요
+          </CustomText>
+        </View>
+      </View>
+    );
+  }
+
+  const formatTime = (dateString: string | null) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+  };
+
+  const getEndTime = () => {
+    if (!mateStatus.statusStartedAt || !mateStatus.reservedTimeInfo) return '';
+    
+    const { hour, minute } = mateStatus.reservedTimeInfo;
+    if (hour === -1 && minute === -1) return '계속 유지';
+    
+    const startDate = new Date(mateStatus.statusStartedAt);
+    startDate.setHours(startDate.getHours() + hour);
+    startDate.setMinutes(startDate.getMinutes() + minute);
+    
+    return `~${formatTime(startDate.toISOString())}`;
+  };
+
+  return (
+    <View style={styles.container}>
+      <CustomText variant='body3' color={GreyColors.grey600}>
+        룸메는 지금
       </CustomText>
-      <CustomText
-        variant='body3'
-        style={styles.roommateTimeInfo}
-        color={PrimaryColors.blue100}
-      >
-        ~18:00
-      </CustomText>
-      <View style={styles.divideCircle} />
-      <CustomText
-        variant='body3'
-        fontWeight='medium'
-        color={GreyColors.grey500}
-      >
-        주의 부탁해요!
-      </CustomText>
+      <View style={styles.roommateState}>
+        <CustomText variant='body1' color={GreyColors.grey800} fontWeight='bold'>
+          {mateStatus.emoji} {mateStatus.text}
+        </CustomText>
+        {getEndTime() && (
+          <CustomText
+            variant='body3'
+            style={styles.roommateTimeInfo}
+            color={PrimaryColors.blue100}
+          >
+            {getEndTime()}
+          </CustomText>
+        )}
+        <View style={styles.divideCircle} />
+        <CustomText
+          variant='body3'
+          fontWeight='medium'
+          color={GreyColors.grey500}
+        >
+          주의 부탁해요!
+        </CustomText>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

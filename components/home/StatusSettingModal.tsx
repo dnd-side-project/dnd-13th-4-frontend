@@ -1,6 +1,7 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import useStatusListQuery from '@/hooks/api/useStatusListQuery';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -28,7 +29,7 @@ interface StatusSettingModalProps {
   onClose: () => void;
   onCustomTimePress: () => void;
   selectedCustomTime: Date | null;
-  onSave: (status: UserStatus, endTime?: Date) => void;
+  onSave: (status: UserStatus, statusId: number, endTime?: Date) => void;
   currentStatus: UserStatus;
 }
 
@@ -43,9 +44,13 @@ export const StatusSettingModal = forwardRef<
     const screenHeight = Dimensions.get('window').height;
     const snapPoints = [screenHeight - 60];
 
+    // API 데이터
+    const { data: statusList } = useStatusListQuery();
+    
     // 선택된 상태 관리
     const [selectedStatus, setSelectedStatus] =
       useState<UserStatus>(currentStatus);
+    const [selectedStatusId, setSelectedStatusId] = useState<number>(1); // 기본값
     const [selectedTimeOption, setSelectedTimeOption] =
       useState<string>('30min');
 
@@ -88,12 +93,13 @@ export const StatusSettingModal = forwardRef<
         endTime = new Date(now.getTime() + minutes * 60 * 1000);
       }
 
-      onSave(selectedStatus, endTime);
+      onSave(selectedStatus, selectedStatusId, endTime);
     };
 
     // 상태 선택 핸들러
-    const handleStatusSelect = (emoji: string, text: string) => {
+    const handleStatusSelect = (id: number, emoji: string, text: string) => {
       setSelectedStatus({ emoji, text });
+      setSelectedStatusId(id);
     };
 
     // 시간 옵션 선택 핸들러
@@ -101,18 +107,9 @@ export const StatusSettingModal = forwardRef<
       setSelectedTimeOption(option);
     };
 
-    // 상태 옵션 데이터
-    const homeStatusOptions = [
-      { id: 'work', emoji: '💻', text: '작업 중' },
-      { id: 'rest', emoji: '🌿', text: '휴식 중' },
-      { id: 'sleep', emoji: '🌙', text: '취침 중' },
-      { id: 'meal', emoji: '🍚', text: '식사 중' },
-    ];
-
-    const outdoorStatusOptions = [
-      { id: 'out', emoji: '🚌', text: '외출 중' },
-      { id: '', emoji: '', text: '' },
-    ];
+    // API 데이터에서 위치별로 상태 필터링
+    const homeStatusOptions = statusList?.filter(status => status.location === 'HOME') || [];
+    const outdoorStatusOptions = statusList?.filter(status => status.location === 'OUTDOORS') || [];
 
     // 시간 옵션 데이터
     const timeOptions = [
@@ -198,16 +195,13 @@ export const StatusSettingModal = forwardRef<
                 columnWrapperStyle={styles.statusRow}
                 renderItem={({ item }) => (
                   <SquareButton
-                    active={
-                      selectedStatus.emoji === item.emoji &&
-                      selectedStatus.text === item.text
-                    }
-                    onPress={() => handleStatusSelect(item.emoji, item.text)}
+                    active={selectedStatusId === item.id}
+                    onPress={() => handleStatusSelect(item.id, item.emoji, item.text)}
                     text={`${item.emoji} ${item.text}`}
                     showIcon={false}
                   />
                 )}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
               />
             </View>
             <View style={styles.customStatusSection}>
@@ -234,7 +228,7 @@ export const StatusSettingModal = forwardRef<
                     <View style={{ flex: 1 }} />
                   )
                 }
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
               />
             </View>
           </View>

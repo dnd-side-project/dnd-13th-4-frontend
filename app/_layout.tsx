@@ -2,7 +2,7 @@ import { STACK_SCREENS } from '@/constants/Routes';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
+// import * as SplashScreen from 'expo-splash-screen'; // 🔹 주석 처리
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
@@ -19,7 +19,12 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { AppStateStatus, Platform } from 'react-native';
+import {
+  ActivityIndicator,
+  AppStateStatus,
+  Platform,
+  View,
+} from 'react-native';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -32,20 +37,18 @@ Notifications.setNotificationHandler({
 });
 
 function onAppStateChange(status: AppStateStatus) {
-  // React Query already supports in web browser refetch on window focus by default
   if (Platform.OS !== 'web') {
     focusManager.setFocused(status === 'active');
   }
 }
 
-// Set the animation options. This is optional.
-SplashScreen.setOptions({
-  duration: 500,
-  fade: true,
-});
+// 🔹 스플래시 관련 코드 주석 처리
+// SplashScreen.setOptions({
+//   duration: 500,
+//   fade: true,
+// });
 
-// Keep the splash screen visible while fonts are loading
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
@@ -65,21 +68,13 @@ export default function RootLayout() {
   >(undefined);
 
   useEffect(() => {
-    // 토큰을 받아 상태로 저장. 이 토큰으로 특정사용자에게 푸시가 가능해짐.
-    // 보통은 백엔드에게 token을 전달. 백엔드는 이 token으로 푸시를 보냄.
     registerForPushNotificationsAsync()
       .then((token) => setExpoPushToken(token ?? ''))
       .catch((error: any) => setExpoPushToken(`${error}`));
 
-    // 알림 수신 리스너 등록
     const notificationListener = Notifications.addNotificationReceivedListener(
-      (notification) => {
-        setNotification(notification);
-      },
+      (notification) => setNotification(notification),
     );
-
-    // 사용자가 백그라운드에서 알림을 탭해서 앱을 열었을때를 감지하는 리스너
-    // 여기서 특정화면으로 넘기는 등의 동작 삽입 필요
     const responseListener =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
@@ -92,17 +87,22 @@ export default function RootLayout() {
   }, []);
 
   useOnlineManager();
-
   useAppState(onAppStateChange);
 
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  // 🔹 스플래시 hide 로직 주석 처리
+  // useEffect(() => {
+  //   if (fontsLoaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
+  // 폰트 로딩 중에는 간단한 로더만 표시
   if (!fontsLoaded) {
-    return null;
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size='large' />
+      </View>
+    );
   }
 
   return (

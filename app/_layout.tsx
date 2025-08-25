@@ -2,7 +2,7 @@ import { STACK_SCREENS } from '@/constants/Routes';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
-// import * as SplashScreen from 'expo-splash-screen'; // 🔹 주석 처리
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
@@ -14,17 +14,13 @@ import ToastHost from '@/components/ToastHost';
 import { useAppState } from '@/hooks/useAppState';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
+import { useNotificationRouting } from '@/lib/notifications/useNotificationRouting';
 import {
   focusManager,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import {
-  ActivityIndicator,
-  AppStateStatus,
-  Platform,
-  View,
-} from 'react-native';
+import { AppStateStatus, Platform } from 'react-native';
 
 // 알림수신 시 포그라운드에서의 동작 정의
 Notifications.setNotificationHandler({
@@ -42,19 +38,19 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
-// 🔹 스플래시 관련 코드 주석 처리
-// SplashScreen.setOptions({
-//   duration: 500,
-//   fade: true,
-// });
+SplashScreen.setOptions({
+  duration: 500,
+  fade: true,
+});
 
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
 });
 
 export default function RootLayout() {
+  useNotificationRouting();
   const [fontsLoaded] = useFonts({
     Pretendard: require('../assets/fonts/Pretendard-Regular.ttf'),
     'Pretendard-Medium': require('../assets/fonts/Pretendard-Medium.ttf'),
@@ -89,20 +85,14 @@ export default function RootLayout() {
   useOnlineManager();
   useAppState(onAppStateChange);
 
-  // 🔹 스플래시 hide 로직 주석 처리
-  // useEffect(() => {
-  //   if (fontsLoaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
-  // 폰트 로딩 중에는 간단한 로더만 표시
   if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size='large' />
-      </View>
-    );
+    return null;
   }
 
   return (

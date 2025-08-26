@@ -88,6 +88,7 @@ const ActionSecond = () => {
                 handleSelect({ id, text, isActive: id === selectedItem?.id })
               }
               active={id === selectedItem?.id}
+              fullWidth={false}
             />
           ))}
         </View>

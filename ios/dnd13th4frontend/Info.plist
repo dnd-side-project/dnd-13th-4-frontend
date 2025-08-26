@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>dnd-13th-4-frontend</string>
+    <string>Wini</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,8 +27,14 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>dnd13th4frontend</string>
           <string>com.kirikiri.wini</string>
+          <string>com.kirikiri.wini</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>exp+wini</string>
         </array>
       </dict>
     </array>

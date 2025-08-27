@@ -75,6 +75,7 @@ const Submit = () => {
             situationActionText={situationAction?.text ?? ''}
             situationStateText={situationState?.text ?? ''}
             randomMessage={'지금처럼만 하면 우리 룸메 계약 연장 가능✨'}
+            emotionType={'negative'} // TODO emotion 보면서 negative , positive 정해야함.
             style={{ zIndex: 100 }}
           />
         </View>

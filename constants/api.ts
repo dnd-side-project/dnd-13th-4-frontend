@@ -6,3 +6,6 @@ export const getNoteSavePath = (noteId: number) => `/notes/${noteId}/save`;
 
 /** GET 보관된 쪽지 리스트 조회 */
 export const NOTES_SAVED_PATH = '/notes/saved';
+
+/** GET 끝맺음 리스트 조회 */
+export const TEMPLATES_CLOSINGS_PATH = '/templates/closings';

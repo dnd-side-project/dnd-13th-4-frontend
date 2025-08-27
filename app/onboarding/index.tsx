@@ -140,9 +140,10 @@ const OnboardingScreen = () => {
           onProgressChange={progress}
           renderItem={({ item }) => renderOnboardingSlide(item)}
           scrollAnimationDuration={300}
-          pagingEnabled={true}
-          snapEnabled={true}
+          pagingEnabled={false}
+          snapEnabled={false}
           loop={false}
+          enabled={false}
         />
       </View>
 

@@ -2,6 +2,7 @@ import { schedulePushNotification } from '@/lib/notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 import { usePathname, useRouter } from 'expo-router';
+import * as Updates from 'expo-updates';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -36,6 +37,13 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
     await AsyncStorage.setItem('accessToken', trimmed);
     Alert.alert('저장 완료', 'AccessToken이 AsyncStorage에 저장되었습니다.');
     Keyboard.dismiss();
+
+    // ✅ 앱 전체 reload
+    try {
+      await Updates.reloadAsync();
+    } catch (e) {
+      console.warn('reload failed', e);
+    }
   };
 
   const normalizePath = (p: string) => {

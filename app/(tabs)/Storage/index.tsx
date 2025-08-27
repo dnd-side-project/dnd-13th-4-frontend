@@ -1,8 +1,8 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import EmotionCardList from '@/components/storage/EmotionCardList';
-import Filter from '@/components/storage/Filter';
+import EmotionCardList from '@/components/Storage/EmotionCardList';
+import Filter from '@/components/Storage/Filter';
 import { GreyColors } from '@/constants/Colors';
 import React, { useRef } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';

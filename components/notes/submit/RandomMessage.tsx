@@ -1,17 +1,32 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { GreyColors } from '@/constants/Colors';
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-const RandomMessage = () => {
+type Props = {
+  initialText: string;
+  isRefresh?: boolean;
+};
+
+const RandomMessage = ({ initialText, isRefresh = false }: Props) => {
+  const [text, setText] = useState(initialText);
+
+  const handleRefresh = (): void => {
+    // TODO : 랜덤 메시지 로직
+    setText(text);
+  };
+
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>
-        지금처럼만 하면 우리 룸메 계약 연장 가능✨
-      </CustomText>
-      <View style={styles.icon}>
-        <Icon name='refresh' color={GreyColors.grey500} />
-      </View>
+      <CustomText style={styles.text}>{text}</CustomText>
+      {isRefresh && (
+        <Pressable onPress={handleRefresh}>
+          <View style={styles.icon}>
+            <Icon name='refresh' color={GreyColors.grey500} />
+          </View>
+        </Pressable>
+      )}
     </View>
   );
 };

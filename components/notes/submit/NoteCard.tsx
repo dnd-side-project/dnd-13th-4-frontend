@@ -1,45 +1,59 @@
+import { CustomText } from '@/components/CustomText';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
-import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';
 import RandomMessage from './RandomMessage';
 import SituationText from './SituationText';
 
-// ✅ S3 이미지 URL
-const imageUrl =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
-
 type NoteCardProps = {
   style?: StyleProp<ViewStyle>;
+  date: string;
+  imageUrl: string;
+  emotionText: string;
+  promiseText: string;
+  situationActionText: string;
+  situationStateText?: string;
+  isRandomMessage?: boolean;
+  randomMessage: string;
 };
 
-const NoteCard = ({ style }: NoteCardProps) => {
-  const { emotion, promise, situationAction, situationState } =
-    useNoteCreateStore();
-
+const NoteCard = ({
+  style,
+  date,
+  emotionText,
+  imageUrl,
+  situationActionText,
+  isRandomMessage,
+  randomMessage,
+  situationStateText,
+  promiseText,
+}: NoteCardProps) => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.card, style]}>
         <View style={styles.imageContainer}>
           <ResponsiveImage source={{ uri: imageUrl }} width={317} />
+          <View style={styles.date}>
+            <CustomText variant='body3'>{date}</CustomText>
+          </View>
         </View>
         <View style={{ paddingHorizontal: 16 }}>
           <View style={{ marginTop: 20, marginBottom: 24 }}>
-            <FeelingText text={emotion?.text ?? ''} />
+            <FeelingText text={emotionText} />
           </View>
           <View style={{ marginBottom: 20 }}>
             <SituationText
-              topText={situationAction?.text ?? ''}
-              bottomText={situationState?.text ?? ''}
+              topText={situationActionText}
+              bottomText={situationStateText}
             />
           </View>
           <View style={{ marginBottom: 24 }}>
-            <PromiseText text={promise?.text ?? ''} />
+            <PromiseText text={promiseText} />
           </View>
           <View style={{ marginBottom: 24 }}>
-            <RandomMessage />
+            <RandomMessage initialText={randomMessage} />
           </View>
         </View>
       </View>
@@ -62,6 +76,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+  },
+  date: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
   },
   backgroundCard: {
     position: 'absolute',

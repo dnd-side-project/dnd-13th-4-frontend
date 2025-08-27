@@ -1,5 +1,6 @@
 import { GreyColors } from '@/constants/Colors';
 import { getGraphicUrl } from '@/constants/graphic';
+import { useRouter } from 'expo-router';
 import { Ref } from 'react';
 import { FlatList, ImageBackground, Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const EmotionCardList = ({ ref }: Props) => {
+  const router = useRouter();
   const { data, isLoading, isError } = useSavedNotesQuery();
 
   if (isLoading) {
@@ -33,7 +35,10 @@ const EmotionCardList = ({ ref }: Props) => {
         <Pressable
           style={styles.cardContainer}
           onPress={() => {
-            /* TODO : 마음편지 상세 페이지 이동 로직 */
+            router.push({
+              pathname: '/Storage/[noteId]',
+              params: { noteId: 1 },
+            });
           }}
         >
           <ImageBackground

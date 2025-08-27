@@ -1,4 +1,5 @@
 import { schedulePushNotification } from '@/lib/notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 import { usePathname, useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -29,6 +30,14 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
     await schedulePushNotification();
   };
 
+  const handleSaveToken = async (text: string): Promise<void> => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    await AsyncStorage.setItem('accessToken', trimmed);
+    Alert.alert('저장 완료', 'AccessToken이 AsyncStorage에 저장되었습니다.');
+    Keyboard.dismiss();
+  };
+
   const normalizePath = (p: string) => {
     const trimmed = p.trim();
     if (!trimmed) return '';
@@ -57,8 +66,6 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
           setPath('');
           setOpen(true);
         }}
-        accessibilityRole='button'
-        accessibilityLabel='디버그 메뉴 열기'
       >
         <Text style={styles.floatingButtonText}>🐛</Text>
       </TouchableOpacity>
@@ -72,8 +79,6 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)} />
         <View style={styles.sheet}>
           <Text style={styles.sheetTitle}>빠른 이동</Text>
-
-          {/* 현재 경로 표시 (참고용) */}
           <Text style={styles.currentPath}>현재 경로: {currentPath}</Text>
 
           {/* 경로 입력 */}
@@ -83,14 +88,12 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
               onChangeText={setPath}
               placeholder='예: /notes/feeling'
               autoCapitalize='none'
-              autoCorrect={false}
               style={styles.input}
               returnKeyType='go'
               onSubmitEditing={() => handleNavigate('push')}
             />
           </View>
 
-          {/* 이동 버튼 */}
           <View style={styles.navRow}>
             <Pressable
               style={styles.goBtn}
@@ -108,15 +111,25 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
 
           <View style={styles.divider} />
 
-          <Text style={styles.sectionTitle}>디버그</Text>
+          <Text style={styles.sectionTitle}>푸시 디버그</Text>
           <View style={styles.actionsRow}>
             <Pressable style={styles.actionBtn} onPress={handleCopy}>
-              <Text style={styles.actionText}>토큰 복사</Text>
+              <Text style={styles.actionText}>푸시토큰 복사</Text>
             </Pressable>
             <Pressable style={styles.actionBtn} onPress={handleLocalPush}>
-              <Text style={styles.actionText}>로컬 푸시</Text>
+              <Text style={styles.actionText}>로컬푸시 실행</Text>
             </Pressable>
           </View>
+
+          {/* AccessToken 입력 즉시 저장 */}
+          <Text style={styles.sectionTitle}>AccessToken 입력 & 저장</Text>
+          <TextInput
+            placeholder='AccessToken 입력 후 Enter'
+            autoCapitalize='none'
+            style={styles.input}
+            returnKeyType='done'
+            onSubmitEditing={(e) => handleSaveToken(e.nativeEvent.text)}
+          />
 
           <Pressable style={styles.closeBtn} onPress={() => setOpen(false)}>
             <Text style={styles.closeText}>닫기</Text>
@@ -153,10 +166,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
     elevation: 20,
   },
   sheetTitle: { fontSize: 16, fontWeight: '600', marginBottom: 8 },
@@ -170,6 +179,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
     backgroundColor: '#F9FAFB',
+    marginBottom: 8,
   },
   navRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
   goBtn: {

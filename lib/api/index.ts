@@ -1,5 +1,6 @@
 import { toast } from '@/store/toast.store';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig } from 'axios';
 import { buildQuery } from '../buildQuery';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -15,6 +16,21 @@ const client = axios.create({
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
   timeout: 60000,
+});
+
+// TODO : refreshToken로 accessToken만료되면 새로 받아오는 로직 적용
+client.interceptors.request.use(async (config) => {
+  try {
+    const token = await AsyncStorage.getItem('accessToken');
+    if (token) {
+      const headers = AxiosHeaders.from(config.headers);
+      headers.set('Authorization', `${token}`);
+      config.headers = headers;
+    }
+  } catch (e) {
+    console.warn('토큰 로드 실패', e);
+  }
+  return config;
 });
 
 async function request<T>(

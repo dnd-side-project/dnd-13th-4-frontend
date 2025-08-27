@@ -14,6 +14,10 @@ const useLatestNotesQuery = () => {
   const query = useQuery({
     queryKey: [LATEST_NOTES_PATH],
     queryFn: getLatestNotes,
+    refetchInterval: 30000,
+    refetchIntervalInBackground: false,
+    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    initialData: [],
   });
 
   return query;

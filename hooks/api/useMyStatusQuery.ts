@@ -14,6 +14,13 @@ const useMyStatusQuery = () => {
   const query = useQuery({
     queryKey: [MY_STATUS_PATH],
     queryFn: getMyStatus,
+    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    initialData: {
+      emoji: null,
+      text: null,
+      statusStartedAt: null,
+      reservedTimeInfo: null,
+    },
   });
 
   return query;

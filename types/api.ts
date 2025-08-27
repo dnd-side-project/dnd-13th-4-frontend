@@ -79,3 +79,37 @@ export type NoteResponse = {
   isSaved: boolean;
   createdAt: string;
 };
+
+// Statistics Types
+export type StatisticsResponse = {
+  notesSentThisWeek: number;
+  notesReceivedThisWeek: number;
+  roomJoinedAt: string;
+};
+
+export type ActionCategoryResponse = {
+  id: number;
+  emotionType: string;
+  name: string;
+};
+
+export type KeywordResponse = {
+  positiveActionCategory: ActionCategoryResponse;
+  negativeActionCategory: ActionCategoryResponse;
+};
+
+export type SimpleActionChange = {
+  text: string;
+  change: number;
+};
+
+export type WeeklyNoteCount = {
+  weeksAgo: number;
+  count: number;
+};
+
+export type GrowthResponse = {
+  increasedPositiveAction: SimpleActionChange;
+  decreasedNegativeAction: SimpleActionChange;
+  weeklyPositiveNoteCounts: WeeklyNoteCount[];
+};

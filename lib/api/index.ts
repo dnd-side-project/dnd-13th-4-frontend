@@ -13,7 +13,11 @@ type RequestOptions = {
 
 const client = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization:
+      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3aW5pIiwic3ViIjoiMiIsImlhdCI6MTc1NjI4NTgzOCwiZXhwIjoxNzU2Mjg3NTg4fQ.5PP__5PPzZTHqKJBGQ6RKZRBVeh4_7k5jp10ih1z7EVdIYLch8UhU7-niZa56OxatnPPRla49FfUunM81zWDpA',
+  },
   timeout: 60000,
 });
 

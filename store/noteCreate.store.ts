@@ -1,4 +1,3 @@
-import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
 import { create, StateCreator } from 'zustand';
 
 export type NoteValue = {
@@ -11,14 +10,14 @@ type Emotion = NoteValue & {
 };
 
 type NoteCreateStateType = {
-  emotion: Emotion;
+  emotion: Emotion | null;
   situationAction: NoteValue | null;
   situationState: NoteValue | null;
   promise: NoteValue | null;
 };
 
 type NoteCreateActionType = {
-  setEmotion: (emotion: Emotion) => void;
+  setEmotion: (emotion: Emotion | null) => void;
   setSituationAction: (situation: NoteValue | null) => void;
   setSituationState: (situation: NoteValue | null) => void;
   setPromise: (promise: NoteValue | null) => void;
@@ -29,7 +28,7 @@ type NoteCreateActionType = {
 export type NoteCreateStoreType = NoteCreateStateType & NoteCreateActionType;
 
 const defaultNoteCreateValue: NoteCreateStateType = {
-  emotion: EMOTION_MOCK_LIST[0], // 최초 선택값
+  emotion: null, // 최초 선택값
   situationAction: null,
   situationState: null,
   promise: null,

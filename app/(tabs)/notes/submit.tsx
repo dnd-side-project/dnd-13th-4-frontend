@@ -69,7 +69,7 @@ const Submit = () => {
         <View style={{ position: 'relative' }}>
           <NoteCard
             date={'8월 7일'}
-            emotionText={emotion?.text}
+            emotionText={emotion?.text ?? ''}
             imageUrl={imageUrl}
             promiseText={promise?.text ?? ''}
             situationActionText={situationAction?.text ?? ''}

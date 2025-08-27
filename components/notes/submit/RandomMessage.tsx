@@ -28,6 +28,7 @@ const RandomMessage = ({
     emotionType,
     enabled: isRefresh,
   });
+  console.log(data);
 
   const handleRefresh = (): void => {
     if (!data) return;
@@ -37,6 +38,8 @@ const RandomMessage = ({
     if (next === text && data.length > 1) {
       next = getRandomItem(data);
     }
+
+    setText(next?.text);
   };
 
   // 초기 랜덤 세팅: initialText가 없고, isRefresh=true이고, 데이터가 왔을 때 한 번만

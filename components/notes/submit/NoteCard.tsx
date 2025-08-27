@@ -19,6 +19,7 @@ type NoteCardProps = {
   isRandomMessage?: boolean;
   randomMessage: string;
   emotionType: EmotionType;
+  isRefresh?: boolean;
 };
 
 const NoteCard = ({
@@ -32,6 +33,7 @@ const NoteCard = ({
   situationStateText,
   promiseText,
   emotionType,
+  isRefresh = false,
 }: NoteCardProps) => {
   return (
     <View style={[styles.container]}>
@@ -59,6 +61,7 @@ const NoteCard = ({
             <RandomMessage
               emotionType={emotionType}
               initialText={randomMessage}
+              isRefresh={isRefresh}
             />
           </View>
         </View>

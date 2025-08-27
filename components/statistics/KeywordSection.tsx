@@ -1,10 +1,15 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import useMyKeywordQuery from '@/hooks/api/useMyKeywordQuery';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 export default function KeywordSection() {
+  const { data } = useMyKeywordQuery();
+
+  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+
   return (
     <View style={styles.container}>
       <View style={styles.areaTitle}>
@@ -23,7 +28,7 @@ export default function KeywordSection() {
         fontWeight='medium'
         style={styles.areaSubtitle}
       >
-        최근 30일 기준으로 선정했어요
+        최근 많이 받은 데이터를 보여줘요
       </CustomText>
       <View style={styles.keywordContainer}>
         <View style={styles.keywordWrapper}>
@@ -36,7 +41,7 @@ export default function KeywordSection() {
             color={PrimaryColors.blue100}
             style={styles.categoryEmoji}
           >
-            🤝
+            {isMatched ? '🤝' : ''}
           </CustomText>
           <View style={styles.keywordBadge}>
             <CustomText
@@ -45,7 +50,8 @@ export default function KeywordSection() {
               color={PrimaryColors.blue100}
               style={styles.keywordText}
             >
-              배려
+              {' '}
+              {isMatched ? '배려 ' : '--'}
             </CustomText>
           </View>
         </View>
@@ -59,7 +65,7 @@ export default function KeywordSection() {
             color={PrimaryColors.blue100}
             style={styles.categoryEmoji}
           >
-            🧺
+            {isMatched ? '🤝' : ''}
           </CustomText>
           <View style={styles.keywordBadge}>
             <CustomText
@@ -68,7 +74,7 @@ export default function KeywordSection() {
               color={PrimaryColors.blue100}
               style={styles.keywordText}
             >
-              집안일
+              {isMatched ? '집안일' : '--'}
             </CustomText>
           </View>
         </View>

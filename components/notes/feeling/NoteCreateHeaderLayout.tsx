@@ -19,7 +19,7 @@ const NoteCreateHeaderLayout = ({
   const previewData = getPreview();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Header text='마음쪽지 생성' />
       <View style={styles.progressBarContainer}>
         <ProgressBar percentage={progressPrecentage} />
@@ -41,7 +41,7 @@ const NoteCreateHeaderLayout = ({
 export default NoteCreateHeaderLayout;
 
 const styles = StyleSheet.create({
-  container: { paddingHorizontal: 20, paddingBottom: 16 },
+  container: { paddingHorizontal: 20, marginHorizontal: 20, paddingBottom: 16 },
   progressBarContainer: { paddingBottom: 8 },
   summaryContainer: { flexDirection: 'row', gap: 8, paddingBottom: 12 },
   summary: {

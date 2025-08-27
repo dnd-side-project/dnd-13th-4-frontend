@@ -42,13 +42,21 @@ export function CustomText({
     : color;
 
   const fontWeightValue = fontWeight ? FontWeights[fontWeight] : undefined;
+  
+  // fontWeight가 있으면 적절한 fontFamily로 매핑
+  const fontFamilyFromWeight = fontWeight ? {
+    regular: 'Pretendard',
+    medium: 'Pretendard-Medium', 
+    semibold: 'Pretendard-SemiBold',
+    bold: 'Pretendard-Bold',
+  }[fontWeight] : undefined;
 
   return (
     <Text
       style={[
         typographyStyle,
         { color: textColor },
-        fontWeightValue && { fontWeight: fontWeightValue },
+        fontFamilyFromWeight && { fontFamily: fontFamilyFromWeight },
         style,
       ]}
       {...rest}

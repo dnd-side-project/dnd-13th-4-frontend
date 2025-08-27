@@ -4,8 +4,11 @@ import { Icon } from '@/components/icons';
 import StarPhysics from '@/components/statistics/StarPhysics';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
+import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+const MAX_ONE_WEEK_NOTES_COUNT = 42;
 
 interface BottleSectionProps {
   refreshKey: number;
@@ -16,78 +19,115 @@ export default function BottleSection({
   refreshKey,
   onRefresh,
 }: BottleSectionProps) {
+  const { data } = useWeeklyLogSummaryQuery();
+
+  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+
+  const calculateDaysSince = (dateString: string) => {
+    if (isMatched) return 0;
+
+    const joinDate = new Date(dateString);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - joinDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
   return (
-    <View style={styles.container}>
-      <Image
-        source={{
-          uri: `${S3_IMAGE_URL}/statistics/big_bottle.png`,
-        }}
-        style={styles.bottleImage}
-      />
-      <TouchableOpacity onPress={onRefresh} style={styles.starPhysicsContainer}>
-        <StarPhysics
-          key={refreshKey}
-          width={220}
-          height={240}
-          starCount={42}
+    <>
+      <CustomText
+        variant='head1'
+        color={GreyColors.grey800}
+        fontWeight='bold'
+        style={styles.headerMessage}
+      >
+        {isMatched
+          ? `지금까지 총 84개의\n마음을 주고 받았어요`
+          : `아직 마음쪽지를\n주고받지 않았어요`}
+      </CustomText>
+      <View style={styles.container}>
+        <Image
+          source={{
+            uri: `${S3_IMAGE_URL}/statistics/big_bottle.png`,
+          }}
+          style={styles.bottleImage}
         />
-      </TouchableOpacity>
-      <View style={styles.weeklyInfoHeader}>
-        <CustomText variant='body2' color='white' fontWeight='medium'>
-          이번주
-        </CustomText>
-        <CustomText
-          variant='body2'
-          color='white'
-          fontWeight='medium'
-          style={styles.weeklyProgress}
+        <TouchableOpacity
+          onPress={onRefresh}
+          style={styles.starPhysicsContainer}
         >
-          19 / 42개
-        </CustomText>
-        <Icon name={'info'} size={16} color='white' />
+          <StarPhysics
+            key={refreshKey}
+            width={220}
+            height={240}
+            starCount={data.notesReceivedThisWeek + data.notesSentThisWeek}
+          />
+        </TouchableOpacity>
+        <View style={styles.weeklyInfoHeader}>
+          <CustomText variant='body2' color='white' fontWeight='medium'>
+            이번주
+          </CustomText>
+          <CustomText
+            variant='body2'
+            color='white'
+            fontWeight='medium'
+            style={styles.weeklyProgress}
+          >
+            {data.notesReceivedThisWeek + data.notesSentThisWeek} /{' '}
+            {MAX_ONE_WEEK_NOTES_COUNT}개
+          </CustomText>
+          <Icon name={'info'} size={16} color='white' />
+        </View>
+        <ProgressBar
+          percentage={Math.round(
+            ((data.notesReceivedThisWeek + data.notesSentThisWeek) /
+              MAX_ONE_WEEK_NOTES_COUNT) *
+              100,
+          )}
+          backgroundColor='white'
+        />
+        <View style={styles.statsContainer}>
+          <View style={styles.statItem}>
+            <CustomText variant='body3' color={'#989DA3'}>
+              이번 주 받은 쪽지
+            </CustomText>
+            <CustomText
+              variant='body1'
+              fontWeight='medium'
+              color={GreyColors.grey800}
+            >
+              {data.notesReceivedThisWeek}개
+            </CustomText>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.statItem}>
+            <CustomText variant='body3' fontWeight='medium' color={'#989DA3'}>
+              이번 주 보낸 쪽지
+            </CustomText>
+            <CustomText
+              variant='body1'
+              fontWeight='medium'
+              color={GreyColors.grey800}
+            >
+              {data.notesSentThisWeek}개
+            </CustomText>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.statItem}>
+            <CustomText variant='body3' color={'#989DA3'}>
+              마음을 나눈지
+            </CustomText>
+            <CustomText
+              variant='body1'
+              fontWeight='medium'
+              color={GreyColors.grey800}
+            >
+              {calculateDaysSince(data.roomJoinedAt)}일째
+            </CustomText>
+          </View>
+        </View>
       </View>
-      <ProgressBar percentage={45} backgroundColor='white' />
-      <View style={styles.statsContainer}>
-        <View style={styles.statItem}>
-          <CustomText variant='body3' color={'#989DA3'}>
-            이번 주 받은 쪽지
-          </CustomText>
-          <CustomText
-            variant='body1'
-            fontWeight='medium'
-            color={GreyColors.grey800}
-          >
-            11개
-          </CustomText>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.statItem}>
-          <CustomText variant='body3' fontWeight='medium' color={'#989DA3'}>
-            이번 주 보낸 쪽지
-          </CustomText>
-          <CustomText
-            variant='body1'
-            fontWeight='medium'
-            color={GreyColors.grey800}
-          >
-            8개
-          </CustomText>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.statItem}>
-          <CustomText variant='body3' color={'#989DA3'}>
-            마음을 나눈지
-          </CustomText>
-          <CustomText
-            variant='body1'
-            fontWeight='medium'
-            color={GreyColors.grey800}
-          >
-            168일째
-          </CustomText>
-        </View>
-      </View>
-    </View>
+    </>
   );
 }
 
@@ -96,6 +136,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+  },
+  headerMessage: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginBottom: 25,
   },
   bottleImage: {
     width: 320,

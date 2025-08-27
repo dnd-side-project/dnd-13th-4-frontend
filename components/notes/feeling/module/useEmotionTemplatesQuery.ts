@@ -1,10 +1,11 @@
 import { EMOTION_TEMPLATE_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
+import { EmotionType } from '../../hooks/useClosingTemplatesQuery';
 
 export type Emotion = {
   id: number;
-  emotionType: string;
+  emotionType: EmotionType;
   text: string;
   graphicUrl: string;
 };

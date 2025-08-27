@@ -2,9 +2,9 @@ import CTAButton from '@/components/button/CTAButton';
 import SquareButton from '@/components/button/SquareButton';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { MY_STATE_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { useSituationTemplatesQuery } from '@/components/notes/hooks/useSituationTemplatesQuery';
 import { PrimaryColors } from '@/constants/Colors';
 import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
@@ -15,8 +15,12 @@ const EMPTY_ACTION_TEXT = '                               ';
 
 const ActionSecond = () => {
   const router = useRouter();
-  const { setSituationState } = useNoteCreateStore();
+  const { emotion, setSituationState } = useNoteCreateStore();
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
+
+  const { data, isLoading, isError } = useSituationTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive', // TODO : default value 를 정하면 안됨. emotionType이 null일수있어 임시로 넣음.
+  });
 
   const handleSelect = ({
     text,
@@ -42,6 +46,13 @@ const ActionSecond = () => {
     setSituationState(selectedItem);
     router.navigate('/notes/promise');
   };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
 
   return (
     <SafeScreenLayout
@@ -79,7 +90,7 @@ const ActionSecond = () => {
           </Pressable>
         </View>
         <View style={styles.grid}>
-          {MY_STATE_LIST.map(({ text, id }) => (
+          {data.map(({ text, id }) => (
             <SquareButton
               key={id}
               style={styles.gridItem}

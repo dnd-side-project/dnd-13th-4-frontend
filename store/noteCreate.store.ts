@@ -1,3 +1,4 @@
+import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
 import { create, StateCreator } from 'zustand';
 
 export type NoteValue = {
@@ -7,6 +8,7 @@ export type NoteValue = {
 
 type Emotion = NoteValue & {
   graphicUrl: string;
+  emotionType: EmotionType;
 };
 
 type NoteCreateStateType = {

@@ -9,3 +9,6 @@ export const NOTES_SAVED_PATH = '/notes/saved';
 
 /** GET 끝맺음 리스트 조회 */
 export const TEMPLATES_CLOSINGS_PATH = '/templates/closings';
+
+/** GET 상황 리스트 조회 */
+export const TEMPLATES_SITUATIONS_PATH = '/templates/situations';

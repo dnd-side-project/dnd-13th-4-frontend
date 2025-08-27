@@ -5,6 +5,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { usePromiseTemplatesQuery } from '@/components/notes/hooks/usePromiseTemplatesQuery';
 import { PrimaryColors } from '@/constants/Colors';
 import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
@@ -16,8 +17,12 @@ const EMPTY_ACTION_TEXT =
 
 const Promise = () => {
   const router = useRouter();
-  const { setPromise } = useNoteCreateStore();
+  const { emotion, setPromise } = useNoteCreateStore();
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
+
+  const { data, isLoading, isError } = usePromiseTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive',
+  });
 
   const handleSelect = ({
     id,
@@ -39,6 +44,13 @@ const Promise = () => {
     setPromise(selectedItem);
     router.navigate('/notes/submit');
   };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
 
   return (
     <SafeScreenLayout

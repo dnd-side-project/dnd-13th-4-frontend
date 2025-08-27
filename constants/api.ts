@@ -12,3 +12,6 @@ export const TEMPLATES_CLOSINGS_PATH = '/templates/closings';
 
 /** GET 상황 리스트 조회 */
 export const TEMPLATES_SITUATIONS_PATH = '/templates/situations';
+
+/** GET 약속 리스트 조회 */
+export const TEMPLATES_PROMISES_PATH = '/templates/promises';

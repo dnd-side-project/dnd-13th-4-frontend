@@ -1,5 +1,6 @@
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
@@ -15,6 +16,8 @@ export default function MyPage() {
     await Clipboard.setStringAsync(copyText);
     toast.show('초대코드가 복사되었습니다.');
   };
+
+  const { data } = useMeQuery();
 
   return (
     <SafeScreenLayout
@@ -41,7 +44,7 @@ export default function MyPage() {
               style={styles.profileImage}
             />
           </LinearGradient>
-          <CustomText variant='head1'>고지우</CustomText>
+          <CustomText variant='head1'>{data?.name ?? `   `}</CustomText>
         </View>
         <View style={styles.roommateDataContainer}>
           <CustomText

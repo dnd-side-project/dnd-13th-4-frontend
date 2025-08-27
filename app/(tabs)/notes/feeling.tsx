@@ -5,8 +5,7 @@ import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { modal } from '@/components/modal/modal';
-import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
-import useEmotionTemplatesQuery from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
+import { useEmotionTemplatesQuery } from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -20,19 +19,18 @@ export const isMatched = false;
 
 const Feeling = () => {
   const router = useRouter();
-  const [selectedItem, setSelectedItem] = useState(EMOTION_MOCK_LIST[0]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const { width: screenWidth } = useWindowDimensions();
   const { setEmotion } = useNoteCreateStore();
-  const { data, isLoading, isError } = useEmotionTemplatesQuery({
-    emotionType: 'positive',
-  });
+  const { data, isLoading, isError } = useEmotionTemplatesQuery();
 
   const changeEmotion = (newIndex: number): void => {
-    setSelectedItem(EMOTION_MOCK_LIST[newIndex]);
+    setSelectedIndex(newIndex);
   };
 
   const handleSubmit = (): void => {
-    setEmotion(selectedItem);
+    if (!data) return;
+    setEmotion(data[selectedIndex]);
     router.navigate('/notes/ActionFirst');
   };
 
@@ -45,21 +43,17 @@ const Feeling = () => {
             description: `룸메가 초대에 응하면\n마음쪽지를 보낼 수 있어요.\n지금은 미리 체험만 가능해요!`,
             confirmText: '확인',
           }),
-        1000,
+        500,
       );
 
       return () => clearTimeout(timerId);
     }
   }, []);
 
-  if (isLoading) {
-    /** 로딩 UI */
-    return null;
-  }
-  if (isError || !data) {
-    /** 에러 UI */
-    return null;
-  }
+  if (isLoading) return null;
+  if (isError || !data) return null;
+
+  const selectedItem = data[selectedIndex];
 
   return (
     <SafeScreenLayout
@@ -99,7 +93,7 @@ const Feeling = () => {
             itemGap={28}
             height={305}
             onChange={changeEmotion}
-            itemList={EMOTION_MOCK_LIST.map(({ emotionType, graphicUrl }) => (
+            itemList={data.map(({ graphicUrl }) => (
               <View key={graphicUrl} style={styles.shadowContainer}>
                 <View style={styles.imageContainer}>
                   <ResponsiveImage

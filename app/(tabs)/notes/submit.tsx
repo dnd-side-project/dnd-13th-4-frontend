@@ -22,7 +22,7 @@ const imageUrl =
 
 const Submit = () => {
   const router = useRouter();
-  const { reset, emotion, promise, situationAction, situationState } =
+  const { reset, emotion, promise, situationAction, situationState, closing } =
     useNoteCreateStore();
 
   const { data: { isMatched, name } = {} } = useMeQuery();
@@ -32,11 +32,11 @@ const Submit = () => {
   const handleSubmit = async () => {
     try {
       await mutateAsync({
-        emotionId: 1,
-        promiseId: 1,
-        situationId: 1,
-        actionId: 0,
-        closingId: 1,
+        emotionId: emotion?.id ?? 0,
+        promiseId: promise?.id ?? 0,
+        situationId: situationState?.id ?? 0,
+        actionId: situationAction?.id ?? 0,
+        closingId: closing?.id ?? 0,
       });
       toast.show('마음쪽지를 룸메이트에게 전달했어요');
     } catch (e) {

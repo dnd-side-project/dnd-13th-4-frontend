@@ -16,6 +16,7 @@ type NoteCreateStateType = {
   situationAction: NoteValue | null;
   situationState: NoteValue | null;
   promise: NoteValue | null;
+  closing: NoteValue | null;
 };
 
 type NoteCreateActionType = {
@@ -23,6 +24,7 @@ type NoteCreateActionType = {
   setSituationAction: (situation: NoteValue | null) => void;
   setSituationState: (situation: NoteValue | null) => void;
   setPromise: (promise: NoteValue | null) => void;
+  setClosing: (closing: NoteValue | null) => void;
   reset: () => void;
   getPreview: () => string[];
 };
@@ -34,6 +36,7 @@ const defaultNoteCreateValue: NoteCreateStateType = {
   situationAction: null,
   situationState: null,
   promise: null,
+  closing: null,
 };
 
 const noteCreateActions: StateCreator<
@@ -46,6 +49,7 @@ const noteCreateActions: StateCreator<
   setSituationAction: (situation) => set({ situationAction: situation }),
   setSituationState: (situation) => set({ situationState: situation }),
   setPromise: (promise) => set({ promise }),
+  setClosing: (closing) => set({ closing }),
 
   reset: () => set(defaultNoteCreateValue),
 

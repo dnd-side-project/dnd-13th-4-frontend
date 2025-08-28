@@ -2,6 +2,7 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { GreyColors } from '@/constants/Colors';
 import { getRandomItem } from '@/lib/getRandomItem';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import {
@@ -22,24 +23,27 @@ const RandomMessage = ({
 }: Props) => {
   // 초기값은 initialText로 고정 세팅
   const [text, setText] = useState<string | undefined>(initialText);
+  const setClosing = useNoteCreateStore((state) => state.setClosing);
 
   // isRefresh가 true일 때만 쿼리 활성화 (hook 내부에서 enabled 옵션 지원한다고 가정)
   const { data, isLoading, isError } = useClosingTemplatesQuery({
     emotionType,
     enabled: isRefresh,
   });
-  console.log(data);
 
   const handleRefresh = (): void => {
     if (!data) return;
 
-    let next = getRandomItem(data);
+    let nextItem = getRandomItem(data);
     // 같은 값 연속 방지(선택): 같은 값이면 한 번 더 시도
-    if (next === text && data.length > 1) {
-      next = getRandomItem(data);
+    if (nextItem === text && data.length > 1) {
+      nextItem = getRandomItem(data);
     }
 
-    setText(next?.text);
+    if (!nextItem) return;
+
+    setText(nextItem.text);
+    setClosing(nextItem);
   };
 
   // 초기 랜덤 세팅: initialText가 없고, isRefresh=true이고, 데이터가 왔을 때 한 번만

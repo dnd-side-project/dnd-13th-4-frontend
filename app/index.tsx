@@ -8,12 +8,13 @@ const RootScreen = () => {
     
     if (isLoggedIn) {
       router.replace('/(tabs)');
-    } else {
-      router.replace('/onboarding');
     }
+    // 로그인 안 되어 있으면 현재 페이지(온보딩) 유지
   }, []);
 
-  return null;
+  // 온보딩 컴포넌트를 직접 import해서 사용
+  const OnboardingScreen = require('./onboarding/index').default;
+  return <OnboardingScreen />;
 };
 
 export default RootScreen;

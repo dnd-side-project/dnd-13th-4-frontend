@@ -58,7 +58,7 @@ const Feeling = () => {
   return (
     <SafeScreenLayout
       header={
-        <NoteCreateFeelingHeader>
+        <NoteCreateFeelingHeader style={{ paddingHorizontal: 40 }}>
           <View style={styles.previewDescription}>
             <Icon size={15} name='altFill' color={GreyColors.grey600} />
             <CustomText
@@ -91,6 +91,7 @@ const Feeling = () => {
         locations: [0, 0.4],
       }}
       style={styles.container}
+      childrenStyle={{ backgroundColor: '#ffffff' }}
     >
       <View style={styles.contentContainer}>
         <View style={styles.guideContainer}>
@@ -162,7 +163,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   contentContainer: {
-    backgroundColor: '#ffffff',
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,

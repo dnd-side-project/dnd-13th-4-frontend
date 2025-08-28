@@ -70,6 +70,12 @@ const ActionFirst = () => {
           </View>
         </NoteCreateHeaderLayout>
       }
+      background={{
+        type: 'gradient',
+        colors: ['#F5FAFF', '#C1DEFF'],
+        locations: [0, 0.4],
+      }}
+      childrenStyle={{ backgroundColor: '#ffffff' }}
       style={styles.container}
     >
       <View style={styles.contentContainer}>

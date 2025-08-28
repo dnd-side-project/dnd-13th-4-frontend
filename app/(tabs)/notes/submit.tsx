@@ -2,6 +2,8 @@ import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
+import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -22,6 +24,9 @@ const Submit = () => {
   const router = useRouter();
   const { reset, emotion, promise, situationAction, situationState } =
     useNoteCreateStore();
+
+  const { data } = useMeQuery();
+  const { data: mateData } = useMateQuery();
 
   const handleSubmit = () => {
     router.replace('/');
@@ -64,7 +69,11 @@ const Submit = () => {
     >
       <View style={styles.contentContainer}>
         <View style={{ paddingTop: 24, paddingBottom: '10%' }}>
-          <FromToText text={`예림님의 마음,\n지우님에게 잘 전달할게요`} />
+          <FromToText
+            text={`${data?.name ?? ''}님의 마음,\n${
+              mateData?.name ?? ''
+            }님에게 잘 전달할게요`}
+          />
         </View>
         <View style={{ position: 'relative' }}>
           <NoteCard

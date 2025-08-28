@@ -51,3 +51,6 @@ export const ROOMS_JOIN_PATH = '/rooms/join';
 
 /** GET 내 정보 조회 */
 export const ME_PATH = '/me';
+
+/** GET 룸메 정보 조회 */
+export const MATE_PATH = '/mate';

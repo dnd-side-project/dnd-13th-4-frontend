@@ -1,5 +1,6 @@
 import {
   LATEST_NOTES_PATH,
+  MATE_PATH,
   MATE_STATUS_PATH,
   ME_PATH,
   MY_STATUS_PATH,
@@ -111,6 +112,10 @@ export default function RootLayout() {
           queryClient.prefetchQuery({
             queryKey: [ME_PATH],
             queryFn: () => api.get({ path: ME_PATH }).then((res) => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MATE_PATH],
+            queryFn: () => api.get({ path: MATE_PATH }).then((res) => res.data),
           }),
           queryClient.prefetchQuery({
             queryKey: [MY_STATUS_PATH],

@@ -83,6 +83,11 @@ const Feeling = () => {
           </View>
         </NoteCreateFeelingHeader>
       }
+      background={{
+        type: 'gradient',
+        colors: ['#F5FAFF', '#C1DEFF'],
+        locations: [0, 0.4],
+      }}
       style={styles.container}
     >
       <View style={styles.contentContainer}>
@@ -157,6 +162,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   contentContainer: {
+    backgroundColor: '#ffffff',
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,

@@ -39,7 +39,7 @@ export default RoundButton;
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-start',
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 20,
     borderWidth: 2,
     borderRadius: 999,

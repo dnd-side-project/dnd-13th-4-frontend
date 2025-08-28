@@ -66,14 +66,22 @@ const Feeling = () => {
       header={
         <NoteCreateFeelingHeader>
           <View style={styles.previewDescription}>
-            <Icon size={15} name='altFill' color={GreyColors.grey500} />
-            <CustomText variant='body3' color={GreyColors.grey500}>
-              룸메에게 보낼 내용 미리보기
+            <Icon size={15} name='altFill' color={GreyColors.grey600} />
+            <CustomText
+              variant='body3'
+              fontWeight='medium'
+              color={GreyColors.grey600}
+            >
+              미리보기
             </CustomText>
           </View>
           <View style={styles.preview}>
             <View style={styles.feelingBox}>
-              <CustomText color={PrimaryColors.blue100} variant='head3'>
+              <CustomText
+                fontWeight='semibold'
+                color={PrimaryColors.blue100}
+                variant='head3'
+              >
                 {selectedItem.text}
               </CustomText>
             </View>
@@ -147,9 +155,7 @@ const styles = StyleSheet.create({
   },
   feelingBox: {
     backgroundColor: '#ffffff',
-    borderWidth: 1,
     borderRadius: 8,
-    borderColor: PrimaryColors.blue200,
     paddingVertical: 2,
     paddingHorizontal: 12,
   },

@@ -57,7 +57,9 @@ async function request<T>(
 
     const errorMessage = `API Error: ${status ?? 'N/A'}`;
 
-    toast.show(errorMessage);
+    if (status === 500 || status === 401) {
+      toast.show(errorMessage);
+    }
 
     throw new Error(`${errorMessage} ${statusText}`);
   }

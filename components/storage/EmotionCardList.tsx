@@ -36,7 +36,7 @@ const EmotionCardList = ({ ref }: Props) => {
           style={styles.cardContainer}
           onPress={() => {
             router.push({
-              pathname: '/Storage/[noteId]',
+              pathname: '/storage/[noteId]',
               params: { noteId: 1 },
             });
           }}

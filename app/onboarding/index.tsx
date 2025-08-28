@@ -5,7 +5,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { router } from 'expo-router';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -33,9 +33,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={{
-          textAlign: 'center',
-        }}
+        style={styles.centerText}
       >
         {`룸메이트와 솔직하게 대화하고 싶지만,\n관계가 어긋날까봐 망설인 적 있나요?`}
       </CustomText>
@@ -48,9 +46,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={{
-          textAlign: 'center',
-        }}
+        style={styles.centerText}
       >
         <CustomText
           variant='head3'
@@ -70,9 +66,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={{
-          textAlign: 'center',
-        }}
+        style={styles.centerText}
       >
         {`쪽지템플릿을 통해 복잡한 고민을 덜고,\n정돈된 글로 마음을 전해보세요`}
       </CustomText>
@@ -87,28 +81,23 @@ const OnboardingScreen = () => {
   const progress = useSharedValue<number>(0);
   const isLastSlide = currentIndex === onboardingData.length - 1;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isLastSlide) {
       // TODO: 실제 카카오 로그인 구현 후 메인 페이지로 이동
       router.replace('/(tabs)');
     } else {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      carouselRef.current?.scrollTo({
-        index: nextIndex,
-        animated: true,
-      });
+      carouselRef.current?.next();
     }
-  };
+  }, [isLastSlide]);
 
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     const lastIndex = onboardingData.length - 1;
     setCurrentIndex(lastIndex);
     carouselRef.current?.scrollTo({
       index: lastIndex,
       animated: true,
     });
-  };
+  }, []);
 
   const renderOnboardingSlide = (item: OnboardingData) => {
     return (
@@ -151,53 +140,22 @@ const OnboardingScreen = () => {
         </Pressable>
       )}
 
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          justifyContent: 'flex-end',
-          flex: 1,
-          bottom: 38,
-          width: '100%',
-          gap: 20,
-        }}
-      >
+      <View style={styles.bottomContainer}>
         <Pagination.Custom
           progress={progress}
           data={onboardingData}
-          dotStyle={{
-            backgroundColor: 'white',
-            borderRadius: 50,
-            width: 8,
-            height: 8,
-          }}
-          activeDotStyle={{
-            backgroundColor: PrimaryColors.blue100,
-            borderRadius: 50,
-            width: 15,
-            height: 15,
-          }}
-          containerStyle={{
-            gap: 8,
-            alignItems: 'center',
-            marginTop: 20,
-          }}
+          dotStyle={styles.dot}
+          activeDotStyle={styles.activeDot}
+          containerStyle={styles.paginationContainer}
         />
 
         {isLastSlide ? (
           <FlexibleButton
             onPress={handleNext}
-            style={{
-              backgroundColor: '#FEE500',
-            }}
+            style={styles.kakaoButton}
           >
             <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 8,
-              }}
+              style={styles.kakaoButtonContent}
             >
               <Icon name='kakao' size={18} />
               <CustomText variant='body1' color='#000000' fontWeight='bold'>
@@ -250,6 +208,44 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: '100%',
+  },
+  centerText: {
+    textAlign: 'center',
+  },
+  bottomContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    flex: 1,
+    bottom: 38,
+    width: '100%',
+    gap: 20,
+  },
+  dot: {
+    backgroundColor: 'white',
+    borderRadius: 50,
+    width: 8,
+    height: 8,
+  },
+  activeDot: {
+    backgroundColor: PrimaryColors.blue100,
+    borderRadius: 50,
+    width: 15,
+    height: 15,
+  },
+  paginationContainer: {
+    gap: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  kakaoButton: {
+    backgroundColor: '#FEE500',
+  },
+  kakaoButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 });
 

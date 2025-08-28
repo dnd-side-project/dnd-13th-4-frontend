@@ -3,6 +3,8 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
+    "build:local:ios": "npx expo run:ios --device",
+    "build:local:android": "npx expo run:android --device",
     "start": "EXPO_PUBLIC_ENV=development expo start --dev-client",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "EXPO_PUBLIC_ENV=development expo start --android",

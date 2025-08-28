@@ -44,7 +44,7 @@ export default CTAButton;
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'stretch',
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 999,
     alignItems: 'center',
     borderWidth: 1,

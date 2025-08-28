@@ -21,6 +21,7 @@ const StatChip = ({ leftText, rightText, style }: Props) => {
       <CustomText
         variant='body3'
         color={GreyColors.grey800}
+        fontWeight='semibold'
         style={styles.right}
       >
         {rightText}
@@ -46,7 +47,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   left: {},
-  right: {
-    fontFamily: 'Pretendard-Bold',
-  },
+  right: {},
 });

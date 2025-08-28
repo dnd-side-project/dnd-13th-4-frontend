@@ -17,6 +17,8 @@ export const MyStatusSection = ({
   onStatusPress,
   userStatus,
 }: MyStatusSectionProps) => {
+  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+
   // 종료 시간 포맷팅
   const formatEndTime = (endTime?: Date) => {
     if (!endTime) return '--:--';
@@ -27,38 +29,46 @@ export const MyStatusSection = ({
 
   return (
     <View style={styles.myStatus}>
-      <View style={styles.myStatusText}>
-        <CustomText
-          variant='body2'
-          fontWeight='medium'
-          style={{ marginRight: 4 }}
-        >
-          나의 상태는
+      {isMatched && userStatus ? (
+        <>
+          <View style={styles.myStatusText}>
+            <CustomText
+              variant='body2'
+              fontWeight='medium'
+              style={{ marginRight: 4 }}
+            >
+              나의 상태는
+            </CustomText>
+            <CustomText
+              variant='body2'
+              fontWeight='bold'
+              style={{ marginRight: 8 }}
+            >
+              {userStatus.emoji} {userStatus.text}
+            </CustomText>
+            <View
+              style={{
+                paddingVertical: 1,
+                paddingHorizontal: 6,
+                borderRadius: 20,
+                backgroundColor: '#E5F1FF',
+              }}
+            >
+              <CustomText
+                variant='body3'
+                fontWeight='bold'
+                color={PrimaryColors.blue100}
+              >
+                {formatEndTime(userStatus.endTime)}
+              </CustomText>
+            </View>
+          </View>
+        </>
+      ) : (
+        <CustomText variant='body2' color={GreyColors.grey600}>
+          아직 나의 상태를 설정하지 않았어요
         </CustomText>
-        <CustomText
-          variant='body2'
-          fontWeight='bold'
-          style={{ marginRight: 8 }}
-        >
-          {userStatus.emoji} {userStatus.text}
-        </CustomText>
-        <View
-          style={{
-            paddingVertical: 1,
-            paddingHorizontal: 6,
-            borderRadius: 20,
-            backgroundColor: '#E5F1FF',
-          }}
-        >
-          <CustomText
-            variant='body3'
-            fontWeight='bold'
-            color={PrimaryColors.blue100}
-          >
-            {formatEndTime(userStatus.endTime)}
-          </CustomText>
-        </View>
-      </View>
+      )}
       <Pressable onPress={onStatusPress}>
         <CustomText
           variant='body3'

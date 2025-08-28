@@ -1,10 +1,13 @@
 import { CustomText } from '@/components/CustomText';
+import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import useMateStatusQuery from '@/hooks/api/useMateStatusQuery';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 export const RoommateStatus = () => {
   const { data: mateStatus, isLoading } = useMateStatusQuery();
+
+  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
 
   if (isLoading) {
     return (
@@ -21,15 +24,33 @@ export const RoommateStatus = () => {
     );
   }
 
+  if (!isMatched) {
+    return (
+      <View style={[styles.container, styles.unmatchedContainer]}>
+        <Image
+          source={{ uri: `${S3_IMAGE_URL}/home/loading_mate_status.png` }}
+          style={styles.unmatchedImage}
+        />
+        <CustomText variant='body3' color={GreyColors.grey600}>
+          룸메이트의 상태는 여기서 보여드릴게요
+        </CustomText>
+      </View>
+    );
+  }
+
   if (!mateStatus?.text) {
     return (
       <View style={styles.container}>
         <CustomText variant='body3' color={GreyColors.grey600}>
-          룸메는 지금
+          룸메이트가 아직
         </CustomText>
         <View style={styles.roommateState}>
-          <CustomText variant='body1' color={GreyColors.grey500}>
-            상태를 설정하지 않았어요
+          <CustomText
+            variant='body1'
+            fontWeight='bold'
+            color={GreyColors.grey600}
+          >
+            ⚪️ 상태를 설정하지 않았어요
           </CustomText>
         </View>
       </View>
@@ -39,19 +60,22 @@ export const RoommateStatus = () => {
   const formatTime = (dateString: string | null) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    return `${date.getHours()}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`;
   };
 
   const getEndTime = () => {
     if (!mateStatus.statusStartedAt || !mateStatus.reservedTimeInfo) return '';
-    
+
     const { hour, minute } = mateStatus.reservedTimeInfo;
     if (hour === -1 && minute === -1) return '계속 유지';
-    
+
     const startDate = new Date(mateStatus.statusStartedAt);
     startDate.setHours(startDate.getHours() + hour);
     startDate.setMinutes(startDate.getMinutes() + minute);
-    
+
     return `~${formatTime(startDate.toISOString())}`;
   };
 
@@ -61,7 +85,11 @@ export const RoommateStatus = () => {
         룸메는 지금
       </CustomText>
       <View style={styles.roommateState}>
-        <CustomText variant='body1' color={GreyColors.grey800} fontWeight='bold'>
+        <CustomText
+          variant='body1'
+          color={GreyColors.grey800}
+          fontWeight='bold'
+        >
           {mateStatus.emoji} {mateStatus.text}
         </CustomText>
         {getEndTime() && (
@@ -116,5 +144,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: GreyColors.grey600,
     marginHorizontal: 4,
+  },
+  unmatchedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 28,
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  unmatchedImage: {
+    width: 47,
+    height: 29,
   },
 });

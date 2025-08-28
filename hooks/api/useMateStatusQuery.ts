@@ -14,6 +14,13 @@ const useMateStatusQuery = () => {
   const query = useQuery({
     queryKey: [MATE_STATUS_PATH],
     queryFn: getMateStatus,
+    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    initialData: {
+      emoji: null,
+      text: null,
+      statusStartedAt: null,
+      reservedTimeInfo: null,
+    },
   });
 
   return query;

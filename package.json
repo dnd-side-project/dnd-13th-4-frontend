@@ -3,7 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "EXPO_PUBLIC_ENV=development expo start",
+    "start": "EXPO_PUBLIC_ENV=development expo start --dev-client",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "EXPO_PUBLIC_ENV=development expo start --android",
     "ios": "EXPO_PUBLIC_ENV=development expo start --ios",
@@ -13,8 +13,11 @@
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
     "@gorhom/bottom-sheet": "^5.2.3",
+    "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-community/datetimepicker": "8.4.1",
     "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-firebase/app": "^23.1.2",
+    "@react-native-firebase/messaging": "^23.1.2",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
@@ -37,6 +40,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.10",
+    "expo-updates": "~0.28.17",
     "expo-web-browser": "~14.2.0",
     "google-auth-library": "^10.2.1",
     "matter-js": "^0.20.0",
@@ -53,8 +57,8 @@
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
     "zustand": "^5.0.7",
-    "@react-native-async-storage/async-storage": "2.1.2",
-    "expo-updates": "~0.28.17"
+    "expo-build-properties": "~0.14.8",
+    "expo-dev-client": "~5.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

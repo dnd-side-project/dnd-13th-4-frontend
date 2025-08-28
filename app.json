@@ -9,11 +9,20 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "useFrameworks": "static",
       "supportsTablet": true,
       "bundleIdentifier": "com.kirikiri.wini",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": [
+          "remote-notification"
+        ]
+      },
+      "appleTeamId": "MRNM55WK54"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +40,8 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-firebase/app",
+      "@react-native-firebase/messaging",
       [
         "expo-splash-screen",
         {
@@ -38,6 +49,14 @@
           "imageWidth": 134,
           "resizeMode": "contain",
           "backgroundColor": "#5BA4FA"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],

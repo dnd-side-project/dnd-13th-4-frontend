@@ -20,11 +20,13 @@ export default function BottleSection({
   onRefresh,
 }: BottleSectionProps) {
   const { data } = useWeeklyLogSummaryQuery();
+  const totalNotesThisWeek =
+    data.notesReceivedThisWeek + data.notesSentThisWeek;
 
   const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
 
   const calculateDaysSince = (dateString: string) => {
-    if (isMatched) return 0;
+    if (!isMatched) return 0;
 
     const joinDate = new Date(dateString);
     const today = new Date();
@@ -60,7 +62,7 @@ export default function BottleSection({
             key={refreshKey}
             width={220}
             height={240}
-            starCount={data.notesReceivedThisWeek + data.notesSentThisWeek}
+            starCount={totalNotesThisWeek}
           />
         </TouchableOpacity>
         <View style={styles.weeklyInfoHeader}>
@@ -73,16 +75,13 @@ export default function BottleSection({
             fontWeight='medium'
             style={styles.weeklyProgress}
           >
-            {data.notesReceivedThisWeek + data.notesSentThisWeek} /{' '}
-            {MAX_ONE_WEEK_NOTES_COUNT}개
+            {totalNotesThisWeek} / {MAX_ONE_WEEK_NOTES_COUNT}개
           </CustomText>
           <Icon name={'info'} size={16} color='white' />
         </View>
         <ProgressBar
           percentage={Math.round(
-            ((data.notesReceivedThisWeek + data.notesSentThisWeek) /
-              MAX_ONE_WEEK_NOTES_COUNT) *
-              100,
+            (totalNotesThisWeek / MAX_ONE_WEEK_NOTES_COUNT) * 100,
           )}
           backgroundColor='white'
         />

@@ -60,14 +60,22 @@ const Feeling = () => {
       header={
         <NoteCreateFeelingHeader>
           <View style={styles.previewDescription}>
-            <Icon size={15} name='altFill' color={GreyColors.grey500} />
-            <CustomText variant='body3' color={GreyColors.grey500}>
-              룸메에게 보낼 내용 미리보기
+            <Icon size={15} name='altFill' color={GreyColors.grey600} />
+            <CustomText
+              variant='body3'
+              fontWeight='medium'
+              color={GreyColors.grey600}
+            >
+              미리보기
             </CustomText>
           </View>
           <View style={styles.preview}>
             <View style={styles.feelingBox}>
-              <CustomText color={PrimaryColors.blue100} variant='head3'>
+              <CustomText
+                fontWeight='semibold'
+                color={PrimaryColors.blue100}
+                variant='head3'
+              >
                 {selectedItem.text}
               </CustomText>
             </View>
@@ -77,6 +85,11 @@ const Feeling = () => {
           </View>
         </NoteCreateFeelingHeader>
       }
+      background={{
+        type: 'gradient',
+        colors: ['#F5FAFF', '#C1DEFF'],
+        locations: [0, 0.4],
+      }}
       style={styles.container}
     >
       <View style={styles.contentContainer}>
@@ -136,9 +149,7 @@ const styles = StyleSheet.create({
   },
   feelingBox: {
     backgroundColor: '#ffffff',
-    borderWidth: 1,
     borderRadius: 8,
-    borderColor: PrimaryColors.blue200,
     paddingVertical: 2,
     paddingHorizontal: 12,
   },
@@ -151,6 +162,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   contentContainer: {
+    backgroundColor: '#ffffff',
     flex: 1,
     paddingTop: 20,
     paddingBottom: 16,

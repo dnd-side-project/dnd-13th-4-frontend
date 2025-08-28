@@ -20,10 +20,10 @@ const CTAButton = ({
   return (
     <Pressable
       style={[
-        style,
         styles.button,
         active ? styles.active : styles.unActive,
         disabled ? styles.disabled : null,
+        style,
       ]}
       onPress={disabled ? undefined : onPress}
       accessibilityRole='button'
@@ -44,7 +44,7 @@ export default CTAButton;
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'stretch',
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 999,
     alignItems: 'center',
     borderWidth: 1,

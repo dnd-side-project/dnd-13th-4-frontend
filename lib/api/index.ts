@@ -1,6 +1,8 @@
 import { toast } from '@/store/toast.store';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig } from 'axios';
 import { buildQuery } from '../buildQuery';
+import { tokenStorage } from '../auth/tokenStorage';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -21,6 +23,53 @@ const client = axios.create({
   timeout: 60000,
 });
 
+client.interceptors.request.use(
+  async (config) => {
+    const accessToken = await tokenStorage.getAccessToken();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+client.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = await tokenStorage.getRefreshToken();
+        if (!refreshToken) {
+          throw new Error('No refresh token');
+        }
+
+        const response = await axios.post(`${API_URL}/auth/reissue`, null, {
+          headers: { Authorization: `Bearer ${refreshToken}` },
+        });
+
+        const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+        
+        await tokenStorage.setTokens(accessToken, newRefreshToken);
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return client(originalRequest);
+
+      } catch (refreshError) {
+        await tokenStorage.clearTokens();
+        console.error('Token refresh failed:', refreshError);
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 async function request<T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { path, params, headers, body }: RequestOptions,
@@ -36,7 +85,7 @@ async function request<T>(
 
   try {
     const res = await client.request<{ data: T; status: number }>(config);
-    return res.data; // { data, status } 형식 그대로 반환
+    return res.data;
   } catch (err) {
     const e = err as AxiosError;
     const status = e.response?.status;
@@ -45,7 +94,9 @@ async function request<T>(
 
     const errorMessage = `API Error: ${status ?? 'N/A'}`;
 
-    toast.show(errorMessage);
+    if (status === 500 || status === 401) {
+      toast.show(errorMessage);
+    }
 
     throw new Error(`${errorMessage} ${statusText}`);
   }

@@ -1,6 +1,8 @@
 export const ROUTE_NAMES = {
   TABS: '(tabs)',
+  ONBOARDING: 'onboarding',
   CREATE_MIND_LETTER: 'CreateMindLetter',
+  API_TEST: 'api-test',
   NOT_FOUND: '+not-found',
 } as const;
 

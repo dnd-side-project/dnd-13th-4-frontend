@@ -1,4 +1,11 @@
+import {
+  LATEST_NOTES_PATH,
+  MATE_STATUS_PATH,
+  ME_PATH,
+  MY_STATUS_PATH,
+} from '@/constants/api';
 import { STACK_SCREENS } from '@/constants/Routes';
+import { api } from '@/lib/api';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
@@ -59,25 +66,32 @@ export default function RootLayout() {
   });
 
   const [expoPushToken, setExpoPushToken] = useState<string>('');
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
+
+  // --- 토큰 전송 함수 ---
+  const postPushToken = async (token?: string) => {
+    if (!token) return;
+
+    try {
+      await api.post({ path: '/notifications/tokens', body: { token } });
+    } catch (e) {
+      console.warn('[push] token post failed:', e);
+    }
+  };
 
   useEffect(() => {
     registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
+      .then((token) => {
+        setExpoPushToken(token ?? '');
+        postPushToken(token);
+      })
       .catch((error: any) => setExpoPushToken(`${error}`));
 
-    const notificationListener = Notifications.addNotificationReceivedListener(
-      (notification) => setNotification(notification),
-    );
     const responseListener =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
       });
 
     return () => {
-      notificationListener.remove();
       responseListener.remove();
     };
   }, []);
@@ -86,8 +100,38 @@ export default function RootLayout() {
   useAppState(onAppStateChange);
 
   useEffect(() => {
+    const prefetchHomeScreenData = async () => {
+      try {
+        await Promise.all([
+          queryClient.prefetchQuery({
+            queryKey: [LATEST_NOTES_PATH],
+            queryFn: () =>
+              api.get({ path: LATEST_NOTES_PATH }).then((res) => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [ME_PATH],
+            queryFn: () => api.get({ path: ME_PATH }).then((res) => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MY_STATUS_PATH],
+            queryFn: () =>
+              api.get({ path: MY_STATUS_PATH }).then((res) => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MATE_STATUS_PATH],
+            queryFn: () =>
+              api.get({ path: MATE_STATUS_PATH }).then((res) => res.data),
+          }),
+        ]);
+      } catch (error) {
+        console.warn('Failed to prefetch home screen data:', error);
+      }
+    };
+
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      prefetchHomeScreenData().finally(() => {
+        SplashScreen.hideAsync();
+      });
     }
   }, [fontsLoaded]);
 

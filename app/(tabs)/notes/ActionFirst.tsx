@@ -59,7 +59,11 @@ const ActionFirst = () => {
               룸메님이
             </CustomText>
             <View style={styles.selectItemBox}>
-              <CustomText color={PrimaryColors.blue100} variant='head3'>
+              <CustomText
+                fontWeight='semibold'
+                color={PrimaryColors.blue100}
+                variant='head3'
+              >
                 {selectedItem?.text ?? EMPTY_ACTION_TEXT}
               </CustomText>
             </View>
@@ -124,9 +128,7 @@ const styles = StyleSheet.create({
   selectItemBox: {
     alignSelf: 'flex-start',
     backgroundColor: '#ffffff',
-    borderWidth: 1,
     borderRadius: 8,
-    borderColor: PrimaryColors.blue200,
     paddingVertical: 2,
     paddingHorizontal: 12,
   },

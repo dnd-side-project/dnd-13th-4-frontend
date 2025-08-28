@@ -27,3 +27,6 @@ export const LATEST_NOTES_PATH = '/notes/latest';
 
 /** GET 보관된 쪽지 리스트 조회 */
 export const NOTES_SAVED_PATH = '/notes/saved';
+
+/** GET 통계 나의 성장 조회 */
+export const MY_GROWTH_PATH = '/log/growth';

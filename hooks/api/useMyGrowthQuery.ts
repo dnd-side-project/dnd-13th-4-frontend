@@ -1,8 +1,7 @@
+import { MY_GROWTH_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { GrowthResponse } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
-
-const MY_GROWTH_PATH = '/log/growth';
 
 const getMyGrowth = async () => {
   const { data } = await api.get<GrowthResponse>({

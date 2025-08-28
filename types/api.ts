@@ -7,7 +7,7 @@ export type StatusResponse = {
   location: 'HOME' | 'OUTDOORS';
 };
 
-// Member Status Types  
+// Member Status Types
 export type MemberStatusResponse = {
   emoji: string | null;
   text: string | null;
@@ -78,4 +78,20 @@ export type NoteResponse = {
   isRead: boolean;
   isSaved: boolean;
   createdAt: string;
+};
+
+// Growth Types
+export type GrowthResponse = {
+  increasedPositiveAction: {
+    text: string;
+    change: number;
+  };
+  decreasedNegativeAction: {
+    text: string;
+    change: number;
+  };
+  weeklyPositiveNoteCounts: {
+    weeksAgo: number;
+    count: number;
+  }[];
 };

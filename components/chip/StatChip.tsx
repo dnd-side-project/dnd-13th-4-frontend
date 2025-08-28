@@ -11,18 +11,13 @@ type Props = {
 const StatChip = ({ leftText, rightText, style }: Props) => {
   return (
     <View style={[style, styles.chip]}>
-      <CustomText
-        variant='body3'
-        color={GreyColors.grey500}
-        style={styles.left}
-      >
+      <CustomText variant='body3' color={GreyColors.grey500}>
         {leftText}
       </CustomText>
       <CustomText
         variant='body3'
         color={GreyColors.grey800}
         fontWeight='semibold'
-        style={styles.right}
       >
         {rightText}
       </CustomText>
@@ -46,6 +41,4 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
   },
-  left: {},
-  right: {},
 });

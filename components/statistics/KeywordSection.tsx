@@ -50,7 +50,6 @@ export default function KeywordSection() {
               color={PrimaryColors.blue100}
               style={styles.keywordText}
             >
-              {' '}
               {isMatched ? '배려 ' : '--'}
             </CustomText>
           </View>

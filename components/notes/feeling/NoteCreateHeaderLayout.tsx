@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
   summaryContainer: { flexDirection: 'row', gap: 8, paddingBottom: 12 },
   summary: {
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ffffff',
     backgroundColor: PrimaryColors.blue300,
     paddingVertical: 2,
     paddingHorizontal: 8,

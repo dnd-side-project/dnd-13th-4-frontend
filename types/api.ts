@@ -80,22 +80,6 @@ export type NoteResponse = {
   createdAt: string;
 };
 
-// Growth Types
-export type GrowthResponse = {
-  increasedPositiveAction: {
-    text: string;
-    change: number;
-  };
-  decreasedNegativeAction: {
-    text: string;
-    change: number;
-  };
-  weeklyPositiveNoteCounts: {
-    weeksAgo: number;
-    count: number;
-  }[];
-};
-
 // Statistics Types
 export type StatisticsResponse = {
   notesSentThisWeek: number;

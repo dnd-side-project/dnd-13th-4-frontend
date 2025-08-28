@@ -20,10 +20,6 @@ export const STACK_SCREENS = [
     options: { title: '편지 쓰기' },
   },
   {
-    name: ROUTE_NAMES.API_TEST,
-    options: { title: 'API Test' },
-  },
-  {
     name: ROUTE_NAMES.NOT_FOUND,
     options: {},
   },

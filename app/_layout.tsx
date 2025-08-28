@@ -67,8 +67,6 @@ export default function RootLayout() {
 
     try {
       await api.post({ path: '/notifications/tokens', body: { token } });
-
-      // console.log('[push] token posted');
     } catch (e) {
       console.warn('[push] token post failed:', e);
     }

@@ -41,15 +41,14 @@ export function CustomText({
     ? allColors[color as keyof typeof allColors]
     : color;
 
-  const fontWeightValue = fontWeight ? FontWeights[fontWeight] : undefined;
-  
-  // fontWeight가 있으면 적절한 fontFamily로 매핑
-  const fontFamilyFromWeight = fontWeight ? {
-    regular: 'Pretendard',
-    medium: 'Pretendard-Medium', 
-    semibold: 'Pretendard-SemiBold',
-    bold: 'Pretendard-Bold',
-  }[fontWeight] : undefined;
+  const fontFamilyFromWeight = fontWeight
+    ? {
+        regular: 'Pretendard',
+        medium: 'Pretendard-Medium',
+        semibold: 'Pretendard-SemiBold',
+        bold: 'Pretendard-Bold',
+      }[fontWeight]
+    : undefined;
 
   return (
     <Text

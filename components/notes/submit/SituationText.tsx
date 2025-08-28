@@ -6,7 +6,7 @@ import NoteBadge from './NoteBadge';
 
 type Props = {
   topText: string;
-  bottomText: string;
+  bottomText?: string;
 };
 
 const SituationText = ({ topText, bottomText }: Props) => {

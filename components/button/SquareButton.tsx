@@ -9,6 +9,7 @@ type Props = {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   showIcon?: boolean;
+  fullWidth?: boolean;
 };
 
 const SquareButton = ({
@@ -17,10 +18,16 @@ const SquareButton = ({
   onPress,
   style,
   showIcon = true,
+  fullWidth = true,
 }: Props) => {
   return (
     <Pressable
-      style={[style, styles.button, active ? styles.active : styles.unActive]}
+      style={[
+        style,
+        styles.button,
+        active ? styles.active : styles.unActive,
+        fullWidth && { flex: 1 },
+      ]}
       onPress={onPress}
       accessibilityRole='button'
       accessibilityState={{ selected: active }}
@@ -51,7 +58,6 @@ export default SquareButton;
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',

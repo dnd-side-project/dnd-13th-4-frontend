@@ -14,9 +14,14 @@ import { isMatched } from './feeling';
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
 
+// ✅ S3 이미지 URL
+const imageUrl =
+  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
+
 const Submit = () => {
   const router = useRouter();
-  const { reset } = useNoteCreateStore();
+  const { reset, emotion, promise, situationAction, situationState } =
+    useNoteCreateStore();
 
   const handleSubmit = () => {
     router.replace('/');
@@ -59,10 +64,19 @@ const Submit = () => {
     >
       <View style={styles.contentContainer}>
         <View style={{ paddingTop: 24, paddingBottom: '10%' }}>
-          <FromToText />
+          <FromToText text={`예림님의 마음,\n지우님에게 잘 전달할게요`} />
         </View>
         <View style={{ position: 'relative' }}>
-          <NoteCard style={{ zIndex: 100 }} />
+          <NoteCard
+            date={'8월 7일'}
+            emotionText={emotion?.text}
+            imageUrl={imageUrl}
+            promiseText={promise?.text ?? ''}
+            situationActionText={situationAction?.text ?? ''}
+            situationStateText={situationState?.text ?? ''}
+            randomMessage={'지금처럼만 하면 우리 룸메 계약 연장 가능✨'}
+            style={{ zIndex: 100 }}
+          />
         </View>
         <View style={styles.buttonContainer}>
           {!isMatched && (

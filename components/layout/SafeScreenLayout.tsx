@@ -1,4 +1,4 @@
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient, LinearGradientPoint } from 'expo-linear-gradient';
 import React from 'react';
 import { ImageBackground, StyleSheet, View, ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,6 +9,8 @@ type BackgroundType =
       type: 'gradient';
       colors: readonly [string, string, ...string[]];
       locations?: readonly [number, number, ...number[]];
+      start?: LinearGradientPoint;
+      end?: LinearGradientPoint;
     }
   | { type: 'image'; uri: string }
   | null;
@@ -59,6 +61,8 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
       return (
         <LinearGradient
           colors={background.colors}
+          start={background.start}
+          end={background.end}
           locations={background.locations}
           style={[styles.container, style]}
         >

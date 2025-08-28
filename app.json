@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "dnd-13th-4-frontend",
+    "name": "Wini",
     "slug": "dnd-13th-4-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
-    "scheme": "dnd13th4frontend",
+    "scheme": "com.kirikiri.wini",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -18,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#5BA4FA"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.kirikiri.wini",

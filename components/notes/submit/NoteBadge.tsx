@@ -1,5 +1,5 @@
 import { CustomText } from '@/components/CustomText';
-import { PrimaryColors } from '@/constants/Colors';
+import { GreyColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
 type NoteBadgeProps = {
@@ -18,13 +18,12 @@ export default NoteBadge;
 
 const styles = StyleSheet.create({
   badge: {
-    backgroundColor: PrimaryColors.blue300,
+    backgroundColor: GreyColors.grey100,
     paddingHorizontal: 8,
     borderRadius: 12,
   },
   badgeText: {
     fontSize: 13,
-    color: PrimaryColors.blue100,
-    fontFamily: 'Pretendard-SemiBold',
+    color: GreyColors.grey600,
   },
 });

@@ -3,33 +3,25 @@ import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { useActionTemplatesQuery } from '@/components/notes/hooks/useActionTemplatesQuery';
 import { PrimaryColors } from '@/constants/Colors';
 import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
 
 const ActionFirst = () => {
   const router = useRouter();
-  const [selectedType, setSelectedType] = useState(
-    ACTION_LIST.negative[0].label,
-  );
+  const [selectedType, setSelectedType] = useState(0);
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
-  const { setSituationAction } = useNoteCreateStore();
-
-  // 현재 선택된 label(type)에 해당하는 카테고리 찾기
-  const currentCategory = useMemo(() => {
-    const categories = [...ACTION_LIST.negative, ...ACTION_LIST.positive];
-    return categories.find((c) => c.label === selectedType) ?? null;
-  }, [selectedType]);
-
-  // 현재 카테고리의 액션 배열
-  const actions = currentCategory?.actions ?? [];
+  const { emotion, setSituationAction } = useNoteCreateStore();
+  const { data, isLoading, isError } = useActionTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive',
+  });
 
   const handleSelectAction = ({
     id,
@@ -49,6 +41,18 @@ const ActionFirst = () => {
     setSituationAction(selectedItem);
     router.navigate('/notes/ActionSecond');
   };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
+
+  const currentCategory = data[selectedType] ?? [];
+
+  // 현재 카테고리의 액션 배열
+  const actions = currentCategory?.actions ?? [];
 
   return (
     <SafeScreenLayout
@@ -84,9 +88,9 @@ const ActionFirst = () => {
           rightText='룸메가 어떤 행동을 했나요?'
         />
         <View style={styles.actionTypeContainer}>
-          {ACTION_LIST.negative.map(({ label }) => (
-            <Pressable key={label} onPress={() => setSelectedType(label)}>
-              <CategoryChip text={label} selected={selectedType === label} />
+          {data.map(({ name }, index) => (
+            <Pressable key={index} onPress={() => setSelectedType(index)}>
+              <CategoryChip text={name} selected={selectedType === index} />
             </Pressable>
           ))}
         </View>

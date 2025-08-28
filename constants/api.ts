@@ -31,6 +31,9 @@ export const TEMPLATES_CLOSINGS_PATH = '/templates/closings';
 /** GET 상황 리스트 조회 */
 export const TEMPLATES_SITUATIONS_PATH = '/templates/situations';
 
+/** GET 행동 리스트 조회 */
+export const TEMPLATES_ACTIONS_PATH = '/templates/actions';
+
 /** GET 약속 리스트 조회 */
 export const TEMPLATES_PROMISES_PATH = '/templates/promises';
 

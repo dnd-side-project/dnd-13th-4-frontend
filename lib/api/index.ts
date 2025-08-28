@@ -1,8 +1,7 @@
 import { toast } from '@/store/toast.store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig } from 'axios';
-import { buildQuery } from '../buildQuery';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { tokenStorage } from '../auth/tokenStorage';
+import { buildQuery } from '../buildQuery';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -17,8 +16,6 @@ const client = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization:
-      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3aW5pIiwic3ViIjoiMiIsImlhdCI6MTc1NjI4OTI4OSwiZXhwIjoxNzU2MjkxMDM5fQ.cFcocu_EeLd1FLN6igNtiVzERdiVb3ByQpznCUIuC4VxD_nnIpv8-sZ9_CVCuCpi4seuv6kDPFuNSY9GFvcEGA',
   },
   timeout: 60000,
 });
@@ -31,7 +28,7 @@ client.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 client.interceptors.response.use(
@@ -52,13 +49,13 @@ client.interceptors.response.use(
           headers: { Authorization: `Bearer ${refreshToken}` },
         });
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data.data;
-        
+        const { accessToken, refreshToken: newRefreshToken } =
+          response.data.data;
+
         await tokenStorage.setTokens(accessToken, newRefreshToken);
 
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return client(originalRequest);
-
       } catch (refreshError) {
         await tokenStorage.clearTokens();
         console.error('Token refresh failed:', refreshError);
@@ -67,7 +64,7 @@ client.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 async function request<T>(

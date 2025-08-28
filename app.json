@@ -18,11 +18,9 @@
       "bundleIdentifier": "com.kirikiri.wini",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": [
-          "remote-notification"
-        ]
+        "UIBackgroundModes": ["remote-notification"]
       },
-      "appleTeamId": "MRNM55WK54"
+      "appleTeamId": "5A7A76PWY7"
     },
     "android": {
       "adaptiveIcon": {

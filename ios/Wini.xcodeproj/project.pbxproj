@@ -9,26 +9,26 @@
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		747229DB7AEBDA3D9BFD77B0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 93A64D606523B6C156BB639C /* PrivacyInfo.xcprivacy */; };
-		B046F5BAA2F44C2C868B70B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85CC9F190E8848649D4614B9 /* GoogleService-Info.plist */; };
-		B2E4464DEBD930BBEEB760DE /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5586492DFC8549C7F224A /* ExpoModulesProvider.swift */; };
+		60A0AA56ED5334D20F9D916A /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0BB3302B96EEFD9D0B69AF /* ExpoModulesProvider.swift */; };
+		B3686B74DE644BA391ED9F35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7990071F164F4F5180FCB8F5 /* GoogleService-Info.plist */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C171231EC36E2E732B1FA6D2 /* Pods_Wini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9BC5CCF93102E687BA20B5 /* Pods_Wini.framework */; };
+		DF7E9C10920451EC4D73A3C3 /* Pods_Wini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DB75F4CCE35438DD32CA0C /* Pods_Wini.framework */; };
+		E188052114B07764A846B929 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B0B468F60E8AB3398F8732B9 /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C9BC5CCF93102E687BA20B5 /* Pods_Wini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Wini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Wini/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Wini/Info.plist; sourceTree = "<group>"; };
-		6FA5586492DFC8549C7F224A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Wini/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		776EFC87B50E2BDAC1911F14 /* Pods-Wini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wini.release.xcconfig"; path = "Target Support Files/Pods-Wini/Pods-Wini.release.xcconfig"; sourceTree = "<group>"; };
-		85CC9F190E8848649D4614B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Wini/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		93A64D606523B6C156BB639C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Wini/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		37564E500C2EF59856E9ADB8 /* Pods-Wini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wini.debug.xcconfig"; path = "Target Support Files/Pods-Wini/Pods-Wini.debug.xcconfig"; sourceTree = "<group>"; };
+		389A442BBAA81EDA6B1AF4BD /* Pods-Wini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wini.release.xcconfig"; path = "Target Support Files/Pods-Wini/Pods-Wini.release.xcconfig"; sourceTree = "<group>"; };
+		7990071F164F4F5180FCB8F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Wini/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		94DB75F4CCE35438DD32CA0C /* Pods_Wini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Wini/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B114AD19043B9E66F370DF1D /* Pods-Wini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wini.debug.xcconfig"; path = "Target Support Files/Pods-Wini/Pods-Wini.debug.xcconfig"; sourceTree = "<group>"; };
+		B0B468F60E8AB3398F8732B9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Wini/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		CF0BB3302B96EEFD9D0B69AF /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Wini/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Wini/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* Wini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Wini-Bridging-Header.h"; path = "Wini/Wini-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -39,21 +39,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C171231EC36E2E732B1FA6D2 /* Pods_Wini.framework in Frameworks */,
+				DF7E9C10920451EC4D73A3C3 /* Pods_Wini.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00A6160E373315678D534106 /* Wini */ = {
-			isa = PBXGroup;
-			children = (
-				6FA5586492DFC8549C7F224A /* ExpoModulesProvider.swift */,
-			);
-			name = Wini;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* Wini */ = {
 			isa = PBXGroup;
 			children = (
@@ -63,8 +55,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				85CC9F190E8848649D4614B9 /* GoogleService-Info.plist */,
-				93A64D606523B6C156BB639C /* PrivacyInfo.xcprivacy */,
+				7990071F164F4F5180FCB8F5 /* GoogleService-Info.plist */,
+				B0B468F60E8AB3398F8732B9 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Wini;
 			sourceTree = "<group>";
@@ -73,17 +65,27 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				0C9BC5CCF93102E687BA20B5 /* Pods_Wini.framework */,
+				94DB75F4CCE35438DD32CA0C /* Pods_Wini.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		561ED171577C04DCF33C9955 /* ExpoModulesProviders */ = {
+		31D750D8B2A2F6674EE356F9 /* Wini */ = {
 			isa = PBXGroup;
 			children = (
-				00A6160E373315678D534106 /* Wini */,
+				CF0BB3302B96EEFD9D0B69AF /* ExpoModulesProvider.swift */,
 			);
-			name = ExpoModulesProviders;
+			name = Wini;
+			sourceTree = "<group>";
+		};
+		37327977C48E32FF8742C3C8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				37564E500C2EF59856E9ADB8 /* Pods-Wini.debug.xcconfig */,
+				389A442BBAA81EDA6B1AF4BD /* Pods-Wini.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -100,8 +102,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				9CC2DDC92CA4C4DEFC4E6DED /* Pods */,
-				561ED171577C04DCF33C9955 /* ExpoModulesProviders */,
+				37327977C48E32FF8742C3C8 /* Pods */,
+				D16D8EBE608A997D77A8F9AE /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -116,16 +118,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9CC2DDC92CA4C4DEFC4E6DED /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B114AD19043B9E66F370DF1D /* Pods-Wini.debug.xcconfig */,
-				776EFC87B50E2BDAC1911F14 /* Pods-Wini.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +125,14 @@
 			);
 			name = Supporting;
 			path = Wini/Supporting;
+			sourceTree = "<group>";
+		};
+		D16D8EBE608A997D77A8F9AE /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				31D750D8B2A2F6674EE356F9 /* Wini */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,14 +143,14 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Wini" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				82AA27394B0CA84D1CA14DF3 /* [Expo] Configure project */,
+				453894F6F71CDC8B2B51551B /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				A4068676DDFCB546C106389A /* [CP] Embed Pods Frameworks */,
-				28029D908F48F7F0C009B379 /* [CP-User] [RNFB] Core Configuration */,
+				B803CE03A7806941B759FBA4 /* [CP] Embed Pods Frameworks */,
+				495D0F72B5F0A190F7178207 /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -170,9 +170,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = MRNM55WK54;
 						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -202,8 +200,8 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				B046F5BAA2F44C2C868B70B6 /* GoogleService-Info.plist in Resources */,
-				747229DB7AEBDA3D9BFD77B0 /* PrivacyInfo.xcprivacy in Resources */,
+				B3686B74DE644BA391ED9F35 /* GoogleService-Info.plist in Resources */,
+				E188052114B07764A846B929 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +245,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		28029D908F48F7F0C009B379 /* [CP-User] [RNFB] Core Configuration */ = {
+		453894F6F71CDC8B2B51551B /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Wini/expo-configure-project.sh\"\n";
+		};
+		495D0F72B5F0A190F7178207 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -332,26 +349,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Wini/Pods-Wini-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		82AA27394B0CA84D1CA14DF3 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Wini/expo-configure-project.sh\"\n";
-		};
-		A4068676DDFCB546C106389A /* [CP] Embed Pods Frameworks */ = {
+		B803CE03A7806941B759FBA4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -377,7 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				B2E4464DEBD930BBEEB760DE /* ExpoModulesProvider.swift in Sources */,
+				60A0AA56ED5334D20F9D916A /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,15 +384,13 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B114AD19043B9E66F370DF1D /* Pods-Wini.debug.xcconfig */;
+			baseConfigurationReference = 37564E500C2EF59856E9ADB8 /* Pods-Wini.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Wini/Wini.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MRNM55WK54;
+				DEVELOPMENT_TEAM = 5A7A76PWY7;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -425,15 +421,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 776EFC87B50E2BDAC1911F14 /* Pods-Wini.release.xcconfig */;
+			baseConfigurationReference = 389A442BBAA81EDA6B1AF4BD /* Pods-Wini.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Wini/Wini.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MRNM55WK54;
+				DEVELOPMENT_TEAM = 5A7A76PWY7;
 				INFOPLIST_FILE = Wini/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -11,7 +11,6 @@ import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { isMatched } from './feeling';
 
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
@@ -25,7 +24,7 @@ const Submit = () => {
   const { reset, emotion, promise, situationAction, situationState } =
     useNoteCreateStore();
 
-  const { data } = useMeQuery();
+  const { data: { isMatched, name } = {} } = useMeQuery();
   const { data: mateData } = useMateQuery();
 
   const handleSubmit = () => {
@@ -70,7 +69,7 @@ const Submit = () => {
       <View style={styles.contentContainer}>
         <View style={{ paddingTop: 24, paddingBottom: '10%' }}>
           <FromToText
-            text={`${data?.name ?? ''}님의 마음,\n${
+            text={`${name ?? ''}님의 마음,\n${
               mateData?.name ?? ''
             }님에게 잘 전달할게요`}
           />

@@ -5,6 +5,7 @@ import { Icon } from '@/components/icons';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { modal } from '@/components/modal/modal';
+import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useEmotionTemplatesQuery } from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateFeelingHeader from '@/components/notes/feeling/NoteCreateHeaderLayout';
@@ -14,15 +15,13 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
-// TODO : isMatched는 API연동을 해야함.
-export const isMatched = false;
-
 const Feeling = () => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { width: screenWidth } = useWindowDimensions();
   const { setEmotion } = useNoteCreateStore();
   const { data, isLoading, isError } = useEmotionTemplatesQuery();
+  const { data: { isMatched } = {} } = useMeQuery();
 
   const changeEmotion = (newIndex: number): void => {
     setSelectedIndex(newIndex);

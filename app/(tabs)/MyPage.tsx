@@ -39,10 +39,7 @@ export default function MyPage() {
             end={{ x: 0.9, y: 0.8 }}
             style={styles.profileImageWrapper}
           >
-            <Image
-              source={require('@/assets/images/test-profile.png')}
-              style={styles.profileImage}
-            />
+            <Image source={{ uri: data?.image }} style={styles.profileImage} />
           </LinearGradient>
           <CustomText variant='head1'>{data?.name ?? `   `}</CustomText>
         </View>

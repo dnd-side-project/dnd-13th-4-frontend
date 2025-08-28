@@ -6,6 +6,8 @@ type MyData = {
   id: number;
   name: string;
   email: string;
+  image: string;
+  isMatched: true;
 };
 
 export const useMeQuery = () => {

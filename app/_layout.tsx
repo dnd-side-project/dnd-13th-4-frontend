@@ -7,6 +7,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { LATEST_NOTES_PATH, MATE_STATUS_PATH, MY_INFO_PATH, MY_STATUS_PATH } from '@/constants/api';
+import { api } from '@/lib/api';
 
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import GlobalModalHost from '@/components/modal/GlobalModalHost';
@@ -94,8 +96,35 @@ export default function RootLayout() {
   useAppState(onAppStateChange);
 
   useEffect(() => {
+    const prefetchHomeScreenData = async () => {
+      try {
+        await Promise.all([
+          queryClient.prefetchQuery({
+            queryKey: [LATEST_NOTES_PATH],
+            queryFn: () => api.get({ path: LATEST_NOTES_PATH }).then(res => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MY_INFO_PATH],
+            queryFn: () => api.get({ path: MY_INFO_PATH }).then(res => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MY_STATUS_PATH],
+            queryFn: () => api.get({ path: MY_STATUS_PATH }).then(res => res.data),
+          }),
+          queryClient.prefetchQuery({
+            queryKey: [MATE_STATUS_PATH],
+            queryFn: () => api.get({ path: MATE_STATUS_PATH }).then(res => res.data),
+          }),
+        ]);
+      } catch (error) {
+        console.warn('Failed to prefetch home screen data:', error);
+      }
+    };
+
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      prefetchHomeScreenData().finally(() => {
+        SplashScreen.hideAsync();
+      });
     }
   }, [fontsLoaded]);
 

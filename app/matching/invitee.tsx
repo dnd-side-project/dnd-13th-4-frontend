@@ -2,8 +2,10 @@ import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useRoomJoinMutation } from '@/components/matching/hooks/useRoomJoinMutation';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { FontWeightToFamily } from '@/constants/Typography';
+import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
@@ -12,11 +14,16 @@ const INVITE_CODE_LENGTH = 7;
 
 const Invitee = () => {
   const router = useRouter();
+  const { mutateAsync } = useRoomJoinMutation();
   const [inviteCode, setInviteCode] = useState('');
 
-  const handleConfirm = (): void => {
-    // TODO: 초대코드 확인 로직 구현
-    router.push('/');
+  const handleConfirm = async (): Promise<void> => {
+    try {
+      await mutateAsync({ roomCode: inviteCode });
+      router.push('/');
+    } catch (e) {
+      toast.show('초대코드가 일치하지않아요.');
+    }
   };
 
   return (
@@ -40,7 +47,7 @@ const Invitee = () => {
               초대코드
             </CustomText>
             <TextInput
-              onChangeText={(text) => setInviteCode(text)}
+              onChangeText={(text) => setInviteCode(text.toUpperCase())}
               value={inviteCode}
               style={styles.textInput}
               placeholder='초대코드 7자리'

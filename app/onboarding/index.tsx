@@ -33,7 +33,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={styles.centerText}
+        style={{ textAlign: 'center' }}
       >
         {`룸메이트와 솔직하게 대화하고 싶지만,\n관계가 어긋날까봐 망설인 적 있나요?`}
       </CustomText>
@@ -46,7 +46,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={styles.centerText}
+        style={{ textAlign: 'center' }}
       >
         <CustomText
           variant='head3'
@@ -66,7 +66,7 @@ const onboardingData: OnboardingData[] = [
         variant='head3'
         color={GreyColors.grey800}
         fontWeight='bold'
-        style={styles.centerText}
+        style={{ textAlign: 'center' }}
       >
         {`쪽지템플릿을 통해 복잡한 고민을 덜고,\n정돈된 글로 마음을 전해보세요`}
       </CustomText>
@@ -77,7 +77,7 @@ const onboardingData: OnboardingData[] = [
 
 const OnboardingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef<ICarouselInstance>(null);
+  const carouselRef = useRef<ICarouselInstance | null>(null);
   const progress = useSharedValue<number>(0);
   const isLastSlide = currentIndex === onboardingData.length - 1;
 
@@ -150,13 +150,8 @@ const OnboardingScreen = () => {
         />
 
         {isLastSlide ? (
-          <FlexibleButton
-            onPress={handleNext}
-            style={styles.kakaoButton}
-          >
-            <View
-              style={styles.kakaoButtonContent}
-            >
+          <FlexibleButton onPress={handleNext} style={styles.kakaoButton}>
+            <View style={styles.kakaoButtonContent}>
               <Icon name='kakao' size={18} />
               <CustomText variant='body1' color='#000000' fontWeight='bold'>
                 카카오 로그인

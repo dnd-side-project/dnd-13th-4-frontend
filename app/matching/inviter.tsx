@@ -2,6 +2,7 @@ import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useRoomCreateQuery } from '@/components/matching/hooks/useRoomCreateMutation';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
@@ -10,13 +11,15 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 const Inviter = () => {
   const router = useRouter();
-  const handleCopy = async (copyText: string): Promise<void> => {
+
+  const { data } = useRoomCreateQuery();
+  const handleCopy = async (copyText?: string): Promise<void> => {
+    if (!copyText) return;
     await Clipboard.setStringAsync(copyText);
     toast.show('초대코드가 복사되었습니다.');
   };
 
-  // TODO 연동
-  const inviteCode = '2HUM8G4';
+  const inviteCode = data?.code ?? `       `;
 
   return (
     <SafeScreenLayout

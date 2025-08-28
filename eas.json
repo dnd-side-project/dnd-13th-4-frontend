@@ -29,6 +29,12 @@
         "simulator": true
       }
     },
+    "production:debug": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "development"
+      }
+    },
     "production": {
       "autoIncrement": true,
       "env": {

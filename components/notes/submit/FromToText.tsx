@@ -2,11 +2,20 @@ import { CustomText } from '@/components/CustomText';
 import { GreyColors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
 
-const FromToText = () => {
+type Props = {
+  text: string;
+};
+
+const FromToText = ({ text }: Props) => {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>예림님의 마음,</CustomText>
-      <CustomText style={styles.text}>지우님에게 잘 전달할게요</CustomText>
+      <CustomText
+        variant='head1'
+        color={GreyColors.grey800}
+        style={styles.text}
+      >
+        {text}
+      </CustomText>
     </View>
   );
 };
@@ -19,11 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-
   text: {
-    fontSize: 23,
-    fontFamily: 'Pretendard-Bold',
-    color: GreyColors.grey900,
-    lineHeight: 32.2,
+    textAlign: 'center',
   },
 });

@@ -184,6 +184,24 @@ const ArrowTopIcon = ({ color = '#000000', size = 24 }: IconProps) => (
   </Svg>
 );
 
+const KakaoLogoIcon = ({ color = '#000000', size = 24 }: IconProps) => (
+  <Svg width={size} height={size} viewBox='0 0 18 18' fill='none'>
+    <G clipPath='url(#clip0_3106_5783)'>
+      <Path
+        fillRule='evenodd'
+        clipRule='evenodd'
+        d='M9.00002 0.600098C4.02917 0.600098 0 3.71306 0 7.55238C0 9.94012 1.5584 12.0451 3.93152 13.2971L2.93303 16.9446C2.84481 17.2669 3.21341 17.5238 3.49646 17.337L7.87334 14.4483C8.2427 14.4839 8.61808 14.5047 9.00002 14.5047C13.9705 14.5047 17.9999 11.3919 17.9999 7.55238C17.9999 3.71306 13.9705 0.600098 9.00002 0.600098Z'
+        fill={color}
+      />
+    </G>
+    <Defs>
+      <ClipPath id='clip0_3106_5783'>
+        <Rect width='17.9999' height='18' fill='white' />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
 export const iconComponents = {
   home: HomeIcon,
   dashboard: DashBoardIcon,
@@ -199,6 +217,7 @@ export const iconComponents = {
   messageFill: MessageFillIcon,
   keyFill: KeyFillIcon,
   arrowTop: ArrowTopIcon,
+  kakao: KakaoLogoIcon,
 } as const;
 
 export type IconName = keyof typeof iconComponents;

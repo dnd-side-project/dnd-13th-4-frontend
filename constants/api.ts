@@ -10,9 +10,6 @@ export const STATUS_LIST_PATH = '/status';
 /** GET : 룸메 상태 조회 */
 export const MATE_STATUS_PATH = '/mate/status';
 
-/** GET : 내 정보 조회 */
-export const MY_INFO_PATH = '/me';
-
 /** GET : 현재 내 상태 조회 */
 export const MY_STATUS_PATH = '/me/status';
 
@@ -30,3 +27,12 @@ export const NOTES_SAVED_PATH = '/notes/saved';
 
 /** GET 통계 나의 성장 조회 */
 export const MY_GROWTH_PATH = '/log/growth';
+
+/** POST 초대코드 생성 */
+export const ROOMS_PATH = '/rooms';
+
+/** POST 초대코드와 연결된 방 정보 반환 */
+export const ROOMS_JOIN_PATH = '/rooms/join';
+
+/** GET 내 정보 조회 */
+export const ME_PATH = '/me';

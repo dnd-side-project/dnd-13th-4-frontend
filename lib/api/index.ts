@@ -1,5 +1,6 @@
 import { toast } from '@/store/toast.store';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig } from 'axios';
 import { buildQuery } from '../buildQuery';
 import { tokenStorage } from '../auth/tokenStorage';
 
@@ -89,7 +90,9 @@ async function request<T>(
 
     const errorMessage = `API Error: ${status ?? 'N/A'}`;
 
-    toast.show(errorMessage);
+    if (status === 500 || status === 401) {
+      toast.show(errorMessage);
+    }
 
     throw new Error(`${errorMessage} ${statusText}`);
   }

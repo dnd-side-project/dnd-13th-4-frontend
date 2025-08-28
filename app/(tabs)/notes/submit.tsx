@@ -4,6 +4,7 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
+import { useNoteSubmitMutation } from '@/components/notes/hooks/useNoteSubmitMutation';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -26,12 +27,24 @@ const Submit = () => {
 
   const { data: { isMatched, name } = {} } = useMeQuery();
   const { data: mateData } = useMateQuery();
+  const { mutateAsync } = useNoteSubmitMutation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    try {
+      await mutateAsync({
+        emotionId: 1,
+        promiseId: 1,
+        situationId: 1,
+        actionId: 0,
+        closingId: 1,
+      });
+      toast.show('마음쪽지를 룸메이트에게 전달했어요');
+    } catch (e) {
+      toast.show('마음쪽지 전달을 실패했어요');
+    }
     router.replace('/');
-    toast.show('마음쪽지를 룸메이트에게 전달했어요');
+
     reset();
-    // TODO: 제출동작 구현
   };
 
   return (

@@ -16,6 +16,9 @@ export const MY_STATUS_PATH = '/me/status';
 /** PUT : 내 상태 수정 */
 export const UPDATE_MY_STATUS_PATH = '/me/status';
 
+/** POST : 쪽지 생성 */
+export const NOTES_PATH = '/notes';
+
 /** GET : 단일 쪽지 조회 */
 export const getNotePath = (noteId: number) => `/notes/${noteId}`;
 

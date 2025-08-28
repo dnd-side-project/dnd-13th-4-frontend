@@ -43,6 +43,10 @@ const Promise = () => {
   const handleSubmit = (): void => {
     setPromise(selectedItem);
     router.navigate('/notes/submit');
+
+    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
+    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
+    setSelectedItem(null);
   };
 
   if (isLoading) {

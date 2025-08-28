@@ -1,4 +1,11 @@
+import {
+  LATEST_NOTES_PATH,
+  MATE_STATUS_PATH,
+  ME_PATH,
+  MY_STATUS_PATH,
+} from '@/constants/api';
 import { STACK_SCREENS } from '@/constants/Routes';
+import { api } from '@/lib/api';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
@@ -7,15 +14,12 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { LATEST_NOTES_PATH, MATE_STATUS_PATH, MY_INFO_PATH, MY_STATUS_PATH } from '@/constants/api';
-import { api } from '@/lib/api';
 
 import { DebugFloatingTokenButton } from '@/components/debug/DebugFloatingTokenButton';
 import GlobalModalHost from '@/components/modal/GlobalModalHost';
 import ToastHost from '@/components/ToastHost';
 import { useAppState } from '@/hooks/useAppState';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
-import { api } from '@/lib/api';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { useNotificationRouting } from '@/lib/notifications/useNotificationRouting';
 import {
@@ -101,19 +105,22 @@ export default function RootLayout() {
         await Promise.all([
           queryClient.prefetchQuery({
             queryKey: [LATEST_NOTES_PATH],
-            queryFn: () => api.get({ path: LATEST_NOTES_PATH }).then(res => res.data),
+            queryFn: () =>
+              api.get({ path: LATEST_NOTES_PATH }).then((res) => res.data),
           }),
           queryClient.prefetchQuery({
-            queryKey: [MY_INFO_PATH],
-            queryFn: () => api.get({ path: MY_INFO_PATH }).then(res => res.data),
+            queryKey: [ME_PATH],
+            queryFn: () => api.get({ path: ME_PATH }).then((res) => res.data),
           }),
           queryClient.prefetchQuery({
             queryKey: [MY_STATUS_PATH],
-            queryFn: () => api.get({ path: MY_STATUS_PATH }).then(res => res.data),
+            queryFn: () =>
+              api.get({ path: MY_STATUS_PATH }).then((res) => res.data),
           }),
           queryClient.prefetchQuery({
             queryKey: [MATE_STATUS_PATH],
-            queryFn: () => api.get({ path: MATE_STATUS_PATH }).then(res => res.data),
+            queryFn: () =>
+              api.get({ path: MATE_STATUS_PATH }).then((res) => res.data),
           }),
         ]);
       } catch (error) {

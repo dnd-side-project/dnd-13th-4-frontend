@@ -28,6 +28,12 @@ export const NOTES_SAVED_PATH = '/notes/saved';
 /** GET 통계 나의 성장 조회 */
 export const MY_GROWTH_PATH = '/log/growth';
 
+/** GET 주간 통계 조회 */
+export const STATISTICS_PATH = '/log/statistics';
+
+/** GET 나를 대표하는 키워드 */
+export const KEYWORDS_PATH = '/log/keywords';
+
 /** POST 초대코드 생성 */
 export const ROOMS_PATH = '/rooms';
 

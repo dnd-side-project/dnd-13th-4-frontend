@@ -1,18 +1,18 @@
-import { MY_INFO_PATH } from '@/constants/api';
+import { ME_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { MemberResponse } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
 
 const getMyInfo = async () => {
   const { data } = await api.get<MemberResponse>({
-    path: MY_INFO_PATH,
+    path: ME_PATH,
   });
   return data;
 };
 
 const useMyInfoQuery = () => {
   const query = useQuery({
-    queryKey: [MY_INFO_PATH],
+    queryKey: [ME_PATH],
     queryFn: getMyInfo,
   });
 

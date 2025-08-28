@@ -8,10 +8,6 @@ export const ROUTE_NAMES = {
 
 export const STACK_SCREENS = [
   {
-    name: ROUTE_NAMES.ONBOARDING,
-    options: { headerShown: false },
-  },
-  {
     name: ROUTE_NAMES.TABS,
     options: { headerShown: false },
   },

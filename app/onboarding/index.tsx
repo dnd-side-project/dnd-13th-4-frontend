@@ -22,14 +22,12 @@ import CarouselUi, {
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 type OnboardingData = {
-  id: number;
   text: React.ReactNode;
   backgroundImage: string;
 };
 
 const onboardingData: OnboardingData[] = [
   {
-    id: 1,
     text: (
       <CustomText
         variant='head3'
@@ -45,7 +43,6 @@ const onboardingData: OnboardingData[] = [
     backgroundImage: 'onboarding_1.png',
   },
   {
-    id: 2,
     text: (
       <CustomText
         variant='head3'
@@ -68,7 +65,6 @@ const onboardingData: OnboardingData[] = [
     backgroundImage: 'onboarding_2.png',
   },
   {
-    id: 3,
     text: (
       <CustomText
         variant='head3'

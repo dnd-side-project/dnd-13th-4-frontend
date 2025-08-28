@@ -20,10 +20,10 @@ const CTAButton = ({
   return (
     <Pressable
       style={[
-        style,
         styles.button,
         active ? styles.active : styles.unActive,
         disabled ? styles.disabled : null,
+        style,
       ]}
       onPress={disabled ? undefined : onPress}
       accessibilityRole='button'

@@ -1,11 +1,9 @@
-import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import BottleSection from '@/components/statistics/BottleSection';
 import GrowthSection from '@/components/statistics/GrowthSection';
 import Header from '@/components/statistics/Header';
 import KeywordSection from '@/components/statistics/KeywordSection';
 import { S3_IMAGE_URL } from '@/constants';
-import { GreyColors } from '@/constants/Colors';
 import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -31,16 +29,7 @@ export default function Statistics() {
         bounces={false}
       >
         <Header />
-        <CustomText
-          variant='head1'
-          color={GreyColors.grey800}
-          fontWeight='bold'
-          style={styles.headerMessage}
-        >
-          지금까지 총 84개의{'\n'}마음을 주고 받았어요
-        </CustomText>
         <BottleSection refreshKey={refreshKey} onRefresh={handleRefresh} />
-
         <View style={styles.contentArea}>
           <GrowthSection />
           <KeywordSection />
@@ -60,10 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: -20,
     paddingHorizontal: 20,
-  },
-  headerMessage: {
-    textAlign: 'center',
-    marginBottom: 25,
   },
   contentArea: {
     borderTopRightRadius: 20,

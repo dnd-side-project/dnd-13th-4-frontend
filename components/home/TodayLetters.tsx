@@ -1,14 +1,30 @@
 import { CustomText } from '@/components/CustomText';
 import { GreyColors } from '@/constants/Colors';
+import useLatestNotesQuery from '@/hooks/api/useLatestNotesQuery';
 import { router } from 'expo-router';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
+import EmptyTodayLetter from './EmptyLetter';
 import LetterCard from './TodayLetter';
 
+const MAX_LETTER_COUNT_IN_VIWEPORT = 3;
+
 export const TodayLetters = () => {
-  const handleCardPress = () => {
-    // ReadMindLetter 페이지로 이동
-    router.push('/ReadMindLetter');
+  const { data: latestNotes = [], isLoading } = useLatestNotesQuery(30000);
+
+  const handleCardPress = (noteId?: number) => {
+    if (noteId) {
+      router.push(`/ReadMindLetter?id=${noteId}`);
+    }
   };
+
+  const notesCount = latestNotes.length;
+  const letterData =
+    notesCount > MAX_LETTER_COUNT_IN_VIWEPORT
+      ? latestNotes.slice(0, 5)
+      : [
+          ...latestNotes,
+          ...new Array(MAX_LETTER_COUNT_IN_VIWEPORT - notesCount).fill(null),
+        ];
 
   return (
     <>
@@ -28,20 +44,26 @@ export const TodayLetters = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.todayLettersContent}
         style={styles.todayLetters}
-        data={new Array(5).fill(0)}
-        renderItem={({ index }) => (
-          <Pressable onPress={handleCardPress}>
-            <LetterCard
-              url={''}
-              endTime={''}
-              isRead={false}
-              index={index}
-              colors={['#5BA4FA', '#45E5DD', '#5BA4FA']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            />
-          </Pressable>
-        )}
+        data={letterData}
+        renderItem={({ item, index }) => {
+          if (!item) {
+            return <EmptyTodayLetter />;
+          }
+
+          return (
+            <Pressable onPress={() => handleCardPress(item.id)}>
+              <LetterCard
+                url={item.emotion?.graphicUrl || ''}
+                endTime={''}
+                isRead={item.isRead || false}
+                index={index}
+                colors={['#5BA4FA', '#45E5DD', '#5BA4FA']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              />
+            </Pressable>
+          );
+        }}
         keyExtractor={(_, index) => index.toString()}
       />
     </>
@@ -63,11 +85,6 @@ const styles = StyleSheet.create({
   },
   todayLettersContent: {
     paddingHorizontal: 24,
-  },
-  cardContent: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    gap: 12,
   },
 });

@@ -33,7 +33,11 @@ const NoteCreateHeaderLayout = ({
       <View style={styles.summaryContainer}>
         {previewData.map((item) => (
           <View key={item} style={styles.summary}>
-            <CustomText variant='body3' color={PrimaryColors.blue100}>
+            <CustomText
+              fontWeight='medium'
+              variant='body3'
+              color={PrimaryColors.blue100}
+            >
               {item}
             </CustomText>
           </View>

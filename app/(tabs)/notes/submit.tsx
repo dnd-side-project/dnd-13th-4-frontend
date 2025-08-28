@@ -93,7 +93,6 @@ const Submit = () => {
 
           <CTAButton
             onPress={handleSubmit}
-            style={{ alignSelf: 'flex-end' }}
             text='마음쪽지 보내기'
             active
             disabled={!isMatched}

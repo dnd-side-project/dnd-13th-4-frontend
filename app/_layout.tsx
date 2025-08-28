@@ -13,6 +13,7 @@ import GlobalModalHost from '@/components/modal/GlobalModalHost';
 import ToastHost from '@/components/ToastHost';
 import { useAppState } from '@/hooks/useAppState';
 import { useOnlineManager } from '@/hooks/useOnlineManager';
+import { api } from '@/lib/api';
 import { registerForPushNotificationsAsync } from '@/lib/notifications';
 import { useNotificationRouting } from '@/lib/notifications/useNotificationRouting';
 import {
@@ -59,25 +60,32 @@ export default function RootLayout() {
   });
 
   const [expoPushToken, setExpoPushToken] = useState<string>('');
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >(undefined);
+
+  // --- 토큰 전송 함수 ---
+  const postPushToken = async (token?: string) => {
+    if (!token) return;
+
+    try {
+      await api.post({ path: '/notifications/tokens', body: { token } });
+    } catch (e) {
+      console.warn('[push] token post failed:', e);
+    }
+  };
 
   useEffect(() => {
     registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
+      .then((token) => {
+        setExpoPushToken(token ?? '');
+        postPushToken(token);
+      })
       .catch((error: any) => setExpoPushToken(`${error}`));
 
-    const notificationListener = Notifications.addNotificationReceivedListener(
-      (notification) => setNotification(notification),
-    );
     const responseListener =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
       });
 
     return () => {
-      notificationListener.remove();
       responseListener.remove();
     };
   }, []);

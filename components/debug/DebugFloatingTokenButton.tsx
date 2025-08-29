@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 16,
     right: 16,
-    bottom: 24,
+    top: 80,
     borderRadius: 16,
     padding: 16,
     backgroundColor: 'white',

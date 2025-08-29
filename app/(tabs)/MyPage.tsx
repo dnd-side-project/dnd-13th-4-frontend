@@ -1,7 +1,9 @@
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,6 +20,7 @@ export default function MyPage() {
   };
 
   const { data } = useMeQuery();
+  const { data: mateData } = useMateQuery();
 
   return (
     <SafeScreenLayout
@@ -53,7 +56,7 @@ export default function MyPage() {
           </CustomText>
           <View style={styles.roommateData}>
             <Image
-              source={require('@/assets/images/test-profile.png')}
+              source={{ uri: mateData?.image }}
               style={styles.roommateImage}
             />
 
@@ -62,10 +65,11 @@ export default function MyPage() {
               variant='body1'
               fontWeight='semibold'
             >
-              김예림
+              {mateData?.name ?? `   `}
             </CustomText>
             <CustomText variant='body3' color={GreyColors.grey500}>
-              우리가 함께한 지 58일째
+              우리가 함께한 지{' '}
+              {mateData?.joinedAt ? getDaysAgo(mateData.joinedAt) : ` `}일째
             </CustomText>
           </View>
         </View>

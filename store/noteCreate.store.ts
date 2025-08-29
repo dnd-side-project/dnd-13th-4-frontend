@@ -1,4 +1,4 @@
-import { EMOTION_MOCK_LIST } from '@/components/notes/constants/mockData';
+import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
 import { create, StateCreator } from 'zustand';
 
 export type NoteValue = {
@@ -8,20 +8,23 @@ export type NoteValue = {
 
 type Emotion = NoteValue & {
   graphicUrl: string;
+  emotionType: EmotionType;
 };
 
 type NoteCreateStateType = {
-  emotion: Emotion;
+  emotion: Emotion | null;
   situationAction: NoteValue | null;
   situationState: NoteValue | null;
   promise: NoteValue | null;
+  closing: NoteValue | null;
 };
 
 type NoteCreateActionType = {
-  setEmotion: (emotion: Emotion) => void;
+  setEmotion: (emotion: Emotion | null) => void;
   setSituationAction: (situation: NoteValue | null) => void;
   setSituationState: (situation: NoteValue | null) => void;
   setPromise: (promise: NoteValue | null) => void;
+  setClosing: (closing: NoteValue | null) => void;
   reset: () => void;
   getPreview: () => string[];
 };
@@ -29,10 +32,11 @@ type NoteCreateActionType = {
 export type NoteCreateStoreType = NoteCreateStateType & NoteCreateActionType;
 
 const defaultNoteCreateValue: NoteCreateStateType = {
-  emotion: EMOTION_MOCK_LIST[0], // 최초 선택값
+  emotion: null, // 최초 선택값
   situationAction: null,
   situationState: null,
   promise: null,
+  closing: null,
 };
 
 const noteCreateActions: StateCreator<
@@ -45,6 +49,7 @@ const noteCreateActions: StateCreator<
   setSituationAction: (situation) => set({ situationAction: situation }),
   setSituationState: (situation) => set({ situationState: situation }),
   setPromise: (promise) => set({ promise }),
+  setClosing: (closing) => set({ closing }),
 
   reset: () => set(defaultNoteCreateValue),
 

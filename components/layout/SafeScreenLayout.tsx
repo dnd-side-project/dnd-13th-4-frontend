@@ -18,6 +18,7 @@ type BackgroundType =
 interface SafeScreenLayoutProps {
   children: React.ReactNode;
   style?: ViewStyle;
+  childrenStyle?: ViewStyle;
   background?: BackgroundType;
   header?: React.ReactNode;
 }
@@ -25,6 +26,7 @@ interface SafeScreenLayoutProps {
 export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
   children,
   style,
+  childrenStyle,
   background,
   header,
 }) => {
@@ -36,7 +38,7 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
           edges={header ? ['left', 'right', 'top'] : ['left', 'right']}
         >
           {header}
-          <View style={styles.content}>{children}</View>
+          <View style={[styles.content, childrenStyle]}>{children}</View>
         </SafeAreaView>
       );
     }
@@ -52,7 +54,7 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
           edges={header ? ['left', 'right', 'top'] : ['left', 'right']}
         >
           {header}
-          <View style={styles.content}>{children}</View>
+          <View style={[styles.content, childrenStyle]}>{children}</View>
         </SafeAreaView>
       );
     }
@@ -71,7 +73,7 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
             edges={header ? ['left', 'right', 'top'] : ['left', 'right']}
           >
             {header}
-            <View style={styles.content}>{children}</View>
+            <View style={[styles.content, childrenStyle]}>{children}</View>
           </SafeAreaView>
         </LinearGradient>
       );
@@ -88,7 +90,7 @@ export const SafeScreenLayout: React.FC<SafeScreenLayoutProps> = ({
             edges={header ? ['left', 'right', 'top'] : ['left', 'right']}
           >
             {header}
-            <View style={styles.content}>{children}</View>
+            <View style={[styles.content, childrenStyle]}>{children}</View>
           </SafeAreaView>
         </ImageBackground>
       );

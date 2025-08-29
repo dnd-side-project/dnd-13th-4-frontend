@@ -5,6 +5,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { usePromiseTemplatesQuery } from '@/components/notes/hooks/usePromiseTemplatesQuery';
 import { PrimaryColors } from '@/constants/Colors';
 import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
@@ -16,8 +17,12 @@ const EMPTY_ACTION_TEXT =
 
 const Promise = () => {
   const router = useRouter();
-  const { setPromise } = useNoteCreateStore();
+  const { emotion, setPromise } = useNoteCreateStore();
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
+
+  const { data, isLoading, isError } = usePromiseTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive',
+  });
 
   const handleSelect = ({
     id,
@@ -38,7 +43,18 @@ const Promise = () => {
   const handleSubmit = (): void => {
     setPromise(selectedItem);
     router.navigate('/notes/submit');
+
+    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
+    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
+    setSelectedItem(null);
   };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
 
   return (
     <SafeScreenLayout
@@ -60,6 +76,12 @@ const Promise = () => {
           </View>
         </NoteCreateHeaderLayout>
       }
+      background={{
+        type: 'gradient',
+        colors: ['#F5FAFF', '#C1DEFF'],
+        locations: [0, 0.4],
+      }}
+      childrenStyle={{ backgroundColor: '#ffffff' }}
       style={styles.container}
     >
       <View style={styles.contentContainer}>

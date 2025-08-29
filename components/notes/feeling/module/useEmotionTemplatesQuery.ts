@@ -1,30 +1,42 @@
 import { EMOTION_TEMPLATE_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
+import { EmotionType } from '../../hooks/useClosingTemplatesQuery';
 
-type Props = {
-  emotionType: 'positive' | 'negative';
+export type Emotion = {
+  id: number;
+  emotionType: EmotionType;
+  text: string;
+  selectionImageUrl: string;
+  previewImageUrl: string;
+  archiveImageUrl: string;
+  homeThumbnailUrl: string;
 };
 
-const useEmotionTemplatesQuery = ({ emotionType }: Props) => {
-  const query = useQuery({
-    queryKey: [EMOTION_TEMPLATE_PATH, emotionType], // NOTE : 여기는 담당 개발자 판단에 따라
-    queryFn: async () => {
-      const { data } = await api.get<
-        {
-          id: number;
-          emotionType: string;
-          text: string;
-        }[]
-      >({
-        path: EMOTION_TEMPLATE_PATH,
-        params: { emotionType: emotionType },
-      });
+export type EmotionList = Emotion[];
 
-      return data;
+export const useEmotionTemplatesQuery = () => {
+  const query = useQuery({
+    queryKey: [EMOTION_TEMPLATE_PATH, 'all'],
+    queryFn: async () => {
+      const [positiveRes, negativeRes] = await Promise.all([
+        api.get<EmotionList>({
+          path: EMOTION_TEMPLATE_PATH,
+          params: { emotionType: 'positive' },
+        }),
+        api.get<EmotionList>({
+          path: EMOTION_TEMPLATE_PATH,
+          params: { emotionType: 'negative' },
+        }),
+      ]);
+
+      const result = [...positiveRes.data, ...negativeRes.data].sort(
+        (a, b) => a.id - b.id,
+      );
+
+      return result;
     },
   });
 
   return query;
 };
-export default useEmotionTemplatesQuery;

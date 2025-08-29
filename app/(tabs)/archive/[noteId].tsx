@@ -1,21 +1,36 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { useRouter } from 'expo-router';
+import useNoteQuery from '@/hooks/api/useNoteQuery';
+import { formatDaysAgo } from '@/lib/time';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
 
-// ✅ S3 이미지 URL
-const imageUrl =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
-
 const NoteDetail = () => {
   const router = useRouter();
+  const { noteId } = useLocalSearchParams<{ noteId: string }>();
+  const { data, isLoading, isError } = useNoteQuery({ noteId: Number(noteId) });
+
+  const handleDelete = (): void => {
+    /** TODO 추후구현 */
+    router.replace('/archive');
+  };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
+
+  const { action, closing, createdAt, emotion, promise, situation } = data;
 
   return (
     <SafeScreenLayout
@@ -27,7 +42,7 @@ const NoteDetail = () => {
       header={
         <View style={styles.headerContainer}>
           <Pressable
-            onPress={() => router.push('/storage')}
+            onPress={() => router.push('/archive')}
             accessibilityRole='button'
             accessibilityLabel='뒤로 가기'
           >
@@ -45,7 +60,7 @@ const NoteDetail = () => {
           >
             보관된 마음 쪽지
           </CustomText>
-          <Pressable style={styles.deleteButton}>
+          <Pressable onPress={handleDelete} style={styles.deleteButton}>
             <CustomText
               variant='body1'
               fontWeight='bold'
@@ -63,13 +78,14 @@ const NoteDetail = () => {
         </View>
         <View style={{ position: 'relative' }}>
           <NoteCard
-            date={'8월 7일'}
-            emotionText={'1'}
-            imageUrl={imageUrl}
-            promiseText={'3'}
-            situationActionText={'4'}
-            situationStateText={'5'}
-            randomMessage={'지금처럼만 하면 우리 룸메 계약 연장 가능✨'}
+            date={formatDaysAgo(createdAt)}
+            emotionText={emotion.text}
+            imageUrl={emotion.archiveImageUrl}
+            promiseText={promise.text}
+            situationActionText={action.text}
+            situationStateText={situation.text}
+            emotionType={emotion.emotionType as EmotionType}
+            randomMessage={closing.text}
             style={{ zIndex: 100 }}
           />
         </View>

@@ -1,27 +1,62 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { GreyColors } from '@/constants/Colors';
-import { useState } from 'react';
+import { getRandomItem } from '@/lib/getRandomItem';
+import { useNoteCreateStore } from '@/store/noteCreate.store';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useClosingTemplatesQuery } from '../hooks/useClosingTemplatesQuery';
 
 type Props = {
-  initialText: string;
+  initialText?: string;
   isRefresh?: boolean;
 };
 
 const RandomMessage = ({ initialText, isRefresh = false }: Props) => {
-  const [text, setText] = useState(initialText);
+  // 초기값은 initialText로 고정 세팅
+  const [text, setText] = useState<string | undefined>(initialText);
+  const { setClosing, emotion } = useNoteCreateStore();
+
+  // isRefresh가 true일 때만 쿼리 활성화 (hook 내부에서 enabled 옵션 지원한다고 가정)
+  const { data, isLoading, isError } = useClosingTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive',
+    enabled: isRefresh,
+  });
 
   const handleRefresh = (): void => {
-    // TODO : 랜덤 메시지 로직
-    setText(text);
+    if (!data) return;
+
+    let nextItem = getRandomItem(data);
+    // 같은 값 연속 방지(선택): 같은 값이면 한 번 더 시도
+    if (nextItem === text && data.length > 1) {
+      nextItem = getRandomItem(data);
+    }
+
+    if (!nextItem) return;
+
+    setText(nextItem.text);
+    setClosing(nextItem);
   };
+
+  // 초기 랜덤 세팅: initialText가 없고, isRefresh=true이고, 데이터가 왔을 때 한 번만
+  useEffect(() => {
+    if (isRefresh && data) {
+      const rnd = getRandomItem(data);
+      if (rnd) {
+        setText(rnd.text);
+        setClosing(rnd);
+      }
+    }
+  }, [data, isRefresh]);
+
+  if (isLoading) return null;
+  if (isError) return null;
 
   return (
     <View style={styles.container}>
       <CustomText style={styles.text}>{text}</CustomText>
       {isRefresh && (
-        <Pressable onPress={handleRefresh}>
+        <Pressable onPress={handleRefresh} accessibilityRole='button'>
           <View style={styles.icon}>
             <Icon name='refresh' color={GreyColors.grey500} />
           </View>

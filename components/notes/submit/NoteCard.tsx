@@ -2,6 +2,7 @@ import { CustomText } from '@/components/CustomText';
 import ResponsiveImage from '@/components/Image/ResponsiveImage';
 import { PrimaryColors } from '@/constants/Colors';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { EmotionType } from '../hooks/useClosingTemplatesQuery';
 import FeelingText from './FeelingText';
 import PromiseText from './PromiseText';
 import RandomMessage from './RandomMessage';
@@ -16,7 +17,9 @@ type NoteCardProps = {
   situationActionText: string;
   situationStateText?: string;
   isRandomMessage?: boolean;
-  randomMessage: string;
+  randomMessage?: string;
+  emotionType: EmotionType;
+  isRefresh?: boolean;
 };
 
 const NoteCard = ({
@@ -29,12 +32,17 @@ const NoteCard = ({
   randomMessage,
   situationStateText,
   promiseText,
+  isRefresh = false,
 }: NoteCardProps) => {
   return (
     <View style={[styles.container]}>
       <View style={[styles.card, style]}>
         <View style={styles.imageContainer}>
-          <ResponsiveImage source={{ uri: imageUrl }} width={317} />
+          <ResponsiveImage
+            source={{ uri: imageUrl }}
+            width={317}
+            initialHeight={176}
+          />
           <View style={styles.date}>
             <CustomText variant='body3'>{date}</CustomText>
           </View>
@@ -53,7 +61,7 @@ const NoteCard = ({
             <PromiseText text={promiseText} />
           </View>
           <View style={{ marginBottom: 24 }}>
-            <RandomMessage initialText={randomMessage} />
+            <RandomMessage initialText={randomMessage} isRefresh={isRefresh} />
           </View>
         </View>
       </View>

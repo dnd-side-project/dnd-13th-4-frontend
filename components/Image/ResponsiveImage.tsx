@@ -9,6 +9,7 @@ import {
 type ResponsiveImageProps = {
   source: ImageSourcePropType; // require(...) 또는 { uri }
   width: number; // 부모 기준 width(px)
+  initialHeight?: number;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center' | 'repeat';
   style?: StyleProp<ImageStyle>;
   onError?: (e: unknown) => void;
@@ -18,14 +19,15 @@ type ResponsiveImageProps = {
 const ResponsiveImage = ({
   source,
   width,
+  initialHeight,
   resizeMode = 'contain',
   style,
   onError,
 }: ResponsiveImageProps) => {
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState(initialHeight);
 
   useEffect(() => {
-    if (!width) return;
+    if (!width || initialHeight) return;
 
     if (typeof source === 'number') {
       const res = Image.resolveAssetSource(source);

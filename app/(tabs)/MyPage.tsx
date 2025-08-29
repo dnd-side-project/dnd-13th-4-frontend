@@ -1,7 +1,10 @@
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
+import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,6 +21,8 @@ export default function MyPage() {
   };
 
   const { data } = useMeQuery();
+  const { data: mateData } = useMateQuery();
+  const { data: { code: roomCode } = { code: `       ` } } = useMyRoomsQuery();
 
   return (
     <SafeScreenLayout
@@ -53,7 +58,10 @@ export default function MyPage() {
           </CustomText>
           <View style={styles.roommateData}>
             <Image
-              source={require('@/assets/images/test-profile.png')}
+              source={{
+                // TODO 카카오 프사 http:// 로 들어오는경우 있음. http는 실기기에서 로드가되지 않음.
+                uri: mateData?.image?.replace(/^http:\/\//, 'https://'),
+              }}
               style={styles.roommateImage}
             />
 
@@ -62,22 +70,23 @@ export default function MyPage() {
               variant='body1'
               fontWeight='semibold'
             >
-              김예림
+              {mateData?.name ?? `   `}
             </CustomText>
             <CustomText variant='body3' color={GreyColors.grey500}>
-              우리가 함께한 지 58일째
+              우리가 함께한 지{' '}
+              {mateData?.joinedAt ? getDaysAgo(mateData.joinedAt) : ` `}일째
             </CustomText>
           </View>
         </View>
         <View style={styles.infoItemContainer}>
           <View style={styles.infoItem}>
             <CustomText color={GreyColors.grey700}>초대코드 복사</CustomText>
-            <Pressable onPress={() => handleCopy('2HUM8G4')}>
+            <Pressable onPress={() => handleCopy(roomCode)}>
               <CustomText
                 color={GreyColors.grey400}
                 style={{ textDecorationLine: 'underline' }}
               >
-                2HUM8G4
+                {roomCode}
               </CustomText>
             </Pressable>
           </View>

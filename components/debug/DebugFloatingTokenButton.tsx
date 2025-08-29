@@ -55,7 +55,7 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
   const handleNavigate = (mode: 'push' | 'replace') => {
     const n = normalizePath(path);
     if (!n) {
-      Alert.alert('경로를 입력하세요', '예: /notes/feeling, /storage, /');
+      Alert.alert('경로를 입력하세요', '예: /notes/feeling, /archive, /');
       return;
     }
     setOpen(false);

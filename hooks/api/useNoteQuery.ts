@@ -1,6 +1,6 @@
 import { getNotePath } from '@/constants/api';
 import { api } from '@/lib/api';
-import type { NoteResponse } from '@/types/api';
+import type { NoteType } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const getNote = async (noteId: number) => {
-  const { data } = await api.get<NoteResponse>({
+  const { data } = await api.get<NoteType>({
     path: getNotePath(noteId),
   });
   return data;

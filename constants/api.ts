@@ -60,3 +60,6 @@ export const ME_PATH = '/me';
 
 /** GET 룸메 정보 조회 */
 export const MATE_PATH = '/mate';
+
+/** GET 방 정보 조회 */
+export const ROOMS_MY_PATH = '/rooms/my';

@@ -7,7 +7,10 @@ export type Emotion = {
   id: number;
   emotionType: EmotionType;
   text: string;
-  graphicUrl: string;
+  selectionImageUrl: string;
+  previewImageUrl: string;
+  archiveImageUrl: string;
+  homeThumbnailUrl: string;
 };
 
 export type EmotionList = Emotion[];

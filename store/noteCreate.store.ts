@@ -1,14 +1,9 @@
-import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
+import { Emotion } from '@/components/notes/feeling/module/useEmotionTemplatesQuery';
 import { create, StateCreator } from 'zustand';
 
 export type NoteValue = {
   id: number;
   text: string;
-};
-
-type Emotion = NoteValue & {
-  graphicUrl: string;
-  emotionType: EmotionType;
 };
 
 type NoteCreateStateType = {

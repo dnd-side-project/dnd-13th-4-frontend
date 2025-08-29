@@ -111,11 +111,11 @@ const Feeling = () => {
             itemGap={28}
             height={305}
             onChange={changeEmotion}
-            itemList={data.map(({ graphicUrl }) => (
-              <View key={graphicUrl} style={styles.shadowContainer}>
+            itemList={data.map(({ selectionImageUrl }) => (
+              <View key={selectionImageUrl} style={styles.shadowContainer}>
                 <View style={styles.imageContainer}>
                   <ResponsiveImage
-                    source={{ uri: graphicUrl }}
+                    source={{ uri: selectionImageUrl }}
                     width={210}
                     style={styles.image}
                   />

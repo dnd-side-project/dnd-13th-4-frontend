@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-export default function NotesStackLayout() {
+export default function ArchiveStackLayout() {
   return (
     <Stack
       screenOptions={{

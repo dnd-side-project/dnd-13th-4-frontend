@@ -73,7 +73,7 @@ const ActionSecond = () => {
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                이었어요.
+                였어요
               </CustomText>
             </View>
           </View>

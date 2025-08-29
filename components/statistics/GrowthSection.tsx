@@ -15,25 +15,22 @@ export default function GrowthSection() {
 
   const isMatched = useIsMatched();
 
-  // 누적값으로 변환 및 라벨 설정
+  // 누적값으로 변환 및 라벨 설정 (데이터 가드   동적 라벨)
   const cumulativeData = React.useMemo(() => {
+    const weekly = data?.weeklyPositiveNoteCounts ?? [];
+    if (weekly.length === 0) return [];
     let cumulative = 0;
-    return data.weeklyPositiveNoteCounts.map((item, index) => {
-      cumulative += item.value;
-
-      // 0주차, 4주차, 8주차만 라벨 표시
+    const lastIdx = weekly.length - 1;
+    const midIdx = Math.round(lastIdx / 2);
+    return weekly.map((item, index) => {
+      cumulative = item.value;
       let label = '';
       if (index === 0) label = '2개월전';
-      else if (index === 4) label = '1개월전';
-      else if (index === 8) label = '현재';
-
-      return {
-        ...item,
-        value: cumulative,
-        label: label,
-      };
+      else if (index === midIdx) label = '1개월전';
+      else if (index === lastIdx) label = '현재';
+      return { ...item, value: cumulative, label };
     });
-  }, [data.weeklyPositiveNoteCounts]);
+  }, [data]);
 
   const dynamicSpacing =
     cumulativeData.length > 1

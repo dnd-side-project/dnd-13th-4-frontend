@@ -32,6 +32,25 @@ export type MemberResponse = {
   id: number;
   name: string;
   email: string;
+  image: string;
+  isMatched: boolean;
+};
+
+export type MateResponse = {
+  id: number;
+  name: string;
+  image: string;
+  joinedAt: string;
+};
+
+// Room Types
+export type RoomResponse = {
+  id: number;
+  code: string;
+};
+
+export type RoomJoinRequest = {
+  roomCode: string;
 };
 
 // Note Types
@@ -50,7 +69,10 @@ export type EmotionResponse = {
   id: number;
   emotionType: string;
   text: string;
-  graphicUrl: string;
+  selectionImageUrl: string;
+  previewImageUrl: string;
+  archiveImageUrl: string;
+  homeThumbnailUrl: string;
 };
 
 export type PromiseResponse = {
@@ -65,10 +87,11 @@ export type SituationResponse = {
   text: string;
 };
 
-export type NoteResponse = {
+export type NoteType = {
   id: number;
-  memberRoomSenderId: number;
-  memberRoomReceiverId: number;
+  senderId: number;
+  receiverId: number;
+  roomId: number;
   emotion: EmotionResponse;
   action: ActionResponse;
   situation: SituationResponse;
@@ -80,10 +103,18 @@ export type NoteResponse = {
   createdAt: string;
 };
 
+export type SimpleNoteResponse = {
+  id: number;
+  emotion: EmotionResponse;
+  isRead: boolean;
+  createdAt: string;
+};
+
 // Statistics Types
 export type StatisticsResponse = {
   notesSentThisWeek: number;
   notesReceivedThisWeek: number;
+  totalNotesExchanged: number;
   roomJoinedAt: string;
 };
 

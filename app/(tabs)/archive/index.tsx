@@ -1,6 +1,6 @@
 import EmotionCardList from '@/components/archive/EmotionCardList';
 import Filter from '@/components/archive/Filter';
-import { useSavedNotesQuery } from '@/components/archive/module/useSavedNotesQuery';
+import { useSavedNotesQuery } from '@/components/archive/hooks/useSavedNotesQuery';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
@@ -10,7 +10,7 @@ import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 export default function Storage() {
   const listRef = useRef<FlatList>(null);
-  const { data, isLoading, isError } = useSavedNotesQuery();
+  const { data } = useSavedNotesQuery();
 
   const handleScrollTop = (): void => {
     listRef.current?.scrollToOffset({ offset: 0, animated: true });

@@ -1,12 +1,12 @@
 import { GreyColors } from '@/constants/Colors';
-import { getGraphicUrl } from '@/constants/graphic';
+import { formatDaysAgo } from '@/lib/time';
 import { useRouter } from 'expo-router';
 import { Ref } from 'react';
 import { FlatList, ImageBackground, Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 import GridList from '../ui/gridList';
 import EmptyCardList from './EmptyCardList';
-import { useSavedNotesQuery } from './module/useSavedNotesQuery';
+import { useSavedNotesQuery } from './hooks/useSavedNotesQuery';
 
 type Props = {
   ref?: Ref<FlatList>;
@@ -29,7 +29,7 @@ const EmotionCardList = ({ ref }: Props) => {
       data={data}
       numColumns={2}
       gap={16}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => String(item.id)}
       contentContainerStyle={styles.gridContent}
       renderItem={({ item }) => (
         <Pressable
@@ -37,13 +37,13 @@ const EmotionCardList = ({ ref }: Props) => {
           onPress={() => {
             router.push({
               pathname: '/archive/[noteId]',
-              params: { noteId: 1 },
+              params: { noteId: item.id },
             });
           }}
         >
           <ImageBackground
             source={{
-              uri: getGraphicUrl({ kind: item.kind, page: 'storage' }),
+              uri: item.emotion.graphicUrl,
             }}
             style={styles.card}
             imageStyle={styles.imageRadius}
@@ -53,7 +53,7 @@ const EmotionCardList = ({ ref }: Props) => {
               color={GreyColors.grey500}
               style={styles.date}
             >
-              {item.date}
+              {formatDaysAgo(item.createdAt)}
             </CustomText>
           </ImageBackground>
         </Pressable>

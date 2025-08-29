@@ -17,7 +17,7 @@ type NoteCardProps = {
   situationActionText: string;
   situationStateText?: string;
   isRandomMessage?: boolean;
-  randomMessage: string;
+  randomMessage?: string;
   emotionType: EmotionType;
   isRefresh?: boolean;
 };

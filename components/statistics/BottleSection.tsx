@@ -1,5 +1,6 @@
 import ProgressBar from '@/components/bar/ProgressBar';
 import { CustomText } from '@/components/CustomText';
+import { Icon } from '@/components/icons';
 import StarPhysics from '@/components/statistics/StarPhysics';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
@@ -7,7 +8,6 @@ import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
 import { calculateDaysSince } from '@/utils/time';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { InfoButton } from '../InfoButton';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const MAX_ONE_WEEK_NOTES_COUNT = 42;
@@ -69,7 +69,7 @@ export default function BottleSection({
           >
             {totalNotesThisWeek} / {MAX_ONE_WEEK_NOTES_COUNT}개
           </CustomText>
-          <InfoButton tooltipText={'dddddd'} />
+          <Icon name={'info'} size={16} color='white' />
         </View>
         <ProgressBar
           percentage={Math.round(

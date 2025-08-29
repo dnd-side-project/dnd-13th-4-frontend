@@ -57,7 +57,7 @@ const ActionFirst = () => {
   return (
     <SafeScreenLayout
       header={
-        <NoteCreateHeaderLayout progressPrecentage={33}>
+        <NoteCreateHeaderLayout progressPrecentage={50}>
           <View style={styles.selectItemContainer}>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
               룸메님이

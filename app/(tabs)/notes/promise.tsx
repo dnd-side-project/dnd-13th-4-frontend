@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   },
 
   ctaContainer: {
+    paddingTop: 24,
     flexDirection: 'row',
     width: '100%',
     marginTop: 'auto',

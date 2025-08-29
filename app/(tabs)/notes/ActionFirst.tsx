@@ -40,11 +40,6 @@ const ActionFirst = () => {
   const handleSubmit = (): void => {
     setSituationAction(selectedItem);
     router.navigate('/notes/ActionSecond');
-
-    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
-    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
-    setSelectedType(0);
-    setSelectedItem(null);
   };
 
   if (isLoading) {
@@ -114,9 +109,9 @@ const ActionFirst = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
+            onPress={() => router.back()}
             style={styles.ctaButton}
             text='이전'
-            onPress={() => router.navigate('/notes/feeling')}
           />
           <CTAButton
             style={styles.ctaButton}

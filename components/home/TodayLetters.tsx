@@ -9,7 +9,7 @@ import LetterCard from './TodayLetter';
 const MAX_LETTER_COUNT_IN_VIWEPORT = 3;
 
 export const TodayLetters = () => {
-  const { data: latestNotes = [], isLoading } = useLatestNotesQuery(30000);
+  const { data: latestNotes = [], isLoading } = useLatestNotesQuery();
 
   const handleCardPress = (noteId?: number) => {
     if (noteId) {

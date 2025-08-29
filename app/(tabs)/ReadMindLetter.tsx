@@ -1,8 +1,12 @@
+import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
+import MindLetter from '@/components/read-mind-letter/MindLetter';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
-import { router } from 'expo-router';
+import useSaveNoteMutation from '@/hooks/api/useSaveNoteMutation';
+import { toast } from '@/store/toast.store';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -100,6 +104,8 @@ export default function ReadMindLetter() {
   const jarHeight = 200;
   const flashOpacity = useRef(new Animated.Value(0)).current;
   const [showJarMessage, setShowJarMessage] = useState(false);
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { mutate } = useSaveNoteMutation();
 
   const handleFlash = () => {
     // 플래시 효과: 투명 -> 완전 불투명 -> 투명
@@ -125,6 +131,12 @@ export default function ReadMindLetter() {
     setTimeout(() => {
       setShowJarMessage(true);
     }, 1000);
+  };
+
+  const handleSave = (): void => {
+    mutate(Number(id));
+    router.push('/');
+    toast.show('마음쪽지를 보관함에 저장했어요');
   };
 
   return (
@@ -197,24 +209,8 @@ export default function ReadMindLetter() {
               </View>
             </>
           ) : (
-            <View style={styles.messageCard}>
-              <CustomText
-                variant='head2'
-                color={GreyColors.grey800}
-                fontWeight='bold'
-                style={styles.messageTitle}
-              >
-                마음쪽지 💌
-              </CustomText>
-              <CustomText
-                variant='body1'
-                color={GreyColors.grey700}
-                style={styles.messageText}
-              >
-                오늘도 수고했어요!{'\n'}
-                당신의 노력이 빛나고 있습니다.{'\n'}
-                잠시 쉬어가며 자신을 돌아보세요. ✨
-              </CustomText>
+            <View>
+              <MindLetter noteId={Number(id)} />
             </View>
           )}
         </View>
@@ -230,6 +226,11 @@ export default function ReadMindLetter() {
         ]}
         pointerEvents='none'
       />
+      {showJarMessage && (
+        <View style={styles.buttonContainer}>
+          <CTAButton onPress={handleSave} text='보관함에 저장하기' active />
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'white',
-    zIndex: 20,
+    zIndex: 2000,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -336,5 +337,9 @@ const styles = StyleSheet.create({
   messageText: {
     textAlign: 'center',
     lineHeight: 24,
+  },
+  buttonContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 16,
   },
 });

@@ -33,6 +33,10 @@
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_ENV": "development"
+      },
+      "ios": {
+        "simulator": false,
+        "scheme": "Wini"
       }
     },
     "production": {

@@ -118,12 +118,12 @@ export default function TabLayout() {
             }}
           />
 
-          {/* 통계 탭 */}
+          {/* 리포트 탭 */}
           <Tabs.Screen
             name='Statistics'
             options={{
-              title: '통계',
-              headerTitle: '통계',
+              title: '리포트',
+              headerTitle: '리포트',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
               tabBarItemStyle: { display: 'flex' },

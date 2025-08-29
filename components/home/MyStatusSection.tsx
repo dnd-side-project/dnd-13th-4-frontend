@@ -28,9 +28,12 @@ export const MyStatusSection = ({
     return `~${hours}:${minutes}`;
   };
 
+  // 상태가 설정되었는지 확인하는 함수
+  const hasStatus = userStatus && userStatus.emoji && userStatus.text;
+
   return (
     <View style={styles.myStatus}>
-      {isMatched && userStatus ? (
+      {isMatched && hasStatus ? (
         <>
           <View style={styles.myStatusText}>
             <CustomText

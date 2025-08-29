@@ -4,11 +4,16 @@ import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import useMyKeywordQuery from '@/hooks/api/useMyKeywordQuery';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 export default function KeywordSection() {
   const { data } = useMyKeywordQuery();
 
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const { positiveActionCategory, negativeActionCategory } = data;
+  const [positiveEmoji, positiveText] = positiveActionCategory.name.split(' ');
+  const [negativeEmoji, negativeText] = negativeActionCategory.name.split(' ');
+
+  const isMatched = useIsMatched();
 
   return (
     <View style={styles.container}>
@@ -41,7 +46,7 @@ export default function KeywordSection() {
             color={PrimaryColors.blue100}
             style={styles.categoryEmoji}
           >
-            {isMatched ? '🤝' : ''}
+            {isMatched ? positiveEmoji : ''}
           </CustomText>
           <View style={styles.keywordBadge}>
             <CustomText
@@ -50,7 +55,7 @@ export default function KeywordSection() {
               color={PrimaryColors.blue100}
               style={styles.keywordText}
             >
-              {isMatched ? '배려 ' : '--'}
+              {isMatched ? positiveText : '--'}
             </CustomText>
           </View>
         </View>
@@ -64,7 +69,7 @@ export default function KeywordSection() {
             color={PrimaryColors.blue100}
             style={styles.categoryEmoji}
           >
-            {isMatched ? '🤝' : ''}
+            {isMatched ? negativeEmoji : ''}
           </CustomText>
           <View style={styles.keywordBadge}>
             <CustomText
@@ -73,7 +78,7 @@ export default function KeywordSection() {
               color={PrimaryColors.blue100}
               style={styles.keywordText}
             >
-              {isMatched ? '집안일' : '--'}
+              {isMatched ? negativeText : '--'}
             </CustomText>
           </View>
         </View>

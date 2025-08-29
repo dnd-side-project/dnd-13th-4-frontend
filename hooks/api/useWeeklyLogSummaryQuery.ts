@@ -1,3 +1,4 @@
+import { useIsMatched } from '@/components/mypage/hooks/useMeQuery';
 import { api } from '@/lib/api';
 import type { StatisticsResponse } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
@@ -12,10 +13,12 @@ const getWeeklyLogSummary = async () => {
 };
 
 const useWeeklyLogSummaryQuery = () => {
+  const isMatched = useIsMatched();
+
   const query = useQuery({
     queryKey: [WEEKLY_LOG_SUMMARY_PATH],
     queryFn: getWeeklyLogSummary,
-    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    enabled: isMatched,
     initialData: {
       notesSentThisWeek: 0,
       notesReceivedThisWeek: 0,

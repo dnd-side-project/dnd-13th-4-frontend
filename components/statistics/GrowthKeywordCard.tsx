@@ -30,9 +30,11 @@ export default function GrowthKeywordCard({
         >
           {title}
         </CustomText>
-        <CustomText variant='body2' color={PrimaryColors.blue100}>
-          {isMatched ? '데이터를 수집중이에요' : '--'}
-        </CustomText>
+        {(!!actionText && !!changeAmount) ?? (
+          <CustomText variant='body2' color={PrimaryColors.blue100}>
+            {isMatched ? '데이터를 수집중이에요' : '--'}
+          </CustomText>
+        )}
       </View>
       {isMatched && actionText && (
         <View style={styles.content}>
@@ -49,7 +51,8 @@ export default function GrowthKeywordCard({
             fontWeight='medium'
             style={styles.changeAmount}
           >
-            {changePrefix}{changeValue}회
+            {changePrefix}
+            {changeValue}회
           </CustomText>
         </View>
       )}

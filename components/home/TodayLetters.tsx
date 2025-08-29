@@ -1,6 +1,7 @@
 import { CustomText } from '@/components/CustomText';
 import { GreyColors } from '@/constants/Colors';
 import useLatestNotesQuery from '@/hooks/api/useLatestNotesQuery';
+import { SimpleNoteResponse } from '@/types/api';
 import { router } from 'expo-router';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 import EmptyTodayLetter from './EmptyLetter';
@@ -20,7 +21,7 @@ export const TodayLetters = () => {
   const notesCount = latestNotes.length;
   const letterData =
     notesCount > MAX_LETTER_COUNT_IN_VIWEPORT
-      ? latestNotes.slice(0, 5)
+      ? latestNotes
       : [
           ...latestNotes,
           ...new Array(MAX_LETTER_COUNT_IN_VIWEPORT - notesCount).fill(null),
@@ -37,7 +38,7 @@ export const TodayLetters = () => {
         color={GreyColors.grey600}
         style={styles.subTitle}
       >
-        받은 마음쪽지는 24시간 내에 사라져요.
+        받은 마음쪽지는 24시간 후에 사라져요.
       </CustomText>
       <FlatList
         horizontal
@@ -45,7 +46,13 @@ export const TodayLetters = () => {
         contentContainerStyle={styles.todayLettersContent}
         style={styles.todayLetters}
         data={letterData}
-        renderItem={({ item, index }) => {
+        renderItem={({
+          item,
+          index,
+        }: {
+          item: SimpleNoteResponse;
+          index: number;
+        }) => {
           if (!item) {
             return <EmptyTodayLetter />;
           }
@@ -53,13 +60,10 @@ export const TodayLetters = () => {
           return (
             <Pressable onPress={() => handleCardPress(item.id)}>
               <LetterCard
-                url={item.emotion?.graphicUrl || ''}
-                endTime={''}
-                isRead={item.isRead || false}
+                url={item.emotion.homeThumbnailUrl}
+                createdAt={item.createdAt}
+                isRead={item.isRead}
                 index={index}
-                colors={['#5BA4FA', '#45E5DD', '#5BA4FA']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
               />
             </Pressable>
           );

@@ -8,7 +8,7 @@ import { Typography } from '@/constants/Typography';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import * as Notifications from 'expo-notifications';
-import { Tabs, router } from 'expo-router';
+import { Tabs, usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -39,16 +39,23 @@ const createTabIcon = (iconName: IconName) => {
 };
 
 // 중간 플러스 버튼 컴포넌트
-const CreateButton = (props: BottomTabBarButtonProps) => (
-  <Pressable
-    onPress={() => router.push(`/notes/feeling`)}
-    style={[props.style]}
-  >
-    <View style={styles.createButton}>
-      <Icon name='star' size={30} color='white' />
-    </View>
-  </Pressable>
-);
+const CreateButton = (props: BottomTabBarButtonProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const onPress = () => {
+    if (pathname === '/notes/feeling') return; // 같은 페이지면 재진입 막기 (애니메이션 X)
+    router.push('/notes/feeling');
+  };
+
+  return (
+    <Pressable onPress={onPress} style={[props.style]}>
+      <View style={styles.createButton}>
+        <Icon name='star' size={30} color='white' />
+      </View>
+    </Pressable>
+  );
+};
 
 export default function TabLayout() {
   return (

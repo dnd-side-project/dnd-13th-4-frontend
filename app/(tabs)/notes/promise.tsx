@@ -2,7 +2,6 @@ import CTAButton from '@/components/button/CTAButton';
 import LongSquareButton from '@/components/button/LongSquareButton';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { usePromiseTemplatesQuery } from '@/components/notes/hooks/usePromiseTemplatesQuery';
@@ -91,7 +90,7 @@ const Promise = () => {
           contentContainerStyle={{ rowGap: 12 }}
           style={styles.listContainer}
         >
-          {PROMISE_LIST.map(({ id, text }) => (
+          {data.map(({ id, text }) => (
             <LongSquareButton
               key={id}
               text={text}

@@ -42,7 +42,7 @@ const NoteDetail = () => {
       header={
         <View style={styles.headerContainer}>
           <Pressable
-            onPress={() => router.push('/archive')}
+            onPress={() => router.back()}
             accessibilityRole='button'
             accessibilityLabel='뒤로 가기'
           >

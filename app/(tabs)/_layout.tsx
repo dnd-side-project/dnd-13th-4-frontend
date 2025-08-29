@@ -8,7 +8,7 @@ import { Typography } from '@/constants/Typography';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import * as Notifications from 'expo-notifications';
-import { Tabs, router } from 'expo-router';
+import { Tabs, usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -39,16 +39,23 @@ const createTabIcon = (iconName: IconName) => {
 };
 
 // 중간 플러스 버튼 컴포넌트
-const CreateButton = (props: BottomTabBarButtonProps) => (
-  <Pressable
-    onPress={() => router.push(`/notes/feeling`)}
-    style={[props.style]}
-  >
-    <View style={styles.createButton}>
-      <Icon name='star' size={30} color='white' />
-    </View>
-  </Pressable>
-);
+const CreateButton = (props: BottomTabBarButtonProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const onPress = () => {
+    if (pathname === '/notes/feeling') return; // 같은 페이지면 재진입 막기 (애니메이션 X)
+    router.push('/notes/feeling');
+  };
+
+  return (
+    <Pressable onPress={onPress} style={[props.style]}>
+      <View style={styles.createButton}>
+        <Icon name='star' size={30} color='white' />
+      </View>
+    </Pressable>
+  );
+};
 
 export default function TabLayout() {
   return (
@@ -62,7 +69,7 @@ export default function TabLayout() {
             tabBarActiveTintColor: GreyColors.grey800,
             tabBarInactiveTintColor: GreyColors.grey400,
             tabBarLabelStyle: styles.tabBarLabel,
-            tabBarStyle: styles.tabBarStyle,
+            tabBarStyle: baseTabBarStyle,
 
             // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
             tabBarButton: () => null,
@@ -87,7 +94,7 @@ export default function TabLayout() {
 
           {/* 보관함 탭 */}
           <Tabs.Screen
-            name='archive/index'
+            name='archive'
             options={{
               title: '보관함',
               headerTitle: '보관함',
@@ -96,6 +103,7 @@ export default function TabLayout() {
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('dashboard'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
 
@@ -121,6 +129,7 @@ export default function TabLayout() {
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('graph'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
 
@@ -135,6 +144,7 @@ export default function TabLayout() {
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('user'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
         </Tabs>
@@ -187,3 +197,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+// 👉 기본: 그림자 없는 스타일
+const baseTabBarStyle = {
+  height: 88,
+  borderTopWidth: 0,
+  shadowOpacity: 0,
+  elevation: 0,
+};
+
+// 👉 그림자 있는 스타일 (base + shadow)
+const shadowTabBarStyle = {
+  ...baseTabBarStyle,
+  borderTopWidth: 1,
+  borderTopColor: PrimaryColors.blue300,
+  shadowColor: '#000000',
+  shadowOffset: { width: 0, height: -3 },
+  shadowOpacity: 0.1,
+  shadowRadius: 12,
+  elevation: 10,
+};

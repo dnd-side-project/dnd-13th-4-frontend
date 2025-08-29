@@ -15,12 +15,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
   const [open, setOpen] = useState(false);
   const [path, setPath] = useState('');
   const router = useRouter();
   const currentPath = usePathname();
+  const insets = useSafeAreaInsets();
 
   const handleCopy = async () => {
     await Clipboard.setStringAsync(token || '');
@@ -69,14 +71,12 @@ export const DebugFloatingTokenButton = ({ token }: { token: string }) => {
   return (
     <>
       <TouchableOpacity
-        style={styles.floatingButton}
+        style={[styles.floatingButton, { top: insets.top }]}
         onPress={() => {
           setPath('');
           setOpen(true);
         }}
-      >
-        <Text style={styles.floatingButtonText}>🐛</Text>
-      </TouchableOpacity>
+      ></TouchableOpacity>
 
       <Modal
         visible={open}
@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     right: 20,
-    bottom: 40,
-    backgroundColor: '#333',
     width: 50,
     height: 50,
     borderRadius: 25,
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 16,
     right: 16,
-    bottom: 24,
+    top: 80,
     borderRadius: 16,
     padding: 16,
     backgroundColor: 'white',

@@ -45,10 +45,6 @@ const ActionSecond = () => {
   const handleSubmit = (): void => {
     setSituationState(selectedItem);
     router.navigate('/notes/promise');
-
-    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
-    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
-    setSelectedItem(null);
   };
 
   if (isLoading) {
@@ -61,7 +57,7 @@ const ActionSecond = () => {
   return (
     <SafeScreenLayout
       header={
-        <NoteCreateHeaderLayout progressPrecentage={66}>
+        <NoteCreateHeaderLayout progressPrecentage={75}>
           <View style={styles.selectItemContainer}>
             <CustomText color={PrimaryColors.blue100} variant='head3'>
               그때 저는
@@ -77,7 +73,7 @@ const ActionSecond = () => {
                 </CustomText>
               </View>
               <CustomText color={PrimaryColors.blue100} variant='head3'>
-                이었어요.
+                였어요
               </CustomText>
             </View>
           </View>
@@ -119,7 +115,7 @@ const ActionSecond = () => {
         </View>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.navigate('/notes/ActionFirst')}
+            onPress={() => router.back()}
             style={styles.ctaButton}
             text='이전'
           />
@@ -174,7 +170,7 @@ const styles = StyleSheet.create({
   },
 
   gridItem: {
-    width: '48.5%', // 50% 대신 gap 고려해서 줄임
+    width: '49%', // 50% 대신 gap 고려해서 줄임
     marginBottom: 12, // 행 사이 간격
     justifyContent: 'center',
     alignItems: 'center',

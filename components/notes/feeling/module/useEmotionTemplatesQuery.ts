@@ -30,7 +30,7 @@ export const useEmotionTemplatesQuery = () => {
         }),
       ]);
 
-      const result = [...positiveRes.data, ...negativeRes.data].sort(
+      const result = [...positiveRes.data /** ...negativeRes.data */].sort(
         (a, b) => a.id - b.id,
       );
 

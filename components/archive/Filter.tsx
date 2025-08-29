@@ -1,19 +1,22 @@
 import { GreyColors } from '@/constants/Colors';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { CustomText } from '../CustomText';
 import { Icon } from '../icons';
+import { SortOption } from './hooks/useSavedNotesQuery';
 
-type SortOption = 'latest' | 'oldest';
-
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'latest', label: '최신 순' },
   { value: 'oldest', label: '오래된 순' },
 ];
 
-const Filter = () => {
+type Props = {
+  selected: SortOption;
+  setSelected: Dispatch<SetStateAction<SortOption>>;
+};
+
+const Filter = ({ selected, setSelected }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<SortOption>('latest');
 
   const label = SORT_OPTIONS.find((opt) => opt.value === selected)?.label;
 

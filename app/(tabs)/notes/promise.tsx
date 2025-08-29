@@ -1,8 +1,7 @@
 import CTAButton from '@/components/button/CTAButton';
-import LongSquareButton from '@/components/button/LongSquareButton';
+import RoundButton from '@/components/button/RoundButton';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { PROMISE_LIST } from '@/components/notes/constants/promises';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
 import { usePromiseTemplatesQuery } from '@/components/notes/hooks/usePromiseTemplatesQuery';
@@ -43,10 +42,6 @@ const Promise = () => {
   const handleSubmit = (): void => {
     setPromise(selectedItem);
     router.navigate('/notes/submit');
-
-    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
-    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
-    setSelectedItem(null);
   };
 
   if (isLoading) {
@@ -95,8 +90,8 @@ const Promise = () => {
           contentContainerStyle={{ rowGap: 12 }}
           style={styles.listContainer}
         >
-          {PROMISE_LIST.map(({ id, text }) => (
-            <LongSquareButton
+          {data.map(({ id, text }) => (
+            <RoundButton
               key={id}
               text={text}
               onPress={() =>
@@ -108,7 +103,7 @@ const Promise = () => {
         </ScrollView>
         <View style={styles.ctaContainer}>
           <CTAButton
-            onPress={() => router.navigate('/notes/ActionSecond')}
+            onPress={() => router.back()}
             style={styles.ctaButton}
             text='이전'
           />
@@ -159,6 +154,7 @@ const styles = StyleSheet.create({
   },
 
   ctaContainer: {
+    paddingTop: 24,
     flexDirection: 'row',
     width: '100%',
     marginTop: 'auto',

@@ -4,7 +4,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
-import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { GreyColors } from '@/constants/Colors';
 import useNoteQuery from '@/hooks/api/useNoteQuery';
 import { formatDaysAgo } from '@/lib/time';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -42,7 +42,7 @@ const NoteDetail = () => {
       header={
         <View style={styles.headerContainer}>
           <Pressable
-            onPress={() => router.push('/archive')}
+            onPress={() => router.back()}
             accessibilityRole='button'
             accessibilityLabel='뒤로 가기'
           >
@@ -60,7 +60,9 @@ const NoteDetail = () => {
           >
             보관된 마음 쪽지
           </CustomText>
-          <Pressable onPress={handleDelete} style={styles.deleteButton}>
+          <View style={{ width: 32 }} />
+          {/* TODO : 삭제API미구현 */}
+          {/* <Pressable onPress={handleDelete} style={styles.deleteButton}>
             <CustomText
               variant='body1'
               fontWeight='bold'
@@ -68,7 +70,7 @@ const NoteDetail = () => {
             >
               삭제
             </CustomText>
-          </Pressable>
+          </Pressable> */}
         </View>
       }
     >

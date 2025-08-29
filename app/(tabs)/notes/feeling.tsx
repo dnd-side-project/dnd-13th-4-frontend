@@ -32,10 +32,6 @@ const Feeling = () => {
     if (!data) return;
     setEmotion(data[selectedIndex]);
     router.navigate('/notes/ActionFirst');
-
-    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
-    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
-    setSelectedIndex(0);
   };
 
   useEffect(() => {
@@ -62,7 +58,10 @@ const Feeling = () => {
   return (
     <SafeScreenLayout
       header={
-        <NoteCreateFeelingHeader style={{ paddingHorizontal: 40 }}>
+        <NoteCreateFeelingHeader
+          progressPrecentage={25}
+          style={{ paddingHorizontal: 40 }}
+        >
           <View style={styles.previewDescription}>
             <Icon size={15} name='altFill' color={GreyColors.grey600} />
             <CustomText

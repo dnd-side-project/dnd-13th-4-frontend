@@ -7,7 +7,7 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useState, useEffect } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -46,28 +46,45 @@ export const StatusSettingModal = forwardRef<
 
     // API 데이터
     const { data: statusList, isLoading } = useStatusListQuery();
-    
+
     // 현재 상태에 맞는 statusId 찾기
     const findCurrentStatusId = () => {
-      if (!statusList || !currentStatus || !currentStatus.emoji || !currentStatus.text) return -1;
+      if (
+        !statusList ||
+        !currentStatus ||
+        !currentStatus.emoji ||
+        !currentStatus.text
+      )
+        return -1;
       const currentStatusItem = statusList.find(
-        item => item.emoji === currentStatus.emoji && item.text === currentStatus.text
+        (item) =>
+          item.emoji === currentStatus.emoji &&
+          item.text === currentStatus.text,
       );
       return currentStatusItem?.id || -1;
     };
-    
+
     // 선택된 상태 관리
     const [selectedStatus, setSelectedStatus] =
       useState<UserStatus>(currentStatus);
-    const [selectedStatusId, setSelectedStatusId] = useState<number>(findCurrentStatusId());
+    const [selectedStatusId, setSelectedStatusId] = useState<number>(
+      findCurrentStatusId(),
+    );
     const [selectedTimeOption, setSelectedTimeOption] =
       useState<string>('30min');
 
     // statusList가 로드되면 현재 상태에 맞는 selectedStatusId 업데이트
     useEffect(() => {
-      if (statusList && currentStatus && currentStatus.emoji && currentStatus.text) {
+      if (
+        statusList &&
+        currentStatus &&
+        currentStatus.emoji &&
+        currentStatus.text
+      ) {
         const currentStatusItem = statusList.find(
-          item => item.emoji === currentStatus.emoji && item.text === currentStatus.text
+          (item) =>
+            item.emoji === currentStatus.emoji &&
+            item.text === currentStatus.text,
         );
         if (currentStatusItem) {
           setSelectedStatusId(currentStatusItem.id);
@@ -133,57 +150,10 @@ export const StatusSettingModal = forwardRef<
     };
 
     // API 데이터에서 위치별로 상태 필터링
-    const homeStatusOptions = statusList?.filter(status => status.location === 'HOME') || [];
-    const outdoorStatusOptions = statusList?.filter(status => status.location === 'OUTDOORS') || [];
-
-    // 로딩 상태 체크
-    if (isLoading) {
-      return (
-        <BottomSheetModal
-          ref={ref}
-          snapPoints={snapPoints}
-          enablePanDownToClose={true}
-          handleStyle={{ display: 'none' }}
-          backgroundStyle={styles.background}
-          style={styles.container}
-          backdropComponent={(props: any) => (
-            <BottomSheetBackdrop
-              {...props}
-              disappearsOnIndex={-1}
-              appearsOnIndex={0}
-              style={[props.style, { backgroundColor: 'rgba(107, 118, 132, 0.50)' }]}
-            />
-          )}
-          enableDynamicSizing={false}
-          animateOnMount={true}
-        >
-          <BottomSheetView style={styles.content}>
-            <View style={styles.header}>
-              <Pressable onPress={onClose} style={styles.closeIcon}>
-                <Icon name='close' size={24} color={GreyColors.grey600} />
-              </Pressable>
-              <CustomText
-                variant='body1'
-                color={GreyColors.grey700}
-                fontWeight='medium'
-                style={styles.title}
-              >
-                나의 상태 설정
-              </CustomText>
-            </View>
-            <View style={styles.section}>
-              <CustomText
-                variant='body1'
-                color={GreyColors.grey500}
-                style={{ textAlign: 'center' }}
-              >
-                상태 목록을 불러오는 중...
-              </CustomText>
-            </View>
-          </BottomSheetView>
-        </BottomSheetModal>
-      );
-    }
+    const homeStatusOptions =
+      statusList?.filter((status) => status.location === 'HOME') || [];
+    const outdoorStatusOptions =
+      statusList?.filter((status) => status.location === 'OUTDOORS') || [];
 
     // 시간 옵션 데이터
     const timeOptions = [
@@ -270,7 +240,9 @@ export const StatusSettingModal = forwardRef<
                 renderItem={({ item }) => (
                   <SquareButton
                     active={selectedStatusId === item.id}
-                    onPress={() => handleStatusSelect(item.id, item.emoji, item.text)}
+                    onPress={() =>
+                      handleStatusSelect(item.id, item.emoji, item.text)
+                    }
                     text={`${item.emoji} ${item.text}`}
                     showIcon={false}
                   />
@@ -295,7 +267,9 @@ export const StatusSettingModal = forwardRef<
                 renderItem={({ item }) => (
                   <SquareButton
                     active={selectedStatusId === item.id}
-                    onPress={() => handleStatusSelect(item.id, item.emoji, item.text)}
+                    onPress={() =>
+                      handleStatusSelect(item.id, item.emoji, item.text)
+                    }
                     text={`${item.emoji} ${item.text}`}
                     showIcon={false}
                   />

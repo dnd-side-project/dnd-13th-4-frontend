@@ -93,7 +93,7 @@ const Submit = () => {
           <NoteCard
             date={formatMonthDay()}
             emotionText={emotion?.text ?? ''}
-            imageUrl={emotion?.graphicUrl ?? ''}
+            imageUrl={imageUrl}
             promiseText={promise?.text ?? ''}
             situationActionText={situationAction?.text ?? ''}
             situationStateText={situationState?.text ?? ''}

@@ -105,7 +105,7 @@ export default function ReadMindLetter() {
   const flashOpacity = useRef(new Animated.Value(0)).current;
   const [showJarMessage, setShowJarMessage] = useState(false);
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { mutate } = useSaveNoteMutation();
+  const { mutateAsync } = useSaveNoteMutation();
 
   const handleFlash = () => {
     // 플래시 효과: 투명 -> 완전 불투명 -> 투명
@@ -133,10 +133,14 @@ export default function ReadMindLetter() {
     }, 1000);
   };
 
-  const handleSave = (): void => {
-    mutate(Number(id));
-    router.push('/');
-    toast.show('마음쪽지를 보관함에 저장했어요');
+  const handleSave = async (): Promise<void> => {
+    try {
+      await mutateAsync(Number(id));
+      router.push('/');
+      toast.show('마음쪽지를 보관함에 저장했어요');
+    } catch (e) {
+      toast.show('보관함 저장에 실패했어요');
+    }
   };
 
   return (

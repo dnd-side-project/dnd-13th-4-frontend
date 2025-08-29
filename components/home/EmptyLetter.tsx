@@ -1,6 +1,8 @@
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
+import { CARD_WIDTH, CARD_HEIGHT } from '@/constants/cardSize';
 import { Image, StyleSheet, View } from 'react-native';
+
 
 export default function EmptyTodayLetter() {
   return (
@@ -15,8 +17,8 @@ export default function EmptyTodayLetter() {
 
 const styles = StyleSheet.create({
   letterConatiner: {
-    width: 105,
-    height: 130,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
     position: 'relative',
     backgroundColor: 'white',
     borderRadius: 12,
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
   },
 
   letterImage: {
-    width: 80,
+    width: Math.min(80, CARD_WIDTH * 0.76), // 카드 크기에 비례해서 조정
     aspectRatio: 1,
   },
 });

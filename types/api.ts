@@ -67,13 +67,37 @@ export type SituationResponse = {
 
 export type NoteResponse = {
   id: number;
-  memberRoomSenderId: number;
-  memberRoomReceiverId: number;
-  emotion: EmotionResponse;
-  action: ActionResponse;
-  situation: SituationResponse;
-  promise: PromiseResponse;
-  closing: ClosingResponse;
+  senderId: number;
+  receiverId: number;
+  roomId: number;
+  emotion: {
+    id: number;
+    emotionType: string;
+    text: string;
+    selectionImageUrl: string;
+    previewImageUrl: string;
+    archiveImageUrl: string;
+    homeThumbnailUrl: string;
+  };
+  action: {
+    id: number;
+    text: string;
+  };
+  situation: {
+    id: number;
+    emotionType: string;
+    text: string;
+  };
+  promise: {
+    id: number;
+    emotionType: string;
+    text: string;
+  };
+  closing: {
+    id: number;
+    emotionType: string;
+    text: string;
+  };
   sequence: number;
   isRead: boolean;
   isSaved: boolean;

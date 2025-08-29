@@ -80,7 +80,7 @@ const NoteDetail = () => {
           <NoteCard
             date={formatDaysAgo(createdAt)}
             emotionText={emotion.text}
-            imageUrl={emotion.graphicUrl}
+            imageUrl={emotion.archiveImageUrl}
             promiseText={promise.text}
             situationActionText={action.text}
             situationStateText={situation.text}

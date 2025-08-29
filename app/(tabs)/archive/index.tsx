@@ -1,20 +1,25 @@
 import EmotionCardList from '@/components/archive/EmotionCardList';
 import Filter from '@/components/archive/Filter';
-import { useSavedNotesQuery } from '@/components/archive/hooks/useSavedNotesQuery';
+import {
+  SortOption,
+  useSavedNotesQuery,
+} from '@/components/archive/hooks/useSavedNotesQuery';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { GreyColors } from '@/constants/Colors';
-import React, { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 export default function Storage() {
   const listRef = useRef<FlatList>(null);
-  const { data } = useSavedNotesQuery();
+  const [selected, setSelected] = useState<SortOption>('latest');
+  const { data } = useSavedNotesQuery({ sort: selected });
 
   const handleScrollTop = (): void => {
     listRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
+
   return (
     <SafeScreenLayout
       header={
@@ -37,11 +42,11 @@ export default function Storage() {
           </CustomText>
         </View>
         <View>
-          <Filter />
+          <Filter selected={selected} setSelected={setSelected} />
         </View>
       </View>
 
-      <EmotionCardList ref={listRef} />
+      <EmotionCardList ref={listRef} sort={selected} />
 
       <Pressable style={styles.topButton} onPress={handleScrollTop}>
         <Icon name='arrowTop' size={24} color={GreyColors.grey500} />

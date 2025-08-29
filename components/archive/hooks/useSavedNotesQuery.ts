@@ -66,11 +66,20 @@ const MOCK_DATA = Array.from({ length: 12 }, (_, i) => ({
   kind: 'awkward' as const,
 }));
 
-export const useSavedNotesQuery = () => {
+export type SortOption = 'latest' | 'oldest';
+
+type Props = {
+  sort?: SortOption;
+};
+
+export const useSavedNotesQuery = ({ sort = 'latest' }: Props) => {
   const query = useQuery({
-    queryKey: [NOTES_SAVED_PATH],
+    queryKey: [NOTES_SAVED_PATH, sort],
     queryFn: async () => {
-      const { data } = await api.get<MessageList>({ path: NOTES_SAVED_PATH });
+      const { data } = await api.get<MessageList>({
+        path: NOTES_SAVED_PATH,
+        params: { sort },
+      });
 
       return data;
     },

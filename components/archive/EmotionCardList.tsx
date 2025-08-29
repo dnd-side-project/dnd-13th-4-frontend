@@ -6,15 +6,16 @@ import { FlatList, ImageBackground, Pressable, StyleSheet } from 'react-native';
 import { CustomText } from '../CustomText';
 import GridList from '../ui/gridList';
 import EmptyCardList from './EmptyCardList';
-import { useSavedNotesQuery } from './hooks/useSavedNotesQuery';
+import { SortOption, useSavedNotesQuery } from './hooks/useSavedNotesQuery';
 
 type Props = {
   ref?: Ref<FlatList>;
+  sort: SortOption;
 };
 
-const EmotionCardList = ({ ref }: Props) => {
+const EmotionCardList = ({ ref, sort }: Props) => {
   const router = useRouter();
-  const { data, isLoading, isError } = useSavedNotesQuery();
+  const { data, isLoading, isError } = useSavedNotesQuery({ sort });
 
   if (isLoading) {
     return null;

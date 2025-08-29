@@ -87,7 +87,7 @@ export default function TabLayout() {
 
           {/* 보관함 탭 */}
           <Tabs.Screen
-            name='archive/index'
+            name='archive'
             options={{
               title: '보관함',
               headerTitle: '보관함',

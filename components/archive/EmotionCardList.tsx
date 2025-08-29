@@ -43,7 +43,7 @@ const EmotionCardList = ({ ref }: Props) => {
         >
           <ImageBackground
             source={{
-              uri: item.emotion.graphicUrl,
+              uri: item.emotion.previewImageUrl,
             }}
             style={styles.card}
             imageStyle={styles.imageRadius}

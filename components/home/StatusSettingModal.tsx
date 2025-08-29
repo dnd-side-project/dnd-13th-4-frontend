@@ -67,16 +67,17 @@ export const StatusSettingModal = forwardRef<
     // 선택된 상태 관리
     const [selectedStatus, setSelectedStatus] =
       useState<UserStatus>(currentStatus);
-    const [selectedStatusId, setSelectedStatusId] = useState<number>(
-      findCurrentStatusId(),
-    );
+    const [selectedStatusId, setSelectedStatusId] = useState<number | null>(null);
     const [selectedTimeOption, setSelectedTimeOption] =
-      useState<string>('30min');
+      useState<string | null>(null);
 
     // statusList가 로드되면 현재 상태에 맞는 selectedStatusId 업데이트
     useEffect(() => {
+      if (!statusList || isLoading) {
+        return; // 로딩 중이면 아직 설정하지 않음
+      }
+      
       if (
-        statusList &&
         currentStatus &&
         currentStatus.emoji &&
         currentStatus.text
@@ -86,15 +87,13 @@ export const StatusSettingModal = forwardRef<
             item.emoji === currentStatus.emoji &&
             item.text === currentStatus.text,
         );
-        if (currentStatusItem) {
-          setSelectedStatusId(currentStatusItem.id);
-        } else {
-          setSelectedStatusId(-1);
-        }
+        setSelectedStatusId(currentStatusItem?.id || null);
       } else {
-        setSelectedStatusId(-1);
+        setSelectedStatusId(null);
       }
-    }, [statusList, currentStatus]);
+      
+      // 시간 옵션은 초기에 선택되지 않은 상태로 유지
+    }, [statusList, currentStatus, isLoading]);
 
     // 선택된 커스텀 시간을 텍스트로 변환
     const getCustomTimeText = () => {
@@ -122,7 +121,7 @@ export const StatusSettingModal = forwardRef<
 
       if (selectedTimeOption === 'custom' && selectedCustomTime) {
         endTime = selectedCustomTime;
-      } else if (selectedTimeOption !== 'keep') {
+      } else if (selectedTimeOption && selectedTimeOption !== 'keep') {
         const now = new Date();
         const minutes =
           {
@@ -135,7 +134,7 @@ export const StatusSettingModal = forwardRef<
         endTime = new Date(now.getTime() + minutes * 60 * 1000);
       }
 
-      onSave(selectedStatus, selectedStatusId, endTime);
+      onSave(selectedStatus, selectedStatusId || -1, endTime);
     };
 
     // 상태 선택 핸들러

@@ -17,7 +17,7 @@ type NoteCardProps = {
   situationActionText: string;
   situationStateText?: string;
   isRandomMessage?: boolean;
-  randomMessage: string;
+  randomMessage?: string;
   emotionType: EmotionType;
   isRefresh?: boolean;
 };
@@ -39,7 +39,11 @@ const NoteCard = ({
     <View style={[styles.container]}>
       <View style={[styles.card, style]}>
         <View style={styles.imageContainer}>
-          <ResponsiveImage source={{ uri: imageUrl }} width={317} />
+          <ResponsiveImage
+            source={{ uri: imageUrl }}
+            width={317}
+            initialHeight={176}
+          />
           <View style={styles.date}>
             <CustomText variant='body3'>{date}</CustomText>
           </View>

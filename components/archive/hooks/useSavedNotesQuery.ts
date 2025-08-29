@@ -7,7 +7,10 @@ type Emotion = {
   id: number;
   emotionType: string;
   text: string;
-  graphicUrl: string;
+  selectionImageUrl: string;
+  previewImageUrl: string;
+  archiveImageUrl: string;
+  homeThumbnailUrl: string;
 };
 
 // 액션 정보

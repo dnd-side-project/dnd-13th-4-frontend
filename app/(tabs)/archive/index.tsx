@@ -33,7 +33,7 @@ export default function Storage() {
             size={16}
           />
           <CustomText variant='body2' color={GreyColors.grey600}>
-            모아둔 마음쪽지 {data?.length ?? ` `}개
+            모아둔 마음쪽지 {data?.length ?? 0}개
           </CustomText>
         </View>
         <View>

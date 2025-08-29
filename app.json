@@ -12,7 +12,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.kirikiri.wini",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": { "NSAllowsArbitraryLoads": true },
+        "supportsTablet": true
       }
     },
     "android": {
@@ -38,6 +40,17 @@
           "imageWidth": 134,
           "resizeMode": "contain",
           "backgroundColor": "#5BA4FA"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          },
+          "ios": {
+            "flipper": true
+          }
         }
       ]
     ],

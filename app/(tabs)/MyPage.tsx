@@ -58,7 +58,10 @@ export default function MyPage() {
           </CustomText>
           <View style={styles.roommateData}>
             <Image
-              source={{ uri: mateData?.image }}
+              source={{
+                // TODO 카카오 프사 http:// 로 들어오는경우 있음. http는 실기기에서 로드가되지 않음.
+                uri: mateData?.image?.replace(/^http:\/\//, 'https://'),
+              }}
               style={styles.roommateImage}
             />
 

@@ -3,11 +3,12 @@ import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import useMateStatusQuery from '@/hooks/api/useMateStatusQuery';
 import { Image, StyleSheet, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 export const RoommateStatus = () => {
   const { data: mateStatus, isLoading } = useMateStatusQuery();
 
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const isMatched = useIsMatched();
 
   if (isLoading) {
     return (

@@ -5,8 +5,10 @@ import StarPhysics from '@/components/statistics/StarPhysics';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
+import { calculateDaysSince } from '@/utils/time';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const MAX_ONE_WEEK_NOTES_COUNT = 42;
 
@@ -23,17 +25,7 @@ export default function BottleSection({
   const totalNotesThisWeek =
     data.notesReceivedThisWeek + data.notesSentThisWeek;
 
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
-
-  const calculateDaysSince = (dateString: string) => {
-    if (!isMatched) return 0;
-
-    const joinDate = new Date(dateString);
-    const today = new Date();
-    const diffTime = Math.abs(today.getTime() - joinDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
+  const isMatched = useIsMatched();
 
   return (
     <>
@@ -44,7 +36,7 @@ export default function BottleSection({
         style={styles.headerMessage}
       >
         {isMatched
-          ? `지금까지 총 84개의\n마음을 주고 받았어요`
+          ? `지금까지 총 ${data.totalNotesExchanged}개의\n마음을 주고 받았어요`
           : `아직 마음쪽지를\n주고받지 않았어요`}
       </CustomText>
       <View style={styles.container}>

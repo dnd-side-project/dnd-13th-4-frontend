@@ -35,7 +35,8 @@ export const StatusManager = ({
 
   // API 데이터를 로컬 상태 형식으로 변환
   const getUserStatusFromApi = (): UserStatus => {
-    if (!myStatus?.emoji || !myStatus?.text) {
+    // API에서 상태가 없거나 null인 경우 기본값 사용
+    if (!myStatus || !myStatus.emoji || !myStatus.text) {
       return initialStatus;
     }
 
@@ -113,9 +114,14 @@ export const StatusManager = ({
         };
       }
 
+      const timezoneOffset = now.getTimezoneOffset() * 60000;
+      const nowTimezoneDate = new Date(
+        now.getTime() - timezoneOffset,
+      ).toISOString();
+
       await updateMyStatusMutation.mutateAsync({
         statusId,
-        startedAt: now.toISOString(),
+        startedAt: nowTimezoneDate,
         reservedTimeInfo,
       });
 

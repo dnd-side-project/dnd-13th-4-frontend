@@ -1,22 +1,40 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import GrowthKeywordCard from '@/components/statistics/GrowthKeywordCard';
-import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { GreyColors } from '@/constants/Colors';
 import useMyGrowthQuery from '@/hooks/api/useMyGrowthQuery';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
-const CHART_WIDTH = 248; // 280 - 32(padding)
+const CHART_WIDTH = 300; // 그래프 너비 확장
 
 export default function GrowthSection() {
   const { data } = useMyGrowthQuery();
 
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const isMatched = useIsMatched();
+
+  // 누적값으로 변환 및 라벨 설정 (데이터 가드   동적 라벨)
+  const cumulativeData = React.useMemo(() => {
+    const weekly = data?.weeklyPositiveNoteCounts ?? [];
+    if (weekly.length === 0) return [];
+    let cumulative = 0;
+    const lastIdx = weekly.length - 1;
+    const midIdx = Math.round(lastIdx / 2);
+    return weekly.map((item, index) => {
+      cumulative = item.value;
+      let label = '';
+      if (index === 0) label = '2개월전';
+      else if (index === midIdx) label = '1개월전';
+      else if (index === lastIdx) label = '현재';
+      return { ...item, value: cumulative, label };
+    });
+  }, [data]);
 
   const dynamicSpacing =
-    data.weeklyPositiveNoteCounts.length > 1
-      ? (CHART_WIDTH - 40) / (data.weeklyPositiveNoteCounts.length - 1)
+    cumulativeData.length > 1
+      ? (CHART_WIDTH - 60) / (cumulativeData.length - 1)
       : 0;
 
   return (
@@ -42,14 +60,14 @@ export default function GrowthSection() {
           : '지난 날보다 좋아진 데이터를 보여줘요'}
       </CustomText>
       <GrowthKeywordCard
-        title="늘어난 칭찬"
+        title='늘어난 칭찬'
         actionText={data.increasedPositiveAction.text}
         changeAmount={data.increasedPositiveAction.change}
         isMatched={isMatched}
         isPositive={true}
       />
       <GrowthKeywordCard
-        title="줄어든 불만"
+        title='줄어든 불만'
         actionText={data.decreasedNegativeAction.text}
         changeAmount={data.decreasedNegativeAction.change}
         isMatched={isMatched}
@@ -66,62 +84,72 @@ export default function GrowthSection() {
         </CustomText>
         <View style={styles.chartContainer}>
           <LineChart
-            areaChart1
-            data={data.weeklyPositiveNoteCounts}
+            data={cumulativeData}
             width={CHART_WIDTH}
-            height={160}
-            color={PrimaryColors.blue100}
-            thickness={2}
-            dataPointsColor={PrimaryColors.blue100}
-            dataPointsRadius={6}
-            dataPointsHeight={6}
-            dataPointsWidth={6}
+            height={200}
+            color='#5BB3F3'
+            thickness={3}
+            dataPointsColor='#5BB3F3'
+            dataPointsRadius={5}
+            hideDataPoints={false}
             curved
             backgroundColor='transparent'
             hideRules={false}
             rulesColor={GreyColors.grey200}
             rulesType='dashed'
             rulesThickness={1}
-            dashWidth={2}
-            dashGap={4}
+            dashWidth={3}
+            dashGap={3}
             hideYAxisText={false}
             yAxisTextStyle={{
               color: GreyColors.grey400,
-              fontSize: 13,
+              fontSize: 12,
+              fontWeight: '400',
             }}
             hideAxesAndRules={false}
             xAxisColor={GreyColors.grey300}
-            xAxisThickness={2}
+            xAxisThickness={1}
             showXAxisIndices={false}
             xAxisLabelTextStyle={{
               color: GreyColors.grey600,
-              fontSize: 13,
+              fontSize: 12,
+              fontWeight: '500',
+              textAlign: 'left',
+              width: 80,
             }}
-            xAxisLabelsVerticalShift={8}
+            xAxisLabelsVerticalShift={12}
+            xAxisTextNumberOfLines={1}
+            rotateLabel={false}
             showVerticalLines={true}
-            verticalLinesColor={PrimaryColors.blue100}
-            verticalLinesStrokeDashArray={[2, 4]}
+            verticalLinesColor={GreyColors.grey200}
+            verticalLinesStrokeDashArray={[3, 3]}
             verticalLinesUptoDataPoint={true}
-            verticalLinesThickness={1.4}
-            verticalLinesZIndex={1}
+            verticalLinesThickness={1}
+            hideOrigin={true}
             isAnimated
-            animationDuration={1500}
+            animationDuration={1200}
             areaChart
-            startFillColor='rgba(132, 191, 243, 0.3)'
-            endFillColor='rgba(229, 241, 255, 0.1)'
+            startFillColor='#84BFF3'
+            endFillColor='#E5F1FF'
+            startOpacity={0.7}
+            endOpacity={0.1}
+            gradientDirection='vertical'
             maxValue={Math.max(
-              ...(data.weeklyPositiveNoteCounts.length > 0
-                ? data.weeklyPositiveNoteCounts.map((item) => item.value)
+              ...(cumulativeData.length > 0
+                ? cumulativeData.map((item) => item.value)
                 : [60]),
               20,
             )}
             stepValue={10}
             spacing={dynamicSpacing}
-            initialSpacing={25}
-            endSpacing={20}
+            initialSpacing={40}
+            endSpacing={40}
+            xAxisLabelTexts={cumulativeData.map((item) => item.label)}
             disableScroll
+            focusEnabled={false}
+            adjustToWidth
           />
-          {data.weeklyPositiveNoteCounts.length === 0 && (
+          {cumulativeData.length === 0 && (
             <View style={styles.emptyChartOverlay}>
               <CustomText
                 variant='body2'
@@ -184,7 +212,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 160,
+    height: 200,
   },
   emptyChartText: {
     backgroundColor: GreyColors.grey600,

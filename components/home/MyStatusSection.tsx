@@ -1,6 +1,7 @@
 import { CustomText } from '@/components/CustomText';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 interface UserStatus {
   emoji: string;
@@ -17,7 +18,7 @@ export const MyStatusSection = ({
   onStatusPress,
   userStatus,
 }: MyStatusSectionProps) => {
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const isMatched = useIsMatched();
 
   // 종료 시간 포맷팅
   const formatEndTime = (endTime?: Date) => {

@@ -4,10 +4,12 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
+import { EmotionType } from '@/components/notes/hooks/useClosingTemplatesQuery';
 import { useNoteSubmitMutation } from '@/components/notes/hooks/useNoteSubmitMutation';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { formatMonthDay } from '@/lib/time';
 import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
@@ -89,14 +91,13 @@ const Submit = () => {
         </View>
         <View style={{ position: 'relative' }}>
           <NoteCard
-            date={'8월 7일'}
+            date={formatMonthDay()}
             emotionText={emotion?.text ?? ''}
-            imageUrl={imageUrl}
+            imageUrl={emotion?.graphicUrl ?? ''}
             promiseText={promise?.text ?? ''}
             situationActionText={situationAction?.text ?? ''}
             situationStateText={situationState?.text ?? ''}
-            randomMessage={'지금처럼만 하면 우리 룸메 계약 연장 가능✨'}
-            emotionType={'negative'} // TODO emotion 보면서 negative , positive 정해야함.
+            emotionType={emotion?.emotionType as EmotionType}
             isRefresh
             style={{ zIndex: 100 }}
           />

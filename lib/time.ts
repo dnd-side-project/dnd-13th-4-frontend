@@ -25,3 +25,18 @@ export function formatDaysAgo(
 
   return `${days}일 전`;
 }
+
+/**
+ * ISO 문자열을 "M월 D일" 형식으로 변환
+ * 예: "2025-08-28T19:45:23.317Z" -> "8월 29일"
+ */
+export function formatMonthDay(date: Date = new Date()): string {
+  if (Number.isNaN(date.getTime())) {
+    throw new Error('Invalid ISO date string');
+  }
+
+  const month = date.getMonth() + 1; // getMonth()는 0부터 시작
+  const day = date.getDate();
+
+  return `${month}월 ${day}일`;
+}

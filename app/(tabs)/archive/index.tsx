@@ -1,14 +1,16 @@
+import EmotionCardList from '@/components/archive/EmotionCardList';
+import Filter from '@/components/archive/Filter';
+import { useSavedNotesQuery } from '@/components/archive/hooks/useSavedNotesQuery';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import EmotionCardList from '@/components/storage/EmotionCardList';
-import Filter from '@/components/storage/Filter';
 import { GreyColors } from '@/constants/Colors';
 import React, { useRef } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 export default function Storage() {
   const listRef = useRef<FlatList>(null);
+  const { data } = useSavedNotesQuery();
 
   const handleScrollTop = (): void => {
     listRef.current?.scrollToOffset({ offset: 0, animated: true });
@@ -31,7 +33,7 @@ export default function Storage() {
             size={16}
           />
           <CustomText variant='body2' color={GreyColors.grey600}>
-            모아둔 마음쪽지 12개
+            모아둔 마음쪽지 {data?.length ?? ` `}개
           </CustomText>
         </View>
         <View>

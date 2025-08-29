@@ -2,6 +2,8 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
+import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
+import { calculateDaysSince } from '@/utils/time';
 import { router } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
@@ -10,6 +12,7 @@ const HOME_STATISTICS_BACKGROUND_IMAGE = `${S3_IMAGE_URL}/home/home_statistics.p
 
 export default function StatisticsSummary() {
   const isMatched = useIsMatched();
+  const { data } = useWeeklyLogSummaryQuery();
 
   return (
     <ImageBackground
@@ -77,7 +80,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-            {isMatched ? 11 : 0}개
+{isMatched ? data.notesReceivedThisWeek : 0}개
           </CustomText>
         </View>
         <View
@@ -106,7 +109,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-            {isMatched ? 8 : 0}개
+{isMatched ? data.notesSentThisWeek : 0}개
           </CustomText>
         </View>
         <View
@@ -135,7 +138,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-            {isMatched ? 168 : 0}일째
+{isMatched ? calculateDaysSince(data.roomJoinedAt) : 0}일째
           </CustomText>
         </View>
       </View>

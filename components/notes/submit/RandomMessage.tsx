@@ -5,29 +5,21 @@ import { getRandomItem } from '@/lib/getRandomItem';
 import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import {
-  EmotionType,
-  useClosingTemplatesQuery,
-} from '../hooks/useClosingTemplatesQuery';
+import { useClosingTemplatesQuery } from '../hooks/useClosingTemplatesQuery';
 
 type Props = {
   initialText?: string;
-  emotionType: EmotionType;
   isRefresh?: boolean;
 };
 
-const RandomMessage = ({
-  initialText,
-  emotionType,
-  isRefresh = false,
-}: Props) => {
+const RandomMessage = ({ initialText, isRefresh = false }: Props) => {
   // 초기값은 initialText로 고정 세팅
   const [text, setText] = useState<string | undefined>(initialText);
-  const setClosing = useNoteCreateStore((state) => state.setClosing);
+  const { setClosing, emotion } = useNoteCreateStore();
 
   // isRefresh가 true일 때만 쿼리 활성화 (hook 내부에서 enabled 옵션 지원한다고 가정)
   const { data, isLoading, isError } = useClosingTemplatesQuery({
-    emotionType,
+    emotionType: emotion?.emotionType ?? 'positive',
     enabled: isRefresh,
   });
 
@@ -50,7 +42,10 @@ const RandomMessage = ({
   useEffect(() => {
     if (isRefresh && data) {
       const rnd = getRandomItem(data);
-      if (rnd) setText(rnd.text);
+      if (rnd) {
+        setText(rnd.text);
+        setClosing(rnd);
+      }
     }
   }, [data, isRefresh]);
 

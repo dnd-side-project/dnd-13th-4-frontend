@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
 
   gridItem: {
-    width: '48.5%', // 50% 대신 gap 고려해서 줄임
+    width: '49%', // 50% 대신 gap 고려해서 줄임
     marginBottom: 12, // 행 사이 간격
     justifyContent: 'center',
     alignItems: 'center',

@@ -37,7 +37,7 @@ const SquareButton = ({
         fontWeight={active ? 'bold' : 'medium'}
         style={
           (active ? styles.active : styles.unActive,
-          { flex: 1, textAlign: 'center' })
+          { flex: 1, textAlign: 'left' })
         }
         color={active ? PrimaryColors.blue100 : GreyColors.grey800}
       >

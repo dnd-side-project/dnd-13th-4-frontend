@@ -15,6 +15,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SquareButton from '../button/SquareButton';
 
 const CARD_IN_ROW = 2;
@@ -42,27 +43,14 @@ export const StatusSettingModal = forwardRef<
     ref,
   ) => {
     const screenHeight = Dimensions.get('window').height;
-    const snapPoints = [screenHeight - 60];
+    const insets = useSafeAreaInsets();
+    const tabBarHeight = 49; // 기본 탭바 높이
+    const bottomNavHeight = tabBarHeight + insets.bottom;
+    const snapPoints = [screenHeight - bottomNavHeight];
 
     // API 데이터
     const { data: statusList, isLoading } = useStatusListQuery();
 
-    // 현재 상태에 맞는 statusId 찾기
-    const findCurrentStatusId = () => {
-      if (
-        !statusList ||
-        !currentStatus ||
-        !currentStatus.emoji ||
-        !currentStatus.text
-      )
-        return -1;
-      const currentStatusItem = statusList.find(
-        (item) =>
-          item.emoji === currentStatus.emoji &&
-          item.text === currentStatus.text,
-      );
-      return currentStatusItem?.id || -1;
-    };
 
     // 선택된 상태 관리
     const [selectedStatus, setSelectedStatus] =

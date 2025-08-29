@@ -3,33 +3,25 @@ import RoundButton from '@/components/button/RoundButton';
 import CategoryChip from '@/components/chip/CategoryChip';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
-import { ACTION_LIST } from '@/components/notes/constants/actions';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
 import NoteCreateHeaderLayout from '@/components/notes/feeling/NoteCreateHeaderLayout';
+import { useActionTemplatesQuery } from '@/components/notes/hooks/useActionTemplatesQuery';
 import { PrimaryColors } from '@/constants/Colors';
 import { NoteValue, useNoteCreateStore } from '@/store/noteCreate.store';
 import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const EMPTY_ACTION_TEXT = '                                         ';
 
 const ActionFirst = () => {
   const router = useRouter();
-  const [selectedType, setSelectedType] = useState(
-    ACTION_LIST.negative[0].label,
-  );
+  const [selectedType, setSelectedType] = useState(0);
   const [selectedItem, setSelectedItem] = useState<NoteValue | null>(null);
-  const { setSituationAction } = useNoteCreateStore();
-
-  // 현재 선택된 label(type)에 해당하는 카테고리 찾기
-  const currentCategory = useMemo(() => {
-    const categories = [...ACTION_LIST.negative, ...ACTION_LIST.positive];
-    return categories.find((c) => c.label === selectedType) ?? null;
-  }, [selectedType]);
-
-  // 현재 카테고리의 액션 배열
-  const actions = currentCategory?.actions ?? [];
+  const { emotion, setSituationAction } = useNoteCreateStore();
+  const { data, isLoading, isError } = useActionTemplatesQuery({
+    emotionType: emotion?.emotionType ?? 'positive',
+  });
 
   const handleSelectAction = ({
     id,
@@ -48,7 +40,24 @@ const ActionFirst = () => {
   const handleSubmit = (): void => {
     setSituationAction(selectedItem);
     router.navigate('/notes/ActionSecond');
+
+    // TODO : 마음쪽지가 제출 되기 이전에 페이지가 언마운트 되게 만들어야함.
+    // 지금은 언마운트가 되지않아 강제로 상태를 초기화
+    setSelectedType(0);
+    setSelectedItem(null);
   };
+
+  if (isLoading) {
+    return null;
+  }
+  if (isError || !data) {
+    return null;
+  }
+
+  const currentCategory = data[selectedType] ?? [];
+
+  // 현재 카테고리의 액션 배열
+  const actions = currentCategory?.actions ?? [];
 
   return (
     <SafeScreenLayout
@@ -70,6 +79,12 @@ const ActionFirst = () => {
           </View>
         </NoteCreateHeaderLayout>
       }
+      background={{
+        type: 'gradient',
+        colors: ['#F5FAFF', '#C1DEFF'],
+        locations: [0, 0.4],
+      }}
+      childrenStyle={{ backgroundColor: '#ffffff' }}
       style={styles.container}
     >
       <View style={styles.contentContainer}>
@@ -78,9 +93,9 @@ const ActionFirst = () => {
           rightText='룸메가 어떤 행동을 했나요?'
         />
         <View style={styles.actionTypeContainer}>
-          {ACTION_LIST.negative.map(({ label }) => (
-            <Pressable key={label} onPress={() => setSelectedType(label)}>
-              <CategoryChip text={label} selected={selectedType === label} />
+          {data.map(({ name }, index) => (
+            <Pressable key={index} onPress={() => setSelectedType(index)}>
+              <CategoryChip text={name} selected={selectedType === index} />
             </Pressable>
           ))}
         </View>

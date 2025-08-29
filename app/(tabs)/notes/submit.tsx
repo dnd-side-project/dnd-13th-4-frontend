@@ -2,6 +2,9 @@ import CTAButton from '@/components/button/CTAButton';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
+import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
+import { useNoteSubmitMutation } from '@/components/notes/hooks/useNoteSubmitMutation';
 import FromToText from '@/components/notes/submit/FromToText';
 import NoteCard from '@/components/notes/submit/NoteCard';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -9,7 +12,6 @@ import { useNoteCreateStore } from '@/store/noteCreate.store';
 import { toast } from '@/store/toast.store';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { isMatched } from './feeling';
 
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
@@ -20,14 +22,29 @@ const imageUrl =
 
 const Submit = () => {
   const router = useRouter();
-  const { reset, emotion, promise, situationAction, situationState } =
+  const { reset, emotion, promise, situationAction, situationState, closing } =
     useNoteCreateStore();
 
-  const handleSubmit = () => {
+  const { data: { isMatched, name } = {} } = useMeQuery();
+  const { data: mateData } = useMateQuery();
+  const { mutateAsync } = useNoteSubmitMutation();
+
+  const handleSubmit = async () => {
+    try {
+      await mutateAsync({
+        emotionId: emotion?.id ?? 0,
+        promiseId: promise?.id ?? 0,
+        situationId: situationState?.id ?? 0,
+        actionId: situationAction?.id ?? 0,
+        closingId: closing?.id ?? 0,
+      });
+      toast.show('마음쪽지를 룸메이트에게 전달했어요');
+    } catch (e) {
+      toast.show('마음쪽지 전달을 실패했어요');
+    }
     router.replace('/');
-    toast.show('마음쪽지를 룸메이트에게 전달했어요');
+
     reset();
-    // TODO: 제출동작 구현
   };
 
   return (
@@ -64,17 +81,23 @@ const Submit = () => {
     >
       <View style={styles.contentContainer}>
         <View style={{ paddingTop: 24, paddingBottom: '10%' }}>
-          <FromToText text={`예림님의 마음,\n지우님에게 잘 전달할게요`} />
+          <FromToText
+            text={`${name ?? ''}님의 마음,\n${
+              mateData?.name ?? ''
+            }님에게 잘 전달할게요`}
+          />
         </View>
         <View style={{ position: 'relative' }}>
           <NoteCard
             date={'8월 7일'}
-            emotionText={emotion?.text}
+            emotionText={emotion?.text ?? ''}
             imageUrl={imageUrl}
             promiseText={promise?.text ?? ''}
             situationActionText={situationAction?.text ?? ''}
             situationStateText={situationState?.text ?? ''}
             randomMessage={'지금처럼만 하면 우리 룸메 계약 연장 가능✨'}
+            emotionType={'negative'} // TODO emotion 보면서 negative , positive 정해야함.
+            isRefresh
             style={{ zIndex: 100 }}
           />
         </View>
@@ -91,7 +114,6 @@ const Submit = () => {
 
           <CTAButton
             onPress={handleSubmit}
-            style={{ alignSelf: 'flex-end' }}
             text='마음쪽지 보내기'
             active
             disabled={!isMatched}

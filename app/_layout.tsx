@@ -1,5 +1,6 @@
 import {
   LATEST_NOTES_PATH,
+  MATE_PATH,
   MATE_STATUS_PATH,
   ME_PATH,
   MY_STATUS_PATH,
@@ -113,6 +114,10 @@ export default function RootLayout() {
             queryFn: () => api.get({ path: ME_PATH }).then((res) => res.data),
           }),
           queryClient.prefetchQuery({
+            queryKey: [MATE_PATH],
+            queryFn: () => api.get({ path: MATE_PATH }).then((res) => res.data),
+          }),
+          queryClient.prefetchQuery({
             queryKey: [MY_STATUS_PATH],
             queryFn: () =>
               api.get({ path: MY_STATUS_PATH }).then((res) => res.data),
@@ -142,7 +147,13 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <Stack screenOptions={{ headerShown: false }}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+          }}
+        >
           {STACK_SCREENS.map((screen) => (
             <Stack.Screen
               key={screen.name}

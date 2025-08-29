@@ -4,11 +4,12 @@ import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import { router } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const HOME_STATISTICS_BACKGROUND_IMAGE = `${S3_IMAGE_URL}/home/home_statistics.png`;
 
 export default function StatisticsSummary() {
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const isMatched = useIsMatched();
 
   return (
     <ImageBackground

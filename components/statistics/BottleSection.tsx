@@ -7,6 +7,7 @@ import { GreyColors } from '@/constants/Colors';
 import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const MAX_ONE_WEEK_NOTES_COUNT = 42;
 
@@ -23,7 +24,7 @@ export default function BottleSection({
   const totalNotesThisWeek =
     data.notesReceivedThisWeek + data.notesSentThisWeek;
 
-  const isMatched = process.env.EXPO_PUBLIC_IS_MATCHED === 'true';
+  const isMatched = useIsMatched();
 
   const calculateDaysSince = (dateString: string) => {
     if (!isMatched) return 0;

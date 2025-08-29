@@ -1,3 +1,4 @@
+import { useIsMatched } from '@/components/mypage/hooks/useMeQuery';
 import { LATEST_NOTES_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { NoteResponse } from '@/types/api';
@@ -11,12 +12,14 @@ const getLatestNotes = async () => {
 };
 
 const useLatestNotesQuery = () => {
+  const isMatched = useIsMatched();
+
   const query = useQuery({
     queryKey: [LATEST_NOTES_PATH],
     queryFn: getLatestNotes,
     refetchInterval: 30000,
     refetchIntervalInBackground: false,
-    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    enabled: isMatched,
     initialData: [],
   });
 

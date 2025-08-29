@@ -1,3 +1,4 @@
+import { useIsMatched } from '@/components/mypage/hooks/useMeQuery';
 import { MATE_STATUS_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { MemberStatusResponse } from '@/types/api';
@@ -11,10 +12,12 @@ const getMateStatus = async () => {
 };
 
 const useMateStatusQuery = () => {
+  const isMatched = useIsMatched();
+
   const query = useQuery({
     queryKey: [MATE_STATUS_PATH],
     queryFn: getMateStatus,
-    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    enabled: isMatched,
     initialData: {
       emoji: null,
       text: null,

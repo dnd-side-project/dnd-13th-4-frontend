@@ -1,3 +1,4 @@
+import { useIsMatched } from '@/components/mypage/hooks/useMeQuery';
 import { api } from '@/lib/api';
 import type { KeywordResponse } from '@/types/api';
 import { useQuery } from '@tanstack/react-query';
@@ -12,10 +13,12 @@ const getMyKeyword = async () => {
 };
 
 const useMyKeywordQuery = () => {
+  const isMatched = useIsMatched();
+
   const query = useQuery({
     queryKey: [MY_KEYWORD_PATH],
     queryFn: getMyKeyword,
-    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    enabled: isMatched,
     initialData: {
       positiveActionCategory: {
         id: 0,

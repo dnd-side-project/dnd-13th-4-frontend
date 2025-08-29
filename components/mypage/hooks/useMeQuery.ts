@@ -7,7 +7,7 @@ type MyData = {
   name: string;
   email: string;
   image: string;
-  isMatched: true;
+  isMatched: boolean;
 };
 
 export const useMeQuery = () => {
@@ -21,4 +21,10 @@ export const useMeQuery = () => {
   });
 
   return query;
+};
+
+export const useIsMatched = () => {
+  const { data } = useMeQuery();
+
+  return !!data && data.isMatched;
 };

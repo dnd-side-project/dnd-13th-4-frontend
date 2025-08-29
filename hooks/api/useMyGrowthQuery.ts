@@ -1,3 +1,4 @@
+import { useIsMatched } from '@/components/mypage/hooks/useMeQuery';
 import { MY_GROWTH_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { GrowthResponse } from '@/types/api';
@@ -17,10 +18,12 @@ const getMyGrowth = async () => {
 };
 
 const useMyGrowthQuery = () => {
+  const isMatched = useIsMatched();
+
   const query = useQuery({
     queryKey: [MY_GROWTH_PATH],
     queryFn: getMyGrowth,
-    enabled: process.env.EXPO_PUBLIC_IS_MATCHED === 'true',
+    enabled: isMatched,
     initialData: {
       increasedPositiveAction: {
         text: '',

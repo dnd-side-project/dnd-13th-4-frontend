@@ -20,7 +20,8 @@
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": ["remote-notification"]
       },
-      "appleTeamId": "5A7A76PWY7"
+      "appleTeamId": "5A7A76PWY7",
+      "NSAppTransportSecurity": { "NSAllowsArbitraryLoads": true }
     },
     "android": {
       "adaptiveIcon": {
@@ -52,8 +53,12 @@
       [
         "expo-build-properties",
         {
+          "android": {
+            "usesCleartextTraffic": true
+          },
           "ios": {
-            "useFrameworks": "static"
+            "useFrameworks": "static",
+            "flipper": true
           }
         }
       ]

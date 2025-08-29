@@ -45,15 +45,15 @@ export const StatusSettingModal = forwardRef<
     const snapPoints = [screenHeight - 60];
 
     // API 데이터
-    const { data: statusList } = useStatusListQuery();
+    const { data: statusList, isLoading } = useStatusListQuery();
     
     // 현재 상태에 맞는 statusId 찾기
     const findCurrentStatusId = () => {
-      if (!statusList || !currentStatus) return 1;
+      if (!statusList || !currentStatus || !currentStatus.emoji || !currentStatus.text) return -1;
       const currentStatusItem = statusList.find(
         item => item.emoji === currentStatus.emoji && item.text === currentStatus.text
       );
-      return currentStatusItem?.id || 1;
+      return currentStatusItem?.id || -1;
     };
     
     // 선택된 상태 관리
@@ -65,13 +65,17 @@ export const StatusSettingModal = forwardRef<
 
     // statusList가 로드되면 현재 상태에 맞는 selectedStatusId 업데이트
     useEffect(() => {
-      if (statusList && currentStatus) {
+      if (statusList && currentStatus && currentStatus.emoji && currentStatus.text) {
         const currentStatusItem = statusList.find(
           item => item.emoji === currentStatus.emoji && item.text === currentStatus.text
         );
         if (currentStatusItem) {
           setSelectedStatusId(currentStatusItem.id);
+        } else {
+          setSelectedStatusId(-1);
         }
+      } else {
+        setSelectedStatusId(-1);
       }
     }, [statusList, currentStatus]);
 
@@ -133,7 +137,7 @@ export const StatusSettingModal = forwardRef<
     const outdoorStatusOptions = statusList?.filter(status => status.location === 'OUTDOORS') || [];
 
     // 로딩 상태 체크
-    if (!statusList) {
+    if (isLoading) {
       return (
         <BottomSheetModal
           ref={ref}

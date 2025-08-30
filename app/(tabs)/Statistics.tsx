@@ -4,6 +4,7 @@ import GrowthSection from '@/components/statistics/GrowthSection';
 import Header from '@/components/statistics/Header';
 import KeywordSection from '@/components/statistics/KeywordSection';
 import { S3_IMAGE_URL } from '@/constants';
+import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
@@ -11,6 +12,7 @@ export default function Statistics() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleRefresh = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setRefreshKey((prev) => prev + 1);
   };
 

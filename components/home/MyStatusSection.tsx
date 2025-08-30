@@ -34,8 +34,7 @@ export const MyStatusSection = ({
   return (
     <View style={styles.myStatus}>
       {isMatched && hasStatus ? (
-        <>
-          <View style={styles.myStatusText}>
+        <View style={styles.myStatusText}>
             <CustomText
               variant='body2'
               fontWeight='medium'
@@ -67,7 +66,6 @@ export const MyStatusSection = ({
               </CustomText>
             </View>
           </View>
-        </>
       ) : (
         <CustomText variant='body2' color={GreyColors.grey600}>
           아직 나의 상태를 설정하지 않았어요
@@ -94,11 +92,9 @@ export const MyStatusSection = ({
 const styles = StyleSheet.create({
   myStatus: {
     height: 58,
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: -20,
     paddingHorizontal: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
@@ -108,9 +104,12 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10,
     backgroundColor: 'white',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   myStatusText: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },

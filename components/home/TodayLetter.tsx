@@ -1,30 +1,20 @@
 import { GreyColors } from '@/constants/Colors';
+import { CARD_WIDTH, CARD_HEIGHT } from '@/constants/cardSize';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { CustomText } from '../CustomText';
 
 interface LetterCardProps {
   url: string;
   createdAt: string;
   isRead: boolean;
-  index: number;
 }
 
-// 카드 비율 (105:130)과 화면 기반 크기 계산
-const CARD_ASPECT_RATIO = 105 / 130;
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const HORIZONTAL_PADDING = 48; // 양쪽 24px씩
-const GAP_TOTAL = 24; // 12px * 2 (간격)
-const MAX_CARDS = 3;
-const AVAILABLE_WIDTH = SCREEN_WIDTH - HORIZONTAL_PADDING - GAP_TOTAL;
-const CARD_WIDTH = AVAILABLE_WIDTH / MAX_CARDS;
-const CARD_HEIGHT = CARD_WIDTH / CARD_ASPECT_RATIO;
 
 export default function LetterCard({
   url,
   createdAt,
   isRead,
-  index,
 }: LetterCardProps) {
   // 시간 차이 계산 함수
   const getTimeAgo = (dateString: string) => {

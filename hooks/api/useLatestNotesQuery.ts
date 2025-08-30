@@ -19,7 +19,7 @@ const useLatestNotesQuery = () => {
     queryKey: [LATEST_NOTES_PATH],
     queryFn: getLatestNotes,
     refetchInterval: 3000,
-    refetchIntervalInBackground: false,
+    refetchIntervalInBackground: true,
     enabled: isMatched,
     initialData: [],
   });

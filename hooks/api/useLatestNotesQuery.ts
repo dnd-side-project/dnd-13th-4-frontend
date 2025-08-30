@@ -8,6 +8,7 @@ const getLatestNotes = async () => {
   const { data } = await api.get<SimpleNoteResponse[]>({
     path: LATEST_NOTES_PATH,
   });
+
   return data;
 };
 
@@ -17,8 +18,8 @@ const useLatestNotesQuery = () => {
   const query = useQuery({
     queryKey: [LATEST_NOTES_PATH],
     queryFn: getLatestNotes,
-    refetchInterval: 30000,
-    refetchIntervalInBackground: false,
+    refetchInterval: 3000,
+    refetchIntervalInBackground: true,
     enabled: isMatched,
     initialData: [],
   });

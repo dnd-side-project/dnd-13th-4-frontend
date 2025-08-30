@@ -3,14 +3,18 @@ import { GreyColors } from '@/constants/Colors';
 import useLatestNotesQuery from '@/hooks/api/useLatestNotesQuery';
 import { SimpleNoteResponse } from '@/types/api';
 import { router } from 'expo-router';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, Pressable, StyleSheet } from 'react-native';
 import EmptyTodayLetter from './EmptyLetter';
 import LetterCard from './TodayLetter';
 
 const MAX_LETTER_COUNT_IN_VIWEPORT = 3;
 
+// iPhone 11 Pro 사이즈 기준 반응형 값
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const isLargeScreen = SCREEN_WIDTH >= 375;
+
 export const TodayLetters = () => {
-  const { data: latestNotes = [], isLoading } = useLatestNotesQuery();
+  const { data: latestNotes = [] } = useLatestNotesQuery();
 
   const handleCardPress = (noteId?: number) => {
     if (noteId) {
@@ -48,10 +52,8 @@ export const TodayLetters = () => {
         data={letterData}
         renderItem={({
           item,
-          index,
         }: {
           item: SimpleNoteResponse;
-          index: number;
         }) => {
           if (!item) {
             return <EmptyTodayLetter />;
@@ -63,7 +65,6 @@ export const TodayLetters = () => {
                 url={item.emotion.homeThumbnailUrl}
                 createdAt={item.createdAt}
                 isRead={item.isRead}
-                index={index}
               />
             </Pressable>
           );
@@ -80,12 +81,14 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   subTitle: {
-    marginBottom: 14,
+    marginBottom: isLargeScreen ? 10 : 14,
   },
   todayLetters: {
-    paddingVertical: 16,
+    paddingVertical: isLargeScreen ? 10 : 16,
     marginHorizontal: -24,
     marginBottom: 4,
+    flexGrow: 0, // 내용에 맞춰 크기 조정
+    flexShrink: 1,
   },
   todayLettersContent: {
     paddingHorizontal: 24,

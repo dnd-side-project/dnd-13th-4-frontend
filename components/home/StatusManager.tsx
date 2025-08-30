@@ -18,7 +18,7 @@ interface StatusManagerProps {
 }
 
 export const StatusManager = ({
-  initialStatus = { emoji: '🚌', text: '외출 중' },
+  initialStatus = { emoji: '', text: '' },
 }: StatusManagerProps) => {
   // API 훅들
   const { data: myStatus, isLoading } = useMyStatusQuery();

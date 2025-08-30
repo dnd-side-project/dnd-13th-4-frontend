@@ -40,10 +40,10 @@ export const TEMPLATES_ACTIONS_PATH = '/templates/actions';
 /** GET 약속 리스트 조회 */
 export const TEMPLATES_PROMISES_PATH = '/templates/promises';
 
-/** GET 통계 나의 성장 조회 */
+/** GET 리포트 나의 성장 조회 */
 export const MY_GROWTH_PATH = '/log/growth';
 
-/** GET 주간 통계 조회 */
+/** GET 주간 리포트 조회 */
 export const STATISTICS_PATH = '/log/statistics';
 
 /** GET 나를 대표하는 키워드 */

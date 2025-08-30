@@ -15,17 +15,37 @@ export function getDaysAgo(isoString: string, now: Date = new Date()): number {
 }
 
 /**
- * UX용 포매터: 오늘/어제/ N일 전
+ * UX용 포매터: 상대 시간 표시
+ * - 5분 미만: "방금 전(~ 4분 59초)"
+ * - 5분 ~ 59분: "N분 전"
+ * - 1시간 ~ 23시간: "N시간 전"
+ * - 1일 이상: "N일 전"
  */
 export function formatDaysAgo(
   isoString: string,
   now: Date = new Date(),
 ): string {
-  const days = getDaysAgo(isoString, now);
+  const target = new Date(isoString);
+  if (Number.isNaN(target.getTime())) {
+    throw new Error('Invalid ISO date string');
+  }
 
-  return `${days}일 전`;
+  const diffMs = now.getTime() - target.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHour = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHour / 24);
+
+  if (diffMin < 5) {
+    return '방금 전';
+  } else if (diffHour < 1) {
+    return `${diffMin}분 전`;
+  } else if (diffDay < 1) {
+    return `${diffHour}시간 전`;
+  } else {
+    return `${diffDay}일 전`;
+  }
 }
-
 /**
  * ISO 문자열을 "M월 D일" 형식으로 변환
  * 예: "2025-08-28T19:45:23.317Z" -> "8월 29일"

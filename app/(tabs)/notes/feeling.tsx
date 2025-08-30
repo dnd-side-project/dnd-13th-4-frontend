@@ -58,7 +58,10 @@ const Feeling = () => {
   return (
     <SafeScreenLayout
       header={
-        <NoteCreateFeelingHeader style={{ paddingHorizontal: 40 }}>
+        <NoteCreateFeelingHeader
+          progressPrecentage={25}
+          style={{ paddingHorizontal: 40 }}
+        >
           <View style={styles.previewDescription}>
             <Icon size={15} name='altFill' color={GreyColors.grey600} />
             <CustomText

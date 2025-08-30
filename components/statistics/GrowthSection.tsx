@@ -15,6 +15,12 @@ export default function GrowthSection() {
 
   const isMatched = useIsMatched();
 
+  const todayDate = (() => {
+    const today = new Date();
+    const day = today.getDate();
+    return day === 1 ? '' : ` ~${day}일`;
+  })(); 
+
   // 누적값으로 변환 및 라벨 설정 (데이터 가드   동적 라벨)
   const cumulativeData = React.useMemo(() => {
     const weekly = data?.weeklyPositiveNoteCounts ?? [];
@@ -56,7 +62,7 @@ export default function GrowthSection() {
         style={styles.areaSubtitle}
       >
         {isMatched
-          ? '1일 ~ 18일을 기준으로 지난달과 비교했어요'
+          ? `1일${todayDate}을 기준으로 지난달과 비교했어요`
           : '지난 날보다 좋아진 데이터를 보여줘요'}
       </CustomText>
       <GrowthKeywordCard

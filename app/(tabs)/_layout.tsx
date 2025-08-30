@@ -69,7 +69,7 @@ export default function TabLayout() {
             tabBarActiveTintColor: GreyColors.grey800,
             tabBarInactiveTintColor: GreyColors.grey400,
             tabBarLabelStyle: styles.tabBarLabel,
-            tabBarStyle: styles.tabBarStyle,
+            tabBarStyle: baseTabBarStyle,
 
             // TODO : 명시적으로 설정한 Tab외의 버튼들은 아예 안보이게 하기위한 궁여지책 ..
             tabBarButton: () => null,
@@ -103,6 +103,7 @@ export default function TabLayout() {
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('dashboard'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
 
@@ -117,17 +118,18 @@ export default function TabLayout() {
             }}
           />
 
-          {/* 통계 탭 */}
+          {/* 리포트 탭 */}
           <Tabs.Screen
             name='Statistics'
             options={{
-              title: '통계',
-              headerTitle: '통계',
+              title: '리포트',
+              headerTitle: '리포트',
               headerStyle: styles.headerStyle,
               headerTitleStyle: styles.headerTitleStyle,
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('graph'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
 
@@ -142,6 +144,7 @@ export default function TabLayout() {
               tabBarItemStyle: { display: 'flex' },
               tabBarButton: HapticTab,
               tabBarIcon: createTabIcon('user'),
+              tabBarStyle: shadowTabBarStyle,
             }}
           />
         </Tabs>
@@ -194,3 +197,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+// 👉 기본: 그림자 없는 스타일
+const baseTabBarStyle = {
+  height: 88,
+  borderTopWidth: 0,
+  shadowOpacity: 0,
+  elevation: 0,
+};
+
+// 👉 그림자 있는 스타일 (base + shadow)
+const shadowTabBarStyle = {
+  ...baseTabBarStyle,
+  borderTopWidth: 1,
+  borderTopColor: PrimaryColors.blue300,
+  shadowColor: '#000000',
+  shadowOffset: { width: 0, height: -3 },
+  shadowOpacity: 0.1,
+  shadowRadius: 12,
+  elevation: 10,
+};

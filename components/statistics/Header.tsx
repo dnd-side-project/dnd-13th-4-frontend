@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <View style={styles.headerWrapper}>
       <CustomText variant='body1' color={GreyColors.grey700}>
-        통계
+        마음 리포트
       </CustomText>
     </View>
   );

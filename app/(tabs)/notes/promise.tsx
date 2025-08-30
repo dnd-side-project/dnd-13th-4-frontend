@@ -1,5 +1,5 @@
 import CTAButton from '@/components/button/CTAButton';
-import LongSquareButton from '@/components/button/LongSquareButton';
+import RoundButton from '@/components/button/RoundButton';
 import { CustomText } from '@/components/CustomText';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import NoteCreateGuide from '@/components/notes/feeling/NoteCreateGuide';
@@ -91,7 +91,7 @@ const Promise = () => {
           style={styles.listContainer}
         >
           {data.map(({ id, text }) => (
-            <LongSquareButton
+            <RoundButton
               key={id}
               text={text}
               onPress={() =>
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   },
 
   ctaContainer: {
+    paddingTop: 24,
     flexDirection: 'row',
     width: '100%',
     marginTop: 'auto',

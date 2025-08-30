@@ -1,14 +1,15 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import GrowthKeywordCard from '@/components/statistics/GrowthKeywordCard';
-import { GreyColors } from '@/constants/Colors';
+import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import useMyGrowthQuery from '@/hooks/api/useMyGrowthQuery';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
-const CHART_WIDTH = 300; // 그래프 너비 확장
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const CHART_WIDTH = SCREEN_WIDTH - 135; // 컨테이너 패딩 + 여유 공간
 
 export default function GrowthSection() {
   const { data } = useMyGrowthQuery();
@@ -19,28 +20,20 @@ export default function GrowthSection() {
     const today = new Date();
     const day = today.getDate();
     return day === 1 ? '' : ` ~${day}일`;
-  })(); 
+  })();
 
-  // 누적값으로 변환 및 라벨 설정 (데이터 가드   동적 라벨)
-  const cumulativeData = React.useMemo(() => {
+  // 데이터에 hideDataPoint 속성 추가 (라벨이 없는 포인트는 점 숨김)
+  const chartData = React.useMemo(() => {
     const weekly = data?.weeklyPositiveNoteCounts ?? [];
-    if (weekly.length === 0) return [];
-    let cumulative = 0;
-    const lastIdx = weekly.length - 1;
-    const midIdx = Math.round(lastIdx / 2);
-    return weekly.map((item, index) => {
-      cumulative = item.value;
-      let label = '';
-      if (index === 0) label = '2개월전';
-      else if (index === midIdx) label = '1개월전';
-      else if (index === lastIdx) label = '현재';
-      return { ...item, value: cumulative, label };
-    });
+    return weekly.map((item) => ({
+      ...item,
+      hideDataPoint: !item.label || item.label.trim() === '', // 라벨이 없으면 점 숨김
+    }));
   }, [data]);
 
   const dynamicSpacing =
-    cumulativeData.length > 1
-      ? (CHART_WIDTH - 60) / (cumulativeData.length - 1)
+    chartData.length > 1
+      ? Math.floor((CHART_WIDTH - 35) / (chartData.length - 1))
       : 0;
 
   return (
@@ -68,14 +61,14 @@ export default function GrowthSection() {
       <GrowthKeywordCard
         title='늘어난 칭찬'
         actionText={data.increasedPositiveAction.text}
-        changeAmount={data.increasedPositiveAction.change}
+        changeAmount={data.increasedPositiveAction.monthlyChange}
         isMatched={isMatched}
         isPositive={true}
       />
       <GrowthKeywordCard
         title='줄어든 불만'
         actionText={data.decreasedNegativeAction.text}
-        changeAmount={data.decreasedNegativeAction.change}
+        changeAmount={data.decreasedNegativeAction.monthlyChange}
         isMatched={isMatched}
         isPositive={false}
       />
@@ -90,7 +83,7 @@ export default function GrowthSection() {
         </CustomText>
         <View style={styles.chartContainer}>
           <LineChart
-            data={cumulativeData}
+            data={chartData}
             width={CHART_WIDTH}
             height={200}
             color='#5BB3F3'
@@ -98,41 +91,51 @@ export default function GrowthSection() {
             dataPointsColor='#5BB3F3'
             dataPointsRadius={5}
             hideDataPoints={false}
-            curved
-            backgroundColor='transparent'
-            hideRules={false}
-            rulesColor={GreyColors.grey200}
-            rulesType='dashed'
-            rulesThickness={1}
-            dashWidth={3}
-            dashGap={3}
+            maxValue={Math.max(
+              ...(chartData.length > 0
+                ? chartData.map((item) => item.value)
+                : [60]),
+              20,
+            )}
+            stepValue={10}
             hideYAxisText={false}
             yAxisTextStyle={{
               color: GreyColors.grey400,
               fontSize: 12,
               fontWeight: '400',
             }}
+            xAxisLabelTexts={chartData.map((item) => item.label)}
             hideAxesAndRules={false}
-            xAxisColor={GreyColors.grey300}
+            xAxisColor={GreyColors.grey900}
             xAxisThickness={1}
-            showXAxisIndices={false}
+            xAxisNoOfSections={0}
             xAxisLabelTextStyle={{
               color: GreyColors.grey600,
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: '500',
-              textAlign: 'left',
-              width: 80,
+              textAlign: 'center',
+              width: 40,
+              position: 'relative',
+              right: 5,
             }}
-            xAxisLabelsVerticalShift={12}
-            xAxisTextNumberOfLines={1}
-            rotateLabel={false}
+            xAxisLabelsVerticalShift={10}
+            yAxisColor={'transparent'}
+            xAxisType={'solid'}
+            hideRules={false}
+            rulesColor={GreyColors.grey200}
+            rulesType='dashed'
+            rulesThickness={2}
+            dashWidth={3}
+            dashGap={3}
             showVerticalLines={true}
-            verticalLinesColor={GreyColors.grey200}
+            verticalLinesColor={PrimaryColors.blue100}
             verticalLinesStrokeDashArray={[3, 3]}
+            verticalLinesThickness={2}
             verticalLinesUptoDataPoint={true}
-            verticalLinesThickness={1}
             hideOrigin={true}
-            isAnimated
+            spacing={dynamicSpacing}
+            initialSpacing={20}
+            endSpacing={10}
             animationDuration={1200}
             areaChart
             startFillColor='#84BFF3'
@@ -140,22 +143,11 @@ export default function GrowthSection() {
             startOpacity={0.7}
             endOpacity={0.1}
             gradientDirection='vertical'
-            maxValue={Math.max(
-              ...(cumulativeData.length > 0
-                ? cumulativeData.map((item) => item.value)
-                : [60]),
-              20,
-            )}
-            stepValue={10}
-            spacing={dynamicSpacing}
-            initialSpacing={40}
-            endSpacing={40}
-            xAxisLabelTexts={cumulativeData.map((item) => item.label)}
+            curved
             disableScroll
             focusEnabled={false}
-            adjustToWidth
           />
-          {cumulativeData.length === 0 && (
+          {chartData.length === 0 && (
             <View style={styles.emptyChartOverlay}>
               <CustomText
                 variant='body2'
@@ -208,7 +200,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chartContainer: {
-    position: 'relative',
+    flex: 1,
+    height: 240,
+    paddingHorizontal: 10,
   },
   emptyChartOverlay: {
     position: 'absolute',

@@ -131,7 +131,7 @@ export type KeywordResponse = {
 
 export type SimpleActionChange = {
   text: string;
-  change: number;
+  monthlyChange: number;
 };
 
 export type WeeklyNoteCount = {

@@ -1,6 +1,6 @@
 import { Icon } from '@/components/icons';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Dimensions, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { CustomText } from './CustomText';
 
@@ -21,15 +21,16 @@ export const InfoButton: React.FC<InfoButtonProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
+  const pressableRef = useRef<View>(null);
 
-  const handlePress = (event: any) => {
+  const handlePress = () => {
     // 버튼의 위치 측정
-    event.target.measure(
+    pressableRef.current?.measure(
       (
-        x: number,
-        y: number,
-        width: number,
-        height: number,
+        _x: number,
+        _y: number,
+        _width: number,
+        _height: number,
         pageX: number,
         pageY: number,
       ) => {
@@ -69,7 +70,11 @@ export const InfoButton: React.FC<InfoButtonProps> = ({
 
   return (
     <>
-      <Pressable onPress={handlePress} style={styles.iconButton}>
+      <Pressable
+        onPress={handlePress}
+        style={styles.iconButton}
+        ref={pressableRef}
+      >
         <Icon name='info' size={iconSize} color={iconColor} />
       </Pressable>
 
@@ -125,25 +130,6 @@ const styles = StyleSheet.create({
   tooltipContent: {
     padding: 16,
     paddingRight: 40,
-  },
-  tooltipTail: {
-    position: 'absolute',
-    width: 0,
-    height: 0,
-    borderLeftWidth: 8,
-    borderRightWidth: 8,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-  },
-  tooltipTailTop: {
-    top: -8,
-    borderBottomWidth: 8,
-    borderBottomColor: 'white',
-  },
-  tooltipTailBottom: {
-    bottom: -8,
-    borderTopWidth: 8,
-    borderTopColor: 'white',
   },
   closeButton: {
     position: 'absolute',

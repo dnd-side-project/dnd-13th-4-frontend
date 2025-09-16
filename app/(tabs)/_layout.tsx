@@ -1,6 +1,7 @@
 import { HapticTab } from '@/components/HapticTab';
 import { Icon } from '@/components/icons';
 import { IconName } from '@/components/icons/iconComponents';
+import { HomeTutorial } from '@/components/tutorial/HomeTutorial';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { LOGO } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
@@ -58,6 +59,8 @@ const CreateButton = (props: BottomTabBarButtonProps) => {
 };
 
 export default function TabLayout() {
+  const pathname = usePathname();
+  
   return (
     <GestureHandlerRootView style={styles.container}>
       <BottomSheetModalProvider>
@@ -148,6 +151,9 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
+        
+        {/* 홈 화면일 때만 튜토리얼 표시 */}
+        {pathname === '/' && <HomeTutorial />}
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );

@@ -1,15 +1,11 @@
 import { S3_IMAGE_URL } from '@/constants';
-import { useState } from 'react';
+import { useTutorial } from '@/hooks/useTutorial';
 import { Image, Pressable, StyleSheet } from 'react-native';
 
 const TUTORIAL_IMAGE_URL = `${S3_IMAGE_URL}/home/home_tutorial.png`;
 
 export const HomeTutorial = () => {
-  const [visible, setVisible] = useState(true);
-
-  const close = () => {
-    setVisible(false);
-  };
+  const { visible, close } = useTutorial('home_tutorial_completed');
 
   if (!visible) return null;
 

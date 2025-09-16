@@ -1,6 +1,5 @@
 import useMyStatusQuery from '@/hooks/api/useMyStatusQuery';
 import useUpdateMyStatusMutation from '@/hooks/api/useUpdateMyStatusMutation';
-import { MY_STATUS_PATH } from '@/constants/api';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
@@ -127,9 +126,6 @@ export const StatusManager = ({
         startedAt: nowTimezoneDate,
         reservedTimeInfo,
       });
-
-      // 상태 업데이트 완료 후 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: [MY_STATUS_PATH] });
 
       handleCloseStatusModal();
     } catch (error) {

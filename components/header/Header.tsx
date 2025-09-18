@@ -1,4 +1,5 @@
 import { GreyColors } from '@/constants/Colors';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 import { Icon, IconName } from '../icons';
@@ -38,7 +39,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: LAYOUT_HEADER_HEIGHT,
     paddingHorizontal: 8,
     display: 'flex',
     flexDirection: 'row',

@@ -4,6 +4,7 @@ import StatisticsSummary from '@/components/home/StatisticsSummary';
 import { StatusManager } from '@/components/home/StatusManager';
 import { TodayLetters } from '@/components/home/TodayLetters';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import { ScrollView } from 'react-native';
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
           locations: [0.149, 0.4087] as const,
         }}
         style={{
-          paddingTop: 56,
+          paddingTop: LAYOUT_HEADER_HEIGHT,
         }}
       >
         <ScrollView

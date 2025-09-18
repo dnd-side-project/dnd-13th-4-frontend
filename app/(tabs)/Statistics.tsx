@@ -4,6 +4,7 @@ import GrowthSection from '@/components/statistics/GrowthSection';
 import Header from '@/components/statistics/Header';
 import KeywordSection from '@/components/statistics/KeywordSection';
 import { S3_IMAGE_URL } from '@/constants';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   scrollContainer: {
-    paddingTop: 56,
+    paddingTop: LAYOUT_HEADER_HEIGHT,
     flex: 1,
     marginHorizontal: -20,
     paddingHorizontal: 20,

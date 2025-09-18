@@ -24,7 +24,7 @@ export default function Storage() {
     <SafeScreenLayout
       header={
         <View style={styles.header}>
-          <CustomText>보관함</CustomText>
+          <CustomText color={GreyColors.grey700}>보관함</CustomText>
         </View>
       }
       background={{ type: 'solid', color: '#ffffff' }}

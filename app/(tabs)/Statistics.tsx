@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   scrollContainer: {
-    paddingTop: 44,
+    paddingTop: 56,
     flex: 1,
     marginHorizontal: -20,
     paddingHorizontal: 20,

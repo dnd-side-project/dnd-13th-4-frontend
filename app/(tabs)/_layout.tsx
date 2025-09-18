@@ -201,16 +201,15 @@ const styles = StyleSheet.create({
 // 👉 기본: 그림자 없는 스타일
 const baseTabBarStyle = {
   height: 88,
-  borderTopWidth: 0,
   shadowOpacity: 0,
   elevation: 0,
+  borderTopWidth: 1,
+  borderTopColor: PrimaryColors.blue300,
 };
 
 // 👉 그림자 있는 스타일 (base + shadow)
 const shadowTabBarStyle = {
   ...baseTabBarStyle,
-  borderTopWidth: 1,
-  borderTopColor: PrimaryColors.blue300,
   shadowColor: '#000000',
   shadowOffset: { width: 0, height: -3 },
   shadowOpacity: 0.1,

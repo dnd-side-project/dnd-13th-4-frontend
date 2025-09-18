@@ -1,5 +1,6 @@
 import { GreyColors } from '@/constants/Colors';
-import { CARD_WIDTH, CARD_HEIGHT } from '@/constants/cardSize';
+import { CARD_HEIGHT, CARD_WIDTH } from '@/constants/cardSize';
+import { formatDaysAgo } from '@/lib/time';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, StyleSheet, View } from 'react-native';
 import { CustomText } from '../CustomText';
@@ -10,29 +11,11 @@ interface LetterCardProps {
   isRead: boolean;
 }
 
-
 export default function LetterCard({
   url,
   createdAt,
   isRead,
 }: LetterCardProps) {
-  // 시간 차이 계산 함수
-  const getTimeAgo = (dateString: string) => {
-    const now = new Date();
-    const created = new Date(dateString);
-    const diffMs = now.getTime() - created.getTime();
-    
-    const hours = Math.floor(diffMs / (1000 * 60 * 60));
-    const minutes = Math.floor(diffMs / (1000 * 60));
-    
-    if (hours > 0) {
-      return `${hours}시간 전`;
-    } else if (minutes > 0) {
-      return `${minutes}분 전`;
-    } else {
-      return '방금 전';
-    }
-  };
 
   // 공통 스타일
   const cardStyle = [
@@ -56,7 +39,7 @@ export default function LetterCard({
         color={GreyColors.grey600}
         style={styles.cardTimeInfo}
       >
-        {getTimeAgo(createdAt)}
+        {formatDaysAgo(createdAt)}
       </CustomText>
     </>
   );

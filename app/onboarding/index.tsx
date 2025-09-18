@@ -4,11 +4,13 @@ import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { appleAuth } from '@/lib/auth/appleAuth';
 import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
 import {
   Dimensions,
   ImageBackground,
+  Platform,
   Pressable,
   StyleSheet,
   View,
@@ -77,15 +79,37 @@ const onboardingData: OnboardingData[] = [
 
 const OnboardingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const carouselRef = useRef<ICarouselInstance | null>(null);
   const progress = useSharedValue<number>(0);
   const isLastSlide = currentIndex === onboardingData.length - 1;
 
+  const handleKakaoLogin = useCallback(() => {
+    // TODO: 실제 카카오 로그인 구현 후 메인 페이지로 이동
+    router.replace('/(tabs)');
+  }, []);
+
+  const handleAppleLogin = useCallback(async () => {
+    if (Platform.OS !== 'ios') {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const result = await appleAuth.signInWithApple();
+
+      if (result) {
+        router.replace('/(tabs)');
+      }
+    } catch (error) {
+      console.error('Apple Sign In failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   const handleNext = useCallback(() => {
-    if (isLastSlide) {
-      // TODO: 실제 카카오 로그인 구현 후 메인 페이지로 이동
-      router.replace('/(tabs)');
-    } else {
+    if (!isLastSlide) {
       carouselRef.current?.next();
     }
   }, [isLastSlide]);
@@ -150,14 +174,35 @@ const OnboardingScreen = () => {
         />
 
         {isLastSlide ? (
-          <FlexibleButton onPress={handleNext} style={styles.kakaoButton}>
-            <View style={styles.kakaoButtonContent}>
-              <Icon name='kakao' size={18} />
-              <CustomText variant='body1' color='#000000' fontWeight='bold'>
-                카카오 로그인
-              </CustomText>
-            </View>
-          </FlexibleButton>
+          <View style={styles.loginButtonsContainer}>
+            <FlexibleButton
+              onPress={handleKakaoLogin}
+              style={styles.kakaoButton}
+              disabled={isLoading}
+            >
+              <View style={styles.loginButtonContent}>
+                <Icon name='kakao' size={18} />
+                <CustomText variant='body1' color='#000000' fontWeight='bold'>
+                  카카오 로그인
+                </CustomText>
+              </View>
+            </FlexibleButton>
+
+            {Platform.OS === 'ios' && (
+              <FlexibleButton
+                onPress={handleAppleLogin}
+                style={styles.appleButton}
+                disabled={isLoading}
+              >
+                <View style={styles.loginButtonContent}>
+                  <Icon name='apple' size={18} color='#ffffff' />
+                  <CustomText variant='body1' color='#ffffff' fontWeight='bold'>
+                    Apple로 로그인
+                  </CustomText>
+                </View>
+              </FlexibleButton>
+            )}
+          </View>
         ) : (
           <FlexibleButton onPress={handleNext}>
             <CustomText variant='body1' color='#ffffff' fontWeight='bold'>
@@ -234,10 +279,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+  loginButtonsContainer: {
+    gap: 12,
+    width: '100%',
+  },
   kakaoButton: {
     backgroundColor: '#FEE500',
   },
-  kakaoButtonContent: {
+  appleButton: {
+    backgroundColor: '#000000',
+  },
+  loginButtonContent: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,

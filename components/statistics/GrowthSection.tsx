@@ -7,6 +7,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
+import { Tooltip } from '../ui/Tooltip';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CHART_WIDTH = SCREEN_WIDTH - 135; // 컨테이너 패딩 + 여유 공간
@@ -46,7 +47,38 @@ export default function GrowthSection() {
         >
           나의 성장 리포트
         </CustomText>
-        <Icon name='info' size={16} color={GreyColors.grey400} />
+        <Tooltip
+          content={
+            <View>
+              <CustomText
+                variant='body3'
+                fontWeight='bold'
+                color={GreyColors.grey600}
+              >
+                [늘어난 칭찬, 줄어든 불만]
+              </CustomText>
+              <CustomText
+                variant='body3'
+                color={GreyColors.grey600}
+                style={{ marginBottom: 20 }}
+              >
+                {`이번 달 누적데이터를 지난 달 동일기간과 비교해요.\n예시) 오늘이 8/18인 경우, 8/1~8/18 vs 7/1~7/18`}
+              </CustomText>
+              <CustomText
+                variant='body3'
+                fontWeight='bold'
+                color={GreyColors.grey600}
+              >
+                [받은 칭찬 추이]
+              </CustomText>
+              <CustomText variant='body3' color={GreyColors.grey600}>
+                최근 2개월 동안 받은 칭찬 개수의 누적 추이를 보여줘요.
+              </CustomText>
+            </View>
+          }
+        >
+          <Icon name={'info'} size={16} color={GreyColors.grey400} />
+        </Tooltip>
       </View>
       <CustomText
         variant='body2'

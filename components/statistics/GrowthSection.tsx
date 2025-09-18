@@ -10,7 +10,7 @@ import { useIsMatched } from '../mypage/hooks/useMeQuery';
 import { Tooltip } from '../ui/Tooltip';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const CHART_WIDTH = SCREEN_WIDTH - 135; // 컨테이너 패딩 + 여유 공간
+const CHART_WIDTH = SCREEN_WIDTH - 130; // 컨테이너 패딩 + 여유 공간
 
 export default function GrowthSection() {
   const { data } = useMyGrowthQuery();
@@ -130,6 +130,7 @@ export default function GrowthSection() {
               20,
             )}
             stepValue={10}
+            noOfSectionsBelowXAxis={0}
             hideYAxisText={false}
             yAxisTextStyle={{
               color: GreyColors.grey400,
@@ -138,9 +139,9 @@ export default function GrowthSection() {
             }}
             xAxisLabelTexts={chartData.map((item) => item.label)}
             hideAxesAndRules={false}
-            xAxisColor={GreyColors.grey900}
+            xAxisColor={GreyColors.grey400}
             xAxisThickness={1}
-            xAxisNoOfSections={0}
+            xAxisLabelsAtBottom={true}
             xAxisLabelTextStyle={{
               color: GreyColors.grey600,
               fontSize: 11,
@@ -157,14 +158,14 @@ export default function GrowthSection() {
             rulesColor={GreyColors.grey200}
             rulesType='dashed'
             rulesThickness={2}
-            dashWidth={3}
+            dashWidth={5}
             dashGap={3}
             showVerticalLines={true}
             verticalLinesColor={PrimaryColors.blue100}
             verticalLinesStrokeDashArray={[3, 3]}
             verticalLinesThickness={2}
             verticalLinesUptoDataPoint={true}
-            hideOrigin={true}
+            hideOrigin={false}
             spacing={dynamicSpacing}
             initialSpacing={20}
             endSpacing={10}
@@ -234,7 +235,6 @@ const styles = StyleSheet.create({
   chartContainer: {
     flex: 1,
     height: 240,
-    paddingHorizontal: 10,
   },
   emptyChartOverlay: {
     position: 'absolute',

@@ -7,26 +7,28 @@ import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
 import { calculateDaysSince } from '@/utils/time';
-import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const MAX_ONE_WEEK_NOTES_COUNT = 42;
 
-interface BottleSectionProps {
-  refreshKey: number;
-  onRefresh: () => void;
-}
+import * as Haptics from 'expo-haptics';
 
-export default function BottleSection({
-  refreshKey,
-  onRefresh,
-}: BottleSectionProps) {
+export default function BottleSection() {
+  const [refreshKey, setRefreshKey] = React.useState(0);
   const { data } = useWeeklyLogSummaryQuery();
   const totalNotesThisWeek =
     data.notesReceivedThisWeek + data.notesSentThisWeek;
 
   const isMatched = useIsMatched();
+
+  useFocusEffect(
+    useCallback(() => {
+      setRefreshKey(prev => prev + 1);
+    }, [])
+  );
 
   return (
     <>
@@ -48,7 +50,10 @@ export default function BottleSection({
           style={styles.bottleImage}
         />
         <TouchableOpacity
-          onPress={onRefresh}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            setRefreshKey(prev => prev + 1);
+          }}
           style={styles.starPhysicsContainer}
         >
           <StarPhysics

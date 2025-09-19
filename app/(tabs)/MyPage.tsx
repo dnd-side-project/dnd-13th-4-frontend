@@ -89,7 +89,7 @@ export default function MyPage() {
               {mateData?.name ?? `   `}
             </CustomText>
             <CustomText variant='body3' color={GreyColors.grey500}>
-              우리가 함께한 지{' '}
+              · 우리가 함께한 지{' '}
               {mateData?.joinedAt ? getDaysAgo(mateData.joinedAt) : ` `}일째
             </CustomText>
           </View>

@@ -16,12 +16,8 @@ export default function LetterCard({
   createdAt,
   isRead,
 }: LetterCardProps) {
-
   // 공통 스타일
-  const cardStyle = [
-    styles.cardWrapper,
-    isRead && styles.readCard,
-  ];
+  const cardStyle = [styles.cardWrapper, isRead && styles.readCard];
 
   // 공통 내용
   const cardContent = (
@@ -53,8 +49,8 @@ export default function LetterCard({
     <LinearGradient
       colors={
         isRead
-          ? ['#5BA4FA', '#45E5DD', '#5BA4FA']
-          : [GreyColors.grey300, GreyColors.grey300]
+          ? [GreyColors.grey300, GreyColors.grey300]
+          : ['#5BA4FA', '#45E5DD', '#5BA4FA']
       }
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}

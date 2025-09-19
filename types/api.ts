@@ -11,6 +11,7 @@ export type StatusResponse = {
 export type MemberStatusResponse = {
   emoji: string | null;
   text: string | null;
+  request: string | null;
   statusStartedAt: string | null;
   reservedTimeInfo: {
     hour: number;

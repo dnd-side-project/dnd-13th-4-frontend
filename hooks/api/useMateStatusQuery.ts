@@ -21,6 +21,7 @@ const useMateStatusQuery = () => {
     initialData: {
       emoji: null,
       text: null,
+      request: '',
       statusStartedAt: null,
       reservedTimeInfo: null,
     },

@@ -9,11 +9,13 @@ import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 const PROFILE_IMAGE_WIDTH = 120;
 
 export default function MyPage() {
+  const router = useRouter();
   const handleLogout = (): void => {};
 
   const handleCopy = async (copyText: string): Promise<void> => {
@@ -94,7 +96,15 @@ export default function MyPage() {
             </CustomText>
           </View>
         </View>
+
         <View style={styles.infoItemContainer}>
+          <CustomText
+            variant='body1'
+            fontWeight='semibold'
+            style={styles.infoTitle}
+          >
+            관리
+          </CustomText>
           <View style={styles.infoItem}>
             <CustomText color={GreyColors.grey700}>초대코드 복사</CustomText>
             <Pressable onPress={() => handleCopy(roomCode)}>
@@ -108,10 +118,20 @@ export default function MyPage() {
           </View>
         </View>
         <View style={styles.infoItemContainer}>
-          <View style={styles.infoItem}>
-            <CustomText color={GreyColors.grey700}>버전 정보</CustomText>
-            <CustomText color={GreyColors.grey400}>6.19.2</CustomText>
-          </View>
+          <CustomText
+            variant='body1'
+            fontWeight='semibold'
+            style={styles.infoTitle}
+          >
+            고객 센터
+          </CustomText>
+          <Pressable
+            onPress={() => router.push('/terms-of-service')}
+            style={styles.infoItem}
+          >
+            <CustomText color={GreyColors.grey700}>이용 약관</CustomText>
+            <Icon name='expandRight' color={GreyColors.grey400} />
+          </Pressable>
         </View>
         <Pressable style={styles.logoutButton} onPress={handleLogout}>
           <CustomText
@@ -176,13 +196,15 @@ const styles = StyleSheet.create({
   },
   roommateData: { flexDirection: 'row', alignItems: 'center' },
   roommateName: { paddingRight: 8 },
+
   infoItemContainer: {
-    paddingTop: 16,
+    paddingTop: 40,
   },
+  infoTitle: { paddingBottom: 8 },
   infoItem: {
     backgroundColor: GreyColors.grey50,
     borderRadius: 8,
-    paddingVertical: 12,
+    paddingVertical: 16,
     paddingLeft: 16,
     paddingRight: 24,
     marginBottom: 8,

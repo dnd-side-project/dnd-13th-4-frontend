@@ -218,6 +218,12 @@ const PersonIcon = ({ color = '#000000', size = 24 }: IconProps) => (
   </Svg>
 );
 
+const ExpandRightIcon = ({ color = '#000000', size = 24 }: IconProps) => (
+  <Svg width={size} height={size} viewBox='0 0 24 24' fill='none'>
+    <Path d='M9 6L15 12L9 18' stroke={color} strokeWidth='2' />
+  </Svg>
+);
+
 export const iconComponents = {
   home: HomeIcon,
   dashboard: DashBoardIcon,
@@ -235,6 +241,7 @@ export const iconComponents = {
   arrowTop: ArrowTopIcon,
   kakao: KakaoLogoIcon,
   person: PersonIcon,
+  expandRight: ExpandRightIcon,
 } as const;
 
 export type IconName = keyof typeof iconComponents;

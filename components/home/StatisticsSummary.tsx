@@ -80,7 +80,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-{isMatched ? data.notesReceivedThisWeek : 0}개
+            {isMatched ? data.notesReceivedThisWeek : 0}개
           </CustomText>
         </View>
         <View
@@ -109,7 +109,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-{isMatched ? data.notesSentThisWeek : 0}개
+            {isMatched ? data.notesSentThisWeek : 0}개
           </CustomText>
         </View>
         <View
@@ -138,7 +138,7 @@ export default function StatisticsSummary() {
             fontWeight='semibold'
             color={isMatched ? GreyColors.grey800 : GreyColors.grey600}
           >
-{isMatched ? calculateDaysSince(data.roomJoinedAt) : 0}일째
+            {isMatched ? calculateDaysSince(data.roomJoinedAt) : 0}일째
           </CustomText>
         </View>
       </View>
@@ -156,6 +156,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 20,
     elevation: 8,
-    marginBottom: 20,
   },
 });

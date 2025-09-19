@@ -24,6 +24,7 @@ export default function Home() {
           showsVerticalScrollIndicator={false}
           bounces={false}
           overScrollMode='never'
+          contentContainerStyle={{ paddingBottom: 80 }}
         >
           <HomeHeader />
           <TodayLetters />

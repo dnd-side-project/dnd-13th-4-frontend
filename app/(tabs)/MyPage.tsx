@@ -51,7 +51,7 @@ export default function MyPage() {
                 style={styles.profileImage}
               />
             ) : (
-              <View style={styles.defaultProfileImage}>
+              <View style={styles.profileImage}>
                 <Icon name='person' size={48} color={PrimaryColors.blue100} />
               </View>
             )}
@@ -67,13 +67,19 @@ export default function MyPage() {
             룸메이트 정보
           </CustomText>
           <View style={styles.roommateData}>
-            <Image
-              source={{
-                // TODO 카카오 프사 http:// 로 들어오는경우 있음. http는 실기기에서 로드가되지 않음.
-                uri: mateData?.image?.replace(/^http:\/\//, 'https://'),
-              }}
-              style={styles.roommateImage}
-            />
+            {mateData?.image ? (
+              <Image
+                source={{
+                  // TODO 카카오 프사 http:// 로 들어오는경우 있음. http는 실기기에서 로드가되지 않음.
+                  uri: mateData?.image?.replace(/^http:\/\//, 'https://'),
+                }}
+                style={styles.roommateImage}
+              />
+            ) : (
+              <View style={styles.roommateImage}>
+                <Icon name='person' size={18} color={'#ffffff'} />
+              </View>
+            )}
 
             <CustomText
               style={styles.roommateName}
@@ -140,18 +146,12 @@ const styles = StyleSheet.create({
     borderRadius: 134, // 👈 이미지 반지름보다 조금 크게
   },
   profileImage: {
-    width: PROFILE_IMAGE_WIDTH + 3,
-    height: PROFILE_IMAGE_WIDTH + 3,
-    backgroundColor: '#ffffff',
-    padding: 3,
-    borderRadius: 999,
-  },
-  defaultProfileImage: {
     justifyContent: 'center',
     alignItems: 'center',
     width: PROFILE_IMAGE_WIDTH + 3,
     height: PROFILE_IMAGE_WIDTH + 3,
     backgroundColor: '#ffffff',
+    padding: 3,
     borderRadius: 999,
   },
   roommateDataContainer: {
@@ -170,6 +170,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
     borderWidth: 1,
     borderColor: PrimaryColors.blue100,
+    backgroundColor: PrimaryColors.blue100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   roommateData: { flexDirection: 'row', alignItems: 'center' },
   roommateName: { paddingRight: 8 },

@@ -1,4 +1,5 @@
 import { CustomText } from '@/components/CustomText';
+import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
@@ -44,7 +45,16 @@ export default function MyPage() {
             end={{ x: 0.9, y: 0.8 }}
             style={styles.profileImageWrapper}
           >
-            <Image source={{ uri: data?.image }} style={styles.profileImage} />
+            {data?.image ? (
+              <Image
+                source={{ uri: data?.image }}
+                style={styles.profileImage}
+              />
+            ) : (
+              <View style={styles.defaultProfileImage}>
+                <Icon name='person' size={48} color={PrimaryColors.blue100} />
+              </View>
+            )}
           </LinearGradient>
           <CustomText variant='head1'>{data?.name ?? `   `}</CustomText>
         </View>
@@ -134,6 +144,14 @@ const styles = StyleSheet.create({
     height: PROFILE_IMAGE_WIDTH + 3,
     backgroundColor: '#ffffff',
     padding: 3,
+    borderRadius: 999,
+  },
+  defaultProfileImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: PROFILE_IMAGE_WIDTH + 3,
+    height: PROFILE_IMAGE_WIDTH + 3,
+    backgroundColor: '#ffffff',
     borderRadius: 999,
   },
   roommateDataContainer: {

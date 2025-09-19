@@ -7,6 +7,7 @@ import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
+import * as Application from 'expo-application';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -16,7 +17,6 @@ const PROFILE_IMAGE_WIDTH = 120;
 
 export default function MyPage() {
   const router = useRouter();
-  const handleLogout = (): void => {};
 
   const handleCopy = async (copyText: string): Promise<void> => {
     await Clipboard.setStringAsync(copyText);
@@ -180,7 +180,7 @@ export default function MyPage() {
         </View>
         <View style={styles.bottomContainer}>
           <CustomText color={GreyColors.grey400} variant='body3'>
-            {`앱 버전   6.19.2`}
+            {`앱 버전   ${Application.nativeApplicationVersion}`}
           </CustomText>
         </View>
       </ScrollView>

@@ -151,15 +151,38 @@ export default function MyPage() {
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
         </View>
-        <Pressable style={styles.logoutButton} onPress={handleLogout}>
+        <View style={styles.infoItemContainer}>
           <CustomText
-            style={{ textDecorationLine: 'underline' }}
-            color={GreyColors.grey500}
-            variant='body3'
+            variant='body1'
+            fontWeight='semibold'
+            style={styles.infoTitle}
           >
-            로그아웃
+            기타
           </CustomText>
-        </Pressable>
+          <Pressable
+            onPress={() => {
+              /** TODO : 로그아웃 동작 구현 */
+            }}
+            style={styles.infoItem}
+          >
+            <CustomText color={GreyColors.grey700}>로그아웃</CustomText>
+            <Icon name='expandRight' color={GreyColors.grey400} />
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              /** TODO : 탈퇴 동작 구현 */
+            }}
+            style={styles.infoItem}
+          >
+            <CustomText color={GreyColors.grey700}>탈퇴하기</CustomText>
+            <Icon name='expandRight' color={GreyColors.grey400} />
+          </Pressable>
+        </View>
+        <View style={styles.bottomContainer}>
+          <CustomText color={GreyColors.grey400} variant='body3'>
+            {`앱 버전   6.19.2`}
+          </CustomText>
+        </View>
       </ScrollView>
     </SafeScreenLayout>
   );
@@ -230,9 +253,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  logoutButton: {
-    marginTop: 'auto',
+  bottomContainer: {
     alignSelf: 'center',
+    marginTop: 20,
     marginBottom: 26,
   },
 });

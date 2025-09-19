@@ -10,7 +10,7 @@ import { toast } from '@/store/toast.store';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 const PROFILE_IMAGE_WIDTH = 120;
 
@@ -39,7 +39,7 @@ export default function MyPage() {
         colors: [PrimaryColors.blue300, '#ffffff', '#ffffff'],
       }}
     >
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.profile}>
           <LinearGradient
             colors={['#7BB8FF', '#1085FF', '#00E4FF']}
@@ -132,6 +132,24 @@ export default function MyPage() {
             <CustomText color={GreyColors.grey700}>이용 약관</CustomText>
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
+          <Pressable
+            onPress={() => router.push('/privacy-policy')}
+            style={styles.infoItem}
+          >
+            <CustomText color={GreyColors.grey700}>
+              개인정보 처리방침
+            </CustomText>
+            <Icon name='expandRight' color={GreyColors.grey400} />
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              /** TODO : 문의하기 페이지 구현 */
+            }}
+            style={styles.infoItem}
+          >
+            <CustomText color={GreyColors.grey700}>문의하기</CustomText>
+            <Icon name='expandRight' color={GreyColors.grey400} />
+          </Pressable>
         </View>
         <Pressable style={styles.logoutButton} onPress={handleLogout}>
           <CustomText
@@ -142,7 +160,7 @@ export default function MyPage() {
             로그아웃
           </CustomText>
         </Pressable>
-      </View>
+      </ScrollView>
     </SafeScreenLayout>
   );
 }
@@ -154,7 +172,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Bold',
     color: '#000',
   },
-  container: { marginTop: 32, flex: 1 },
+  container: { paddingTop: 32, flex: 1 },
   profile: {
     alignItems: 'center',
     flexDirection: 'column',
@@ -198,7 +216,7 @@ const styles = StyleSheet.create({
   roommateName: { paddingRight: 8 },
 
   infoItemContainer: {
-    paddingTop: 40,
+    paddingTop: 32,
   },
   infoTitle: { paddingBottom: 8 },
   infoItem: {
@@ -207,7 +225,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingLeft: 16,
     paddingRight: 24,
-    marginBottom: 8,
+    marginBottom: 16,
 
     flexDirection: 'row',
     justifyContent: 'space-between',

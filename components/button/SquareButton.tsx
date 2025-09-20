@@ -1,5 +1,5 @@
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { Dimensions, Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { CustomText } from '../CustomText';
 import { Icon } from '../icons';
 
@@ -26,7 +26,7 @@ const SquareButton = ({
         style,
         styles.button,
         active ? styles.active : styles.unActive,
-        fullWidth && { flex: 1 },
+        fullWidth && { width: (Dimensions.get('window').width - 40 - 17) / 2 },
       ]}
       onPress={onPress}
       accessibilityRole='button'

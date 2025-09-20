@@ -5,6 +5,7 @@ import useMyKeywordQuery from '@/hooks/api/useMyKeywordQuery';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
+import { Tooltip } from '../ui/Tooltip';
 
 export default function KeywordSection() {
   const { data } = useMyKeywordQuery();
@@ -25,7 +26,15 @@ export default function KeywordSection() {
         >
           나를 대표하는 키워드
         </CustomText>
-        <Icon name='info' size={16} color={GreyColors.grey400} />
+        <Tooltip
+          content={
+            <CustomText variant='body3' color={GreyColors.grey600}>
+              {`최근 30일 동안 많이 받은 카테고리를 바탕으로\n나를 대표하는 키워드를 선정해요`}
+            </CustomText>
+          }
+        >
+          <Icon name={'info'} size={16} color={GreyColors.grey400} />
+        </Tooltip>
       </View>
       <CustomText
         variant='body2'

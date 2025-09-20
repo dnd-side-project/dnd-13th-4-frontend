@@ -35,37 +35,37 @@ export const MyStatusSection = ({
     <View style={styles.myStatus}>
       {isMatched && hasStatus ? (
         <View style={styles.myStatusText}>
+          <CustomText
+            variant='body2'
+            fontWeight='medium'
+            style={{ marginRight: 4 }}
+          >
+            나의 상태는
+          </CustomText>
+          <CustomText
+            variant='body2'
+            fontWeight='bold'
+            style={{ marginRight: 8 }}
+          >
+            {userStatus.emoji} {userStatus.text}
+          </CustomText>
+          <View
+            style={{
+              paddingVertical: 1,
+              paddingHorizontal: 6,
+              borderRadius: 20,
+              backgroundColor: '#E5F1FF',
+            }}
+          >
             <CustomText
-              variant='body2'
-              fontWeight='medium'
-              style={{ marginRight: 4 }}
-            >
-              나의 상태는
-            </CustomText>
-            <CustomText
-              variant='body2'
+              variant='body3'
               fontWeight='bold'
-              style={{ marginRight: 8 }}
+              color={PrimaryColors.blue100}
             >
-              {userStatus.emoji} {userStatus.text}
+              {formatEndTime(userStatus.endTime)}
             </CustomText>
-            <View
-              style={{
-                paddingVertical: 1,
-                paddingHorizontal: 6,
-                borderRadius: 20,
-                backgroundColor: '#E5F1FF',
-              }}
-            >
-              <CustomText
-                variant='body3'
-                fontWeight='bold'
-                color={PrimaryColors.blue100}
-              >
-                {formatEndTime(userStatus.endTime)}
-              </CustomText>
-            </View>
           </View>
+        </View>
       ) : (
         <CustomText variant='body2' color={GreyColors.grey600}>
           아직 나의 상태를 설정하지 않았어요

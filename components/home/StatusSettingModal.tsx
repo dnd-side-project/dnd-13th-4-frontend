@@ -51,25 +51,23 @@ export const StatusSettingModal = forwardRef<
     // API 데이터
     const { data: statusList, isLoading } = useStatusListQuery();
 
-
     // 선택된 상태 관리
     const [selectedStatus, setSelectedStatus] =
       useState<UserStatus>(currentStatus);
-    const [selectedStatusId, setSelectedStatusId] = useState<number | null>(null);
-    const [selectedTimeOption, setSelectedTimeOption] =
-      useState<string | null>(null);
+    const [selectedStatusId, setSelectedStatusId] = useState<number | null>(
+      null,
+    );
+    const [selectedTimeOption, setSelectedTimeOption] = useState<string | null>(
+      null,
+    );
 
     // statusList가 로드되면 현재 상태에 맞는 selectedStatusId 업데이트
     useEffect(() => {
       if (!statusList || isLoading) {
         return; // 로딩 중이면 아직 설정하지 않음
       }
-      
-      if (
-        currentStatus &&
-        currentStatus.emoji &&
-        currentStatus.text
-      ) {
+
+      if (currentStatus && currentStatus.emoji && currentStatus.text) {
         const currentStatusItem = statusList.find(
           (item) =>
             item.emoji === currentStatus.emoji &&
@@ -79,7 +77,7 @@ export const StatusSettingModal = forwardRef<
       } else {
         setSelectedStatusId(null);
       }
-      
+
       // 시간 옵션은 초기에 선택되지 않은 상태로 유지
     }, [statusList, currentStatus, isLoading]);
 
@@ -357,7 +355,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   statusRow: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginBottom: 12,
     gap: 17,
   },

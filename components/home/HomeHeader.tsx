@@ -1,4 +1,5 @@
 import { LOGO } from '@/constants';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import { Image, StyleSheet, View } from 'react-native';
 
 export const HomeHeader = () => (
@@ -9,7 +10,7 @@ export const HomeHeader = () => (
 
 const styles = StyleSheet.create({
   header: {
-    height: 56,
+    height: LAYOUT_HEADER_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,

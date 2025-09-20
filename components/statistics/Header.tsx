@@ -1,4 +1,5 @@
 import { GreyColors } from '@/constants/Colors';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import { StyleSheet, View } from 'react-native';
 import { CustomText } from '../CustomText';
 
@@ -14,7 +15,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   headerWrapper: {
-    height: 56,
+    height: LAYOUT_HEADER_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
   },

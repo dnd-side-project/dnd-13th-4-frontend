@@ -1,22 +1,35 @@
 {
   "expo": {
-    "name": "dnd-13th-4-frontend",
+    "name": "Wini",
     "slug": "dnd-13th-4-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "dnd13th4frontend",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/app-icon.png",
+    "scheme": "com.kirikiri.wini",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "useFrameworks": "static",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kirikiri.wini",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": ["remote-notification"]
+      },
+      "appleTeamId": "5A7A76PWY7"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#5BA4FA"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.kirikiri.wini",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -25,18 +38,53 @@
     },
     "plugins": [
       "expo-router",
+      "@react-native-firebase/app",
+      "@react-native-firebase/messaging",
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "imageWidth": 134,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#5BA4FA"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "fonts": [
+      {
+        "asset": "./assets/fonts/Pretendard-Regular.ttf",
+        "family": "Pretendard"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-Medium.ttf",
+        "family": "Pretendard"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-SemiBold.ttf",
+        "family": "Pretendard"
+      },
+      {
+        "asset": "./assets/fonts/Pretendard-Bold.ttf",
+        "family": "Pretendard"
+      }
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d5d172fd-934f-4e97-9dc8-45f56d83980a"
+      }
+    },
+    "owner": "wini_kirikiri"
   }
 }

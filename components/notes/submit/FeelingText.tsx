@@ -9,8 +9,15 @@ type Props = {
 const FeelingText = ({ text }: Props) => {
   return (
     <View style={styles.feelingContainer}>
-      <CustomText style={styles.feelingText}>
-        <CustomText style={styles.feeling}>{text}</CustomText> 마음을 전해요
+      <CustomText variant='body3'>
+        <CustomText
+          variant='body3'
+          fontWeight='bold'
+          color={PrimaryColors.blueText}
+        >
+          {text}
+        </CustomText>{' '}
+        마음을 전해요
       </CustomText>
     </View>
   );
@@ -26,11 +33,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 4,
-  },
-  feelingText: { fontSize: 17 },
-  feeling: {
-    fontSize: 17,
-    color: PrimaryColors.blueText,
-    fontFamily: 'Pretendard-Bold',
   },
 });

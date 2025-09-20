@@ -31,7 +31,7 @@ export default function MyPage() {
     <SafeScreenLayout
       header={
         <View style={styles.header}>
-          <CustomText>마이페이지</CustomText>
+          <CustomText color={GreyColors.grey700}>마이페이지</CustomText>
         </View>
       }
       background={{
@@ -220,7 +220,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
   },
-  roommateDataTitle: {
+  roommateData
+    : {
     paddingBottom: 16,
   },
 

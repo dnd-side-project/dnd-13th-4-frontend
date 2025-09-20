@@ -16,7 +16,6 @@ interface TooltipProps {
   children: React.ReactNode;
   content: React.ReactNode;
   backgroundColor?: string;
-  textColor?: string;
   position?: 'top' | 'bottom';
 }
 

@@ -17,10 +17,13 @@ const useMateStatusQuery = () => {
   const query = useQuery({
     queryKey: [MATE_STATUS_PATH],
     queryFn: getMateStatus,
+    refetchInterval: 3000,
+    refetchIntervalInBackground: true,
     enabled: isMatched,
     initialData: {
       emoji: null,
       text: null,
+      request: '',
       statusStartedAt: null,
       reservedTimeInfo: null,
     },

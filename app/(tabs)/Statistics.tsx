@@ -4,17 +4,12 @@ import GrowthSection from '@/components/statistics/GrowthSection';
 import Header from '@/components/statistics/Header';
 import KeywordSection from '@/components/statistics/KeywordSection';
 import { S3_IMAGE_URL } from '@/constants';
+import { LAYOUT_HEADER_HEIGHT } from '@/constants/layout';
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function Statistics() {
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const handleRefresh = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    setRefreshKey((prev) => prev + 1);
-  };
 
   return (
     <SafeScreenLayout>
@@ -31,7 +26,7 @@ export default function Statistics() {
         bounces={false}
       >
         <Header />
-        <BottleSection refreshKey={refreshKey} onRefresh={handleRefresh} />
+        <BottleSection />
         <View style={styles.contentArea}>
           <GrowthSection />
           <KeywordSection />
@@ -47,7 +42,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   scrollContainer: {
-    paddingTop: 44,
+    paddingTop: LAYOUT_HEADER_HEIGHT,
     flex: 1,
     marginHorizontal: -20,
     paddingHorizontal: 20,

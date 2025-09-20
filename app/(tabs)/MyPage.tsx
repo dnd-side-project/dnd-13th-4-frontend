@@ -28,7 +28,7 @@ export default function MyPage() {
     <SafeScreenLayout
       header={
         <View style={styles.header}>
-          <CustomText>마이페이지</CustomText>
+          <CustomText color={GreyColors.grey700}>마이페이지</CustomText>
         </View>
       }
       background={{
@@ -113,11 +113,6 @@ export default function MyPage() {
 
 const styles = StyleSheet.create({
   header: { alignSelf: 'center', paddingVertical: 16 },
-  title: {
-    fontSize: 24,
-    fontFamily: 'Pretendard-Bold',
-    color: '#000',
-  },
   container: { marginTop: 32, flex: 1 },
   profile: {
     alignItems: 'center',

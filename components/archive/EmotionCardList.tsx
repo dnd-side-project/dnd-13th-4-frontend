@@ -2,11 +2,21 @@ import { GreyColors } from '@/constants/Colors';
 import { formatDaysAgo } from '@/lib/time';
 import { useRouter } from 'expo-router';
 import { Ref } from 'react';
-import { FlatList, ImageBackground, Pressable, StyleSheet } from 'react-native';
+import {
+  FlatList,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import { CustomText } from '../CustomText';
 import GridList from '../ui/gridList';
 import EmptyCardList from './EmptyCardList';
 import { SortOption, useSavedNotesQuery } from './hooks/useSavedNotesQuery';
+
+const NUM_COLS = 2;
+const H_PADDING = 20;
+const GAP = 20;
 
 type Props = {
   ref?: Ref<FlatList>;
@@ -15,7 +25,12 @@ type Props = {
 
 const EmotionCardList = ({ ref, sort }: Props) => {
   const router = useRouter();
+  const { width } = useWindowDimensions();
   const { data, isLoading, isError } = useSavedNotesQuery({ sort });
+
+  const itemSize = Math.floor(
+    (width - H_PADDING * 2 - GAP * (NUM_COLS - 1)) / NUM_COLS,
+  );
 
   if (isLoading) {
     return null;
@@ -34,7 +49,7 @@ const EmotionCardList = ({ ref, sort }: Props) => {
       contentContainerStyle={styles.gridContent}
       renderItem={({ item }) => (
         <Pressable
-          style={styles.cardContainer}
+          style={[styles.cardContainer, { width: itemSize, height: itemSize }]}
           onPress={() => {
             router.push({
               pathname: '/archive/[noteId]',
@@ -71,8 +86,6 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   cardContainer: {
-    flex: 1,
-    aspectRatio: 1,
     borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -87,7 +100,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderRadius: 16,
-    overflow: 'hidden', // 여기선 이미지/내용만 잘라줌
+    overflow: 'hidden',
     justifyContent: 'flex-end',
   },
   imageRadius: { borderRadius: 12 },

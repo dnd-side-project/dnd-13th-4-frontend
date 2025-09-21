@@ -16,7 +16,7 @@ import { SortOption, useSavedNotesQuery } from './hooks/useSavedNotesQuery';
 
 const NUM_COLS = 2;
 const H_PADDING = 20;
-const GAP = 20;
+const GAP = 16;
 
 type Props = {
   ref?: Ref<FlatList>;

@@ -36,7 +36,9 @@ const Feeling = () => {
 
   useEffect(() => {
     reset();
+  }, []);
 
+  useEffect(() => {
     if (!isMatched) {
       const timerId = setTimeout(
         () =>
@@ -50,7 +52,7 @@ const Feeling = () => {
 
       return () => clearTimeout(timerId);
     }
-  }, []);
+  }, [isMatched]);
 
   if (isLoading) return null;
   if (isError || !data) return null;

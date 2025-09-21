@@ -4,13 +4,10 @@ import { useMutation } from '@tanstack/react-query';
 
 export const useDeleteAccountMutation = () => {
   const mutation = useMutation({
-    mutationFn: async () => {
-      const data = await api.delete({
+    mutationFn: () =>
+      api.delete({
         path: ME_PATH,
-      });
-
-      return data;
-    },
+      }),
   });
 
   return mutation;

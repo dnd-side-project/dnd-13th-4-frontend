@@ -167,7 +167,7 @@ export default function MyPage() {
             onPress={async () => {
               await tokenStorage.removeAccessToken();
               await tokenStorage.removeRefreshToken();
-              router.replace('/');
+              router.replace('/onboarding');
             }}
             style={styles.infoItem}
           >
@@ -182,7 +182,7 @@ export default function MyPage() {
                 confirmText: '확인',
                 onConfirm: async () => {
                   await mutateAsyncDeleteAccount();
-                  router.replace('/');
+                  router.replace('/onboarding');
                 },
                 cancelText: '취소',
               });

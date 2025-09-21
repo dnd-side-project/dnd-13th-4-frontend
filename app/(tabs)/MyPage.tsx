@@ -6,10 +6,12 @@ import { useDeleteAccountMutation } from '@/components/mypage/hooks/useDeleteAcc
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
+import { getMailDeviceInfo } from '@/components/mypage/modules/getMailDeviceInfo';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
+import { openMail } from '@/utils/openMail';
 import * as Application from 'expo-application';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -146,8 +148,14 @@ export default function MyPage() {
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
           <Pressable
-            onPress={() => {
-              /** TODO : 문의하기 페이지 구현 */
+            onPress={async () => {
+              if (!data) return;
+              console.log(2323);
+              await openMail({
+                recipients: ['dnd13gi4jo@gmail.com'],
+                subject: '위니 문의하기',
+                body: getMailDeviceInfo({ userId: data.id }),
+              });
             }}
             style={styles.infoItem}
           >

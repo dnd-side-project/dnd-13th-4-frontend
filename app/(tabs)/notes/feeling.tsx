@@ -20,7 +20,7 @@ const { width: screenWidth } = Dimensions.get('window');
 const Feeling = () => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { setEmotion } = useNoteCreateStore();
+  const { setEmotion, reset } = useNoteCreateStore();
   const { data, isLoading, isError } = useEmotionTemplatesQuery();
   const { data: { isMatched } = {} } = useMeQuery();
 
@@ -35,6 +35,8 @@ const Feeling = () => {
   };
 
   useEffect(() => {
+    reset();
+
     if (!isMatched) {
       const timerId = setTimeout(
         () =>

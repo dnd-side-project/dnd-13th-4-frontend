@@ -20,7 +20,7 @@ App Version: ${Constants.expoConfig?.version ?? 'N/A'} (${
     Constants.nativeBuildVersion ?? 'N/A'
   })
 User Id: ${userId}
-  `.trim();
+  `;
 
   return deviceInfo;
 };

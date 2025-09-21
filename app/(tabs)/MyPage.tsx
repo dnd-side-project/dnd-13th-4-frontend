@@ -151,11 +151,15 @@ export default function MyPage() {
             onPress={async () => {
               if (!data) return;
 
-              await openMail({
-                recipients: ['dnd13gi4jo@gmail.com'],
-                subject: '위니 문의하기',
-                body: getMailDeviceInfo({ userId: data.id }),
-              });
+              try {
+                await openMail({
+                  recipients: ['dnd13gi4jo@gmail.com'],
+                  subject: '위니 문의하기',
+                  body: getMailDeviceInfo({ userId: data.id }),
+                });
+              } catch (e) {
+                toast.show('메일을 열 수 없습니다.');
+              }
             }}
             style={styles.infoItem}
           >

@@ -150,7 +150,7 @@ export default function MyPage() {
           <Pressable
             onPress={async () => {
               if (!data) return;
-              console.log(2323);
+
               await openMail({
                 recipients: ['dnd13gi4jo@gmail.com'],
                 subject: '위니 문의하기',

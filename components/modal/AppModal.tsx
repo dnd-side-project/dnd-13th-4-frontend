@@ -115,8 +115,19 @@ export default function AppModal({
           ) : null}
 
           <View style={styles.footer}>
-            {cancelText && <CTAButton onPress={onCancel} text={cancelText} />}
-            <CTAButton onPress={onConfirm} text={confirmText} active />
+            {cancelText && (
+              <CTAButton
+                style={{ flex: 1 }}
+                onPress={onCancel}
+                text={cancelText}
+              />
+            )}
+            <CTAButton
+              style={{ flex: 1 }}
+              onPress={onConfirm}
+              text={confirmText}
+              active
+            />
           </View>
         </Animated.View>
       </View>
@@ -160,6 +171,6 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: 16,
     gap: 10,
-    flexDirection: 'column', // 버튼 세로 스택 (스크린샷 느낌)
+    flexDirection: 'row',
   },
 });

@@ -1,10 +1,13 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { modal } from '@/components/modal/modal';
+import { useDeleteAccountMutation } from '@/components/mypage/hooks/useDeleteAccountMutation';
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { getDaysAgo } from '@/lib/time';
 import { toast } from '@/store/toast.store';
 import * as Application from 'expo-application';
@@ -17,6 +20,7 @@ const PROFILE_IMAGE_WIDTH = 120;
 
 export default function MyPage() {
   const router = useRouter();
+  const { mutateAsync: mutateAsyncDeleteAccount } = useDeleteAccountMutation();
 
   const handleCopy = async (copyText: string): Promise<void> => {
     await Clipboard.setStringAsync(copyText);
@@ -160,8 +164,10 @@ export default function MyPage() {
             기타
           </CustomText>
           <Pressable
-            onPress={() => {
-              /** TODO : 로그아웃 동작 구현 */
+            onPress={async () => {
+              await tokenStorage.removeAccessToken();
+              await tokenStorage.removeRefreshToken();
+              router.replace('/onboarding');
             }}
             style={styles.infoItem}
           >
@@ -169,8 +175,17 @@ export default function MyPage() {
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
           <Pressable
-            onPress={() => {
-              /** TODO : 탈퇴 동작 구현 */
+            onPress={async () => {
+              modal.show({
+                title: '정말 탈퇴하시겠습니까?',
+                description: `지금 탈퇴하면 룸메이트와 주고받은 마음쪽지를 다시 볼 수 없어요.\n그래도 탈퇴하시겠어요?`,
+                confirmText: '확인',
+                onConfirm: async () => {
+                  await mutateAsyncDeleteAccount();
+                  router.replace('/onboarding');
+                },
+                cancelText: '취소',
+              });
             }}
             style={styles.infoItem}
           >
@@ -220,8 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
   },
-  roommateData
-    : {
+  roommateDataTitle: {
     paddingBottom: 16,
   },
 

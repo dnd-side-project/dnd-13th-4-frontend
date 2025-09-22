@@ -3,7 +3,7 @@ import { MATE_STATUS_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { MemberStatusResponse } from '@/types/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import useSSE, { type MateStatusChangedEvent } from './useSSE';
+import useSSE, { isMateStatusChangedEvent } from './useSSE';
 
 const getMateStatus = async () => {
   const { data } = await api.get<MemberStatusResponse>({
@@ -35,12 +35,10 @@ const useMateStatusQuery = () => {
     enabled: isMatched,
     eventTypes: ['MATE_STATUS_CHANGED'],
     onEvent: (event) => {
-      if (event.type === 'MATE_STATUS_CHANGED') {
-        const statusEvent = event as MateStatusChangedEvent;
-
+      if (isMateStatusChangedEvent(event)) {
         // 룸메 상태 업데이트
         queryClient.setQueryData<MemberStatusResponse>([MATE_STATUS_PATH], () => {
-          return statusEvent.data;
+          return event.data;
         });
       }
     },

@@ -5,29 +5,42 @@ import { useEffect, useRef, useState } from 'react';
 
 export type SSEEventType = 'NOTE_RECEIVED' | 'MATE_STATUS_CHANGED' | 'MATE_ONLINE_STATUS';
 
-export interface SSEEvent {
+export interface SSEEvent<T = any> {
   type: SSEEventType;
-  data: any;
+  data: T;
   timestamp: string;
 }
 
-export interface NoteReceivedEvent extends SSEEvent {
+export interface NoteReceivedEvent extends SSEEvent<SimpleNoteResponse> {
   type: 'NOTE_RECEIVED';
-  data: SimpleNoteResponse;
 }
 
-export interface MateStatusChangedEvent extends SSEEvent {
+export interface MateStatusChangedEvent extends SSEEvent<MemberStatusResponse> {
   type: 'MATE_STATUS_CHANGED';
-  data: MemberStatusResponse;
 }
 
-export interface MateOnlineStatusEvent extends SSEEvent {
+export interface MateOnlineStatusEvent extends SSEEvent<{
+  isOnline: boolean;
+  lastSeen: string;
+}> {
   type: 'MATE_ONLINE_STATUS';
-  data: {
-    isOnline: boolean;
-    lastSeen: string;
-  };
 }
+
+// Type union for all possible SSE events
+export type AnySSEEvent = NoteReceivedEvent | MateStatusChangedEvent | MateOnlineStatusEvent;
+
+// Type guard functions
+export const isNoteReceivedEvent = (event: SSEEvent): event is NoteReceivedEvent => {
+  return event.type === 'NOTE_RECEIVED';
+};
+
+export const isMateStatusChangedEvent = (event: SSEEvent): event is MateStatusChangedEvent => {
+  return event.type === 'MATE_STATUS_CHANGED';
+};
+
+export const isMateOnlineStatusEvent = (event: SSEEvent): event is MateOnlineStatusEvent => {
+  return event.type === 'MATE_ONLINE_STATUS';
+};
 
 interface UseSSEOptions {
   enabled?: boolean;
@@ -51,7 +64,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
   const [isConnected, setIsConnected] = useState(false);
   const [lastEventId, setLastEventId] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
 
   const MAX_RECONNECT_ATTEMPTS = 5;
@@ -80,12 +93,15 @@ const useSSE = (options: UseSSEOptions = {}) => {
         url += `?${params.toString()}`;
       }
 
-      const eventSource = new EventSource(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          ...(lastEventId && { 'Last-Event-ID': lastEventId }),
-        },
-      });
+      // Note: EventSource doesn't support custom headers directly
+      // We'll need to pass the token as a query parameter instead
+      const urlWithAuth = new URL(url);
+      urlWithAuth.searchParams.set('token', token);
+      if (lastEventId) {
+        urlWithAuth.searchParams.set('lastEventId', lastEventId);
+      }
+
+      const eventSource = new EventSource(urlWithAuth.toString());
 
       eventSourceRef.current = eventSource;
 
@@ -98,7 +114,12 @@ const useSSE = (options: UseSSEOptions = {}) => {
 
       eventSource.onmessage = (event) => {
         try {
-          const sseEvent: SSEEvent = JSON.parse(event.data);
+          const parsedData = JSON.parse(event.data);
+          const sseEvent: SSEEvent = {
+            type: parsedData.type,
+            data: parsedData.data,
+            timestamp: parsedData.timestamp || new Date().toISOString(),
+          };
           setLastEventId(event.lastEventId || null);
           onEvent?.(sseEvent);
         } catch (error) {
@@ -126,12 +147,13 @@ const useSSE = (options: UseSSEOptions = {}) => {
         eventTypes.forEach(eventType => {
           eventSource.addEventListener(eventType, (event) => {
             try {
+              const parsedData = JSON.parse((event as MessageEvent).data);
               const sseEvent: SSEEvent = {
                 type: eventType,
-                data: JSON.parse(event.data),
+                data: parsedData,
                 timestamp: new Date().toISOString(),
               };
-              setLastEventId(event.lastEventId || null);
+              setLastEventId((event as MessageEvent).lastEventId || null);
               onEvent?.(sseEvent);
             } catch (error) {
               console.error(`Error parsing ${eventType} event:`, error);

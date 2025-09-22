@@ -3,7 +3,7 @@ import { LATEST_NOTES_PATH } from '@/constants/api';
 import { api } from '@/lib/api';
 import type { SimpleNoteResponse } from '@/types/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import useSSE, { type NoteReceivedEvent } from './useSSE';
+import useSSE, { isNoteReceivedEvent } from './useSSE';
 
 const getLatestNotes = async () => {
   const { data } = await api.get<SimpleNoteResponse[]>({
@@ -30,19 +30,17 @@ const useLatestNotesQuery = () => {
     enabled: isMatched,
     eventTypes: ['NOTE_RECEIVED'],
     onEvent: (event) => {
-      if (event.type === 'NOTE_RECEIVED') {
-        const noteEvent = event as NoteReceivedEvent;
-
+      if (isNoteReceivedEvent(event)) {
         // 기존 데이터에 새 쪽지 추가
         queryClient.setQueryData<SimpleNoteResponse[]>([LATEST_NOTES_PATH], (oldData) => {
-          if (!oldData) return [noteEvent.data];
+          if (!oldData) return [event.data];
 
           // 중복 확인 후 추가
-          const exists = oldData.some(note => note.id === noteEvent.data.id);
+          const exists = oldData.some(note => note.id === event.data.id);
           if (exists) return oldData;
 
           // 최신순으로 정렬하여 추가
-          return [noteEvent.data, ...oldData];
+          return [event.data, ...oldData];
         });
       }
     },

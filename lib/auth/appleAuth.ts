@@ -47,14 +47,19 @@ export const appleAuth = {
         user: credential.user,
       };
     } catch (error: any) {
-      if (error.code === 'ERR_CANCELED') {
+      if (
+        error instanceof AppleAuthentication.AppleAuthenticationError &&
+        error.code === 'ERR_CANCELED'
+      ) {
         return null;
       }
       throw error;
     }
   },
 
-  async authenticateWithServer(appleCredential: AppleAuthResponse): Promise<LoginResponse> {
+  async authenticateWithServer(
+    appleCredential: AppleAuthResponse,
+  ): Promise<LoginResponse> {
     try {
       const response = await api.post<LoginResponse>({
         path: '/auth/login/apple',

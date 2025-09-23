@@ -103,6 +103,7 @@ const OnboardingScreen = () => {
       }
     } catch (error) {
       console.error('Apple Sign In failed:', error);
+      // TODO: 사용자에게 로그인 실패를 알리는 UI 피드백(예: 토스트 메시지)을 추가해주세요.
     } finally {
       setIsLoading(false);
     }

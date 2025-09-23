@@ -1,8 +1,13 @@
-import { APPLE_LOGIN_PATH, KAKAO_LOGIN_PATH, LOGOUT_PATH, TOKEN_REISSUE_PATH } from '@/constants/api';
-import { TokenResponse, IdTokenRequest, AuthError } from '@/types/auth';
+import {
+  APPLE_LOGIN_PATH,
+  KAKAO_LOGIN_PATH,
+  LOGOUT_PATH,
+  TOKEN_REISSUE_PATH,
+} from '@/constants/api';
+import { IdTokenRequest, TokenResponse } from '@/types/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import { Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || '';
 
@@ -23,7 +28,7 @@ export const kakaoLogin = async (): Promise<TokenResponse> => {
       // 모바일에서는 WebBrowser 사용
       const result = await WebBrowser.openAuthSessionAsync(
         `${API_BASE_URL}${KAKAO_LOGIN_PATH}`,
-        'com.kirikiri.wini://auth/callback'
+        'com.kirikiri.wini://auth/callback',
       );
 
       if (result.type === 'success' && result.url) {
@@ -90,7 +95,7 @@ export const reissueToken = async (): Promise<TokenResponse> => {
     const response = await fetch(`${API_BASE_URL}${TOKEN_REISSUE_PATH}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${refreshToken}`,
         'Content-Type': 'application/json',
       },
     });
@@ -120,7 +125,7 @@ export const logout = async (): Promise<void> => {
       await fetch(`${API_BASE_URL}${LOGOUT_PATH}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

@@ -66,3 +66,6 @@ export const MATE_PATH = '/mate';
 
 /** GET 방 정보 조회 */
 export const ROOMS_MY_PATH = '/rooms/my';
+
+/** GET SSE 연결 요청 */
+export const SSE_SUBSCRIBE_PATH = '/sse/subscribe';

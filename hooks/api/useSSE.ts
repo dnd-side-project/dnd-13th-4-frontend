@@ -1,9 +1,12 @@
 import { SSE_SUBSCRIBE_PATH } from '@/constants/api';
-import { getToken } from '@/lib/secureStore';
-import type { SimpleNoteResponse, MemberStatusResponse } from '@/types/api';
-import { useEffect, useRef, useState } from 'react';
+import { tokenStorage } from '@/lib/auth/tokenStorage';
+import type { MemberStatusResponse, SimpleNoteResponse } from '@/types/api';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type SSEEventType = 'NOTE_RECEIVED' | 'MATE_STATUS_CHANGED' | 'MATE_ONLINE_STATUS';
+export type SSEEventType =
+  | 'NOTE_RECEIVED'
+  | 'MATE_STATUS_CHANGED'
+  | 'MATE_ONLINE_STATUS';
 
 export interface SSEEvent<T = any> {
   type: SSEEventType;
@@ -19,26 +22,36 @@ export interface MateStatusChangedEvent extends SSEEvent<MemberStatusResponse> {
   type: 'MATE_STATUS_CHANGED';
 }
 
-export interface MateOnlineStatusEvent extends SSEEvent<{
-  isOnline: boolean;
-  lastSeen: string;
-}> {
+export interface MateOnlineStatusEvent
+  extends SSEEvent<{
+    isOnline: boolean;
+    lastSeen: string;
+  }> {
   type: 'MATE_ONLINE_STATUS';
 }
 
 // Type union for all possible SSE events
-export type AnySSEEvent = NoteReceivedEvent | MateStatusChangedEvent | MateOnlineStatusEvent;
+export type AnySSEEvent =
+  | NoteReceivedEvent
+  | MateStatusChangedEvent
+  | MateOnlineStatusEvent;
 
 // Type guard functions
-export const isNoteReceivedEvent = (event: SSEEvent): event is NoteReceivedEvent => {
+export const isNoteReceivedEvent = (
+  event: SSEEvent,
+): event is NoteReceivedEvent => {
   return event.type === 'NOTE_RECEIVED';
 };
 
-export const isMateStatusChangedEvent = (event: SSEEvent): event is MateStatusChangedEvent => {
+export const isMateStatusChangedEvent = (
+  event: SSEEvent,
+): event is MateStatusChangedEvent => {
   return event.type === 'MATE_STATUS_CHANGED';
 };
 
-export const isMateOnlineStatusEvent = (event: SSEEvent): event is MateOnlineStatusEvent => {
+export const isMateOnlineStatusEvent = (
+  event: SSEEvent,
+): event is MateOnlineStatusEvent => {
   return event.type === 'MATE_ONLINE_STATUS';
 };
 
@@ -64,15 +77,17 @@ const useSSE = (options: UseSSEOptions = {}) => {
   const [isConnected, setIsConnected] = useState(false);
   const [lastEventId, setLastEventId] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
-  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
 
   const MAX_RECONNECT_ATTEMPTS = 5;
   const RECONNECT_DELAY = 1000;
 
-  const connect = async () => {
+  const connect = useCallback(async () => {
     try {
-      const token = await getToken();
+      const token = await tokenStorage.getAccessToken();
       if (!token) {
         console.warn('No token available for SSE connection');
         return;
@@ -83,25 +98,31 @@ const useSSE = (options: UseSSEOptions = {}) => {
         eventSourceRef.current.close();
       }
 
-      const baseUrl = process.env.EXPO_PUBLIC_API_URL || '';
-      let url = `${baseUrl}${SSE_SUBSCRIBE_PATH}`;
+      const baseUrl = process.env.EXPO_PUBLIC_API_URL;
+      if (!baseUrl) {
+        console.error(
+          'EXPO_PUBLIC_API_URL is not set. Cannot create SSE connection.',
+        );
+        return;
+      }
+
+      const url = new URL(`${baseUrl}${SSE_SUBSCRIBE_PATH}`);
 
       // Add event types as query parameters if specified
       if (eventTypes && eventTypes.length > 0) {
-        const params = new URLSearchParams();
-        eventTypes.forEach(type => params.append('eventTypes', type));
-        url += `?${params.toString()}`;
+        eventTypes.forEach((type) =>
+          url.searchParams.append('eventTypes', type),
+        );
       }
 
       // Note: EventSource doesn't support custom headers directly
       // We'll need to pass the token as a query parameter instead
-      const urlWithAuth = new URL(url);
-      urlWithAuth.searchParams.set('token', token);
+      url.searchParams.set('token', token);
       if (lastEventId) {
-        urlWithAuth.searchParams.set('lastEventId', lastEventId);
+        url.searchParams.set('lastEventId', lastEventId);
       }
 
-      const eventSource = new EventSource(urlWithAuth.toString());
+      const eventSource = new EventSource(url.toString());
 
       eventSourceRef.current = eventSource;
 
@@ -136,7 +157,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
         if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
           const delay = RECONNECT_DELAY * Math.pow(2, reconnectAttempts);
           reconnectTimeoutRef.current = setTimeout(() => {
-            setReconnectAttempts(prev => prev + 1);
+            setReconnectAttempts((prev) => prev + 1);
             connect();
           }, delay);
         }
@@ -144,7 +165,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
 
       // Add event listeners for specific event types
       if (eventTypes) {
-        eventTypes.forEach(eventType => {
+        eventTypes.forEach((eventType) => {
           eventSource.addEventListener(eventType, (event) => {
             try {
               const parsedData = JSON.parse((event as MessageEvent).data);
@@ -161,13 +182,12 @@ const useSSE = (options: UseSSEOptions = {}) => {
           });
         });
       }
-
     } catch (error) {
       console.error('Error creating SSE connection:', error);
     }
-  };
+  }, [eventTypes, lastEventId, onEvent, onOpen, onError, reconnectAttempts]);
 
-  const disconnect = () => {
+  const disconnect = useCallback(() => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
       eventSourceRef.current = null;
@@ -178,7 +198,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
     }
     setIsConnected(false);
     onClose?.();
-  };
+  }, [onClose]);
 
   useEffect(() => {
     if (enabled) {
@@ -190,7 +210,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
     return () => {
       disconnect();
     };
-  }, [enabled, eventTypes?.join(',')]);
+  }, [enabled, connect, disconnect]);
 
   return {
     isConnected,

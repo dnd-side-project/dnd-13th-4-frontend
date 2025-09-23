@@ -27,7 +27,6 @@ const useMateStatusQuery = () => {
       statusStartedAt: null,
       reservedTimeInfo: null,
     },
-    staleTime: Infinity, // SSE로 실시간 업데이트하므로 polling 비활성화
   });
 
   // SSE 연결 설정

@@ -133,20 +133,6 @@ const useSSE = (options: UseSSEOptions = {}) => {
         onOpen?.();
       };
 
-      eventSource.onmessage = (event) => {
-        try {
-          const parsedData = JSON.parse(event.data);
-          const sseEvent: SSEEvent = {
-            type: parsedData.type,
-            data: parsedData.data,
-            timestamp: parsedData.timestamp || new Date().toISOString(),
-          };
-          setLastEventId(event.lastEventId || null);
-          onEvent?.(sseEvent);
-        } catch (error) {
-          console.error('Error parsing SSE event:', error);
-        }
-      };
 
       eventSource.onerror = (error) => {
         console.error('SSE connection error:', error);
@@ -164,24 +150,24 @@ const useSSE = (options: UseSSEOptions = {}) => {
       };
 
       // Add event listeners for specific event types
-      if (eventTypes) {
-        eventTypes.forEach((eventType) => {
-          eventSource.addEventListener(eventType, (event) => {
-            try {
-              const parsedData = JSON.parse((event as MessageEvent).data);
-              const sseEvent: SSEEvent = {
-                type: eventType,
-                data: parsedData,
-                timestamp: new Date().toISOString(),
-              };
-              setLastEventId((event as MessageEvent).lastEventId || null);
-              onEvent?.(sseEvent);
-            } catch (error) {
-              console.error(`Error parsing ${eventType} event:`, error);
-            }
-          });
+      const eventTypesToListen = eventTypes || ['NOTE_RECEIVED', 'MATE_STATUS_CHANGED', 'MATE_ONLINE_STATUS'];
+
+      eventTypesToListen.forEach((eventType) => {
+        eventSource.addEventListener(eventType, (event) => {
+          try {
+            const parsedData = JSON.parse((event as MessageEvent).data);
+            const sseEvent: SSEEvent = {
+              type: eventType,
+              data: parsedData,
+              timestamp: new Date().toISOString(),
+            };
+            setLastEventId((event as MessageEvent).lastEventId || null);
+            onEvent?.(sseEvent);
+          } catch (error) {
+            console.error(`Error parsing ${eventType} event:`, error);
+          }
         });
-      }
+      });
     } catch (error) {
       console.error('Error creating SSE connection:', error);
     }

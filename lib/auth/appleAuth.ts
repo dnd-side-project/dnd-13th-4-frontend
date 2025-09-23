@@ -47,10 +47,7 @@ export const appleAuth = {
         user: credential.user,
       };
     } catch (error: any) {
-      if (
-        error instanceof AppleAuthentication.AppleAuthenticationError &&
-        error.code === 'ERR_CANCELED'
-      ) {
+      if (error?.code === 'ERR_CANCELED') {
         return null;
       }
       throw error;

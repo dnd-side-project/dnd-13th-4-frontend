@@ -220,11 +220,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
   },
-  roommateData
-    : {
-    paddingBottom: 16,
-  },
-
   roommateImage: {
     width: 36,
     height: 36,
@@ -236,7 +231,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  roommateData: { flexDirection: 'row', alignItems: 'center' },
+  roommateData: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
   roommateName: { paddingRight: 8 },
 
   infoItemContainer: {

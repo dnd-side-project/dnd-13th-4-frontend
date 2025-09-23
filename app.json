@@ -10,12 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "entitlements": {
+        "com.apple.developer.applesignin": ["Default"],
         "aps-environment": "production"
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "useFrameworks": "static",
       "supportsTablet": true,
       "bundleIdentifier": "com.kirikiri.wini",
+      "associatedDomains": ["applinks:app.wini.my"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIBackgroundModes": [
@@ -31,7 +33,20 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.kirikiri.wini",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.wini.my",
+              "pathPrefix": "/app"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +57,7 @@
       "expo-router",
       "@react-native-firebase/app",
       "@react-native-firebase/messaging",
+      "expo-apple-authentication",
       [
         "expo-splash-screen",
         {

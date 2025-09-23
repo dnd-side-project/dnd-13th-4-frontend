@@ -2,30 +2,33 @@ import ProgressBar from '@/components/bar/ProgressBar';
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import StarPhysics from '@/components/statistics/StarPhysics';
+import { Tooltip } from '@/components/ui/Tooltip';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors } from '@/constants/Colors';
 import useWeeklyLogSummaryQuery from '@/hooks/api/useWeeklyLogSummaryQuery';
 import { calculateDaysSince } from '@/utils/time';
-import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useIsMatched } from '../mypage/hooks/useMeQuery';
 
 const MAX_ONE_WEEK_NOTES_COUNT = 42;
 
-interface BottleSectionProps {
-  refreshKey: number;
-  onRefresh: () => void;
-}
+import * as Haptics from 'expo-haptics';
 
-export default function BottleSection({
-  refreshKey,
-  onRefresh,
-}: BottleSectionProps) {
+export default function BottleSection() {
+  const [refreshKey, setRefreshKey] = React.useState(0);
   const { data } = useWeeklyLogSummaryQuery();
   const totalNotesThisWeek =
     data.notesReceivedThisWeek + data.notesSentThisWeek;
 
   const isMatched = useIsMatched();
+
+  useFocusEffect(
+    useCallback(() => {
+      setRefreshKey(prev => prev + 1);
+    }, [])
+  );
 
   return (
     <>
@@ -47,7 +50,10 @@ export default function BottleSection({
           style={styles.bottleImage}
         />
         <TouchableOpacity
-          onPress={onRefresh}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            setRefreshKey(prev => prev + 1);
+          }}
           style={styles.starPhysicsContainer}
         >
           <StarPhysics
@@ -69,7 +75,16 @@ export default function BottleSection({
           >
             {totalNotesThisWeek} / {MAX_ONE_WEEK_NOTES_COUNT}개
           </CustomText>
-          <Icon name={'info'} size={16} color='white' />
+          <Tooltip
+            position='top'
+            content={
+              <CustomText variant='body3' color={GreyColors.grey600}>
+                {`7일간(월~일) 하루 3개씩 룸메와 서로 보낼 수 있으므로\n이번 주에 최대 42개의 마음쪽지를 쌓을 수 있어요.`}
+              </CustomText>
+            }
+          >
+            <Icon name={'info'} size={16} color='white' />
+          </Tooltip>
         </View>
         <ProgressBar
           percentage={Math.round(

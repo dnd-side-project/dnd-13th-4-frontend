@@ -18,10 +18,6 @@ import { Pressable, StyleSheet, View } from 'react-native';
 const BACKGROUND_IMAGE =
   'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/create_letter_sample_+background.png';
 
-// ✅ S3 이미지 URL
-const imageUrl =
-  'https://wiinii-bucket.s3.ap-northeast-2.amazonaws.com/images/letter_detail/uncomfortable.png';
-
 const Submit = () => {
   const router = useRouter();
   const { reset, emotion, promise, situationAction, situationState, closing } =

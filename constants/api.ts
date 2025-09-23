@@ -79,5 +79,5 @@ export const LOGOUT_PATH = '/auth/logout';
 /** POST 토큰 재발급 */
 export const TOKEN_REISSUE_PATH = '/auth/reissue';
 
-/** GET SSE 구독 */
+/** GET SSE 연결 요청 */
 export const SSE_SUBSCRIBE_PATH = '/sse/subscribe';

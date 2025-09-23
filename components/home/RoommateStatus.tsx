@@ -108,7 +108,7 @@ export const RoommateStatus = () => {
           fontWeight='medium'
           color={GreyColors.grey500}
         >
-          주의 부탁해요!
+          {mateStatus.request}
         </CustomText>
       </View>
     </View>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="45415874-59cc-4d71-8ef5-bcac2323875d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTAppDependencyProvider.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTAppDependencyProvider.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTModuleProviders.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTModuleProviders.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTModulesConformingToProtocolsProvider.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTModulesConformingToProtocolsProvider.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTThirdPartyComponentsProvider.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RCTThirdPartyComponentsProvider.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNCWebViewSpec/RNCWebViewSpec-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNCWebViewSpec/RNCWebViewSpec.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNCWebViewSpecJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNCWebViewSpecJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNDateTimePickerCGen/RNDateTimePickerCGen-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNDateTimePickerCGen/RNDateTimePickerCGen.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNDateTimePickerCGenJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/RNDateTimePickerCGenJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/ReactAppDependencyProvider.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/ReactCodegen.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNCWebViewSpec/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/RNDateTimePickerCGen/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rngesturehandler_codegen/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnscreens/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/rnsvg/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/ComponentDescriptors.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/ComponentDescriptors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/EventEmitters.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/EventEmitters.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/Props.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/Props.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/RCTComponentViewHelpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/ShadowNodes.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/ShadowNodes.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/States.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/react/renderer/components/safeareacontext/States.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnasyncstorage/rnasyncstorage-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnasyncstorage/rnasyncstorage.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnasyncstorageJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnasyncstorageJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rngesturehandler_codegen/rngesturehandler_codegen-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rngesturehandler_codegen/rngesturehandler_codegen.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rngesturehandler_codegenJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rngesturehandler_codegenJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnreanimated/rnreanimated-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnreanimated/rnreanimated.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnreanimatedJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnreanimatedJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnscreens/rnscreens-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnscreens/rnscreens.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnscreensJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnscreensJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnsvg/rnsvg-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnsvg/rnsvg.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnsvgJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/rnsvgJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/safeareacontext/safeareacontext-generated.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/safeareacontext/safeareacontext.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/safeareacontextJSI-generated.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/build/generated/ios/safeareacontextJSI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="33039uDBJ5vg1DGhvhuB76kVhL2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "release/v0.9.0",
+    "last_opened_file_path": "/Users/sangwoopark/dnd-13th-4-frontend",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="45415874-59cc-4d71-8ef5-bcac2323875d" name="Changes" comment="" />
+      <created>1758440013619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758440013619</updated>
+    </task>
+    <servers />
+  </component>
+</project>

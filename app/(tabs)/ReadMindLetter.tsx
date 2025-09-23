@@ -19,7 +19,7 @@ import {
   View,
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 // 별 컴포넌트 - 수직 위아래 반복 움직임과 클릭시 위로 올라가기
 const FloatingStar = ({ onFlash }: { onFlash: () => void }) => {

@@ -210,7 +210,7 @@ const AppleLogoIcon = ({ color = '#000000', size = 24 }: IconProps) => (
     />
   </Svg>
 );
-
+  
 const PersonIcon = ({ color = '#000000', size = 24 }: IconProps) => (
   <Svg width={size} height={size} viewBox='0 0 48 48' fill='none'>
     <G clipPath='url(#clip0_3934_9290)'>

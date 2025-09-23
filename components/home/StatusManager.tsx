@@ -1,6 +1,7 @@
 import useMyStatusQuery from '@/hooks/api/useMyStatusQuery';
 import useUpdateMyStatusMutation from '@/hooks/api/useUpdateMyStatusMutation';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { MyStatusSection } from './MyStatusSection';
 import { StatusSettingModal } from './StatusSettingModal';
@@ -23,6 +24,7 @@ export const StatusManager = ({
   // API 훅들
   const { data: myStatus, isLoading } = useMyStatusQuery();
   const updateMyStatusMutation = useUpdateMyStatusMutation();
+  const queryClient = useQueryClient();
 
   // 바텀시트 ref
   const statusModalRef = useRef<BottomSheetModal>(null);

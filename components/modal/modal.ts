@@ -4,7 +4,9 @@ export type ModalShowOptions = {
   title?: string;
   description?: string;
   confirmText?: string;
+  onConfirm?: () => Promise<void>;
   cancelText?: string;
+  onCancel?: () => Promise<void>;
   closeOnBackdropPress?: boolean;
   /** 커스텀 내용: AppModal의 children으로 들어감 */
   children?: React.ReactNode;

@@ -8,6 +8,7 @@ import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
 import { getMailDeviceInfo } from '@/components/mypage/modules/getMailDeviceInfo';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
+import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { getDaysAgo } from '@/lib/time';
 import { logout } from '@/services/authService';
 import { toast } from '@/store/toast.store';
@@ -245,6 +246,9 @@ const styles = StyleSheet.create({
     backgroundColor: PrimaryColors.blue300,
     borderRadius: 12,
     padding: 16,
+  },
+  roommateDataTitle: {
+    paddingBottom: 16,
   },
   roommateImage: {
     width: 36,

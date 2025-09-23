@@ -18,7 +18,9 @@
       "bundleIdentifier": "com.kirikiri.wini",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": ["remote-notification"]
+        "UIBackgroundModes": [
+          "remote-notification"
+        ]
       },
       "appleTeamId": "5A7A76PWY7"
     },
@@ -56,7 +58,8 @@
             "useFrameworks": "static"
           }
         }
-      ]
+      ],
+      "expo-mail-composer"
     ],
     "experiments": {
       "typedRoutes": true

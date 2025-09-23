@@ -55,7 +55,10 @@ export const ROOMS_PATH = '/rooms';
 /** POST 초대코드와 연결된 방 정보 반환 */
 export const ROOMS_JOIN_PATH = '/rooms/join';
 
-/** GET 내 정보 조회 */
+/**
+ * GET 내 정보 조회
+ * DELETE 회원 탈퇴
+ */
 export const ME_PATH = '/me';
 
 /** GET 룸메 정보 조회 */
@@ -76,5 +79,5 @@ export const LOGOUT_PATH = '/auth/logout';
 /** POST 토큰 재발급 */
 export const TOKEN_REISSUE_PATH = '/auth/reissue';
 
-/** GET SSE 구독 */
+/** GET SSE 연결 요청 */
 export const SSE_SUBSCRIBE_PATH = '/sse/subscribe';

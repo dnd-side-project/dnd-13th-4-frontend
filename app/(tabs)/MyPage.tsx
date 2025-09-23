@@ -10,6 +10,7 @@ import { getMailDeviceInfo } from '@/components/mypage/modules/getMailDeviceInfo
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { getDaysAgo } from '@/lib/time';
+import { logout } from '@/services/authService';
 import { toast } from '@/store/toast.store';
 import { openMail } from '@/utils/openMail';
 import * as Application from 'expo-application';
@@ -177,8 +178,7 @@ export default function MyPage() {
           </CustomText>
           <Pressable
             onPress={async () => {
-              await tokenStorage.removeAccessToken();
-              await tokenStorage.removeRefreshToken();
+              await logout();
               router.replace('/onboarding');
             }}
             style={styles.infoItem}
@@ -250,7 +250,6 @@ const styles = StyleSheet.create({
   roommateDataTitle: {
     paddingBottom: 16,
   },
-
   roommateImage: {
     width: 36,
     height: 36,
@@ -262,7 +261,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  roommateData: { flexDirection: 'row', alignItems: 'center' },
+  roommateData: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
   roommateName: { paddingRight: 8 },
 
   infoItemContainer: {

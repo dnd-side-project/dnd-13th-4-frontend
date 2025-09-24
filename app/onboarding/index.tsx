@@ -5,6 +5,7 @@ import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
 import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { appleAuth } from '@/lib/auth/appleAuth';
+import { kakaoLogin } from '@/services/authService';
 import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
 import {
@@ -84,9 +85,19 @@ const OnboardingScreen = () => {
   const progress = useSharedValue<number>(0);
   const isLastSlide = currentIndex === onboardingData.length - 1;
 
-  const handleKakaoLogin = useCallback(() => {
-    // TODO: 실제 카카오 로그인 구현 후 메인 페이지로 이동
-    router.replace('/(tabs)');
+  const handleKakaoLogin = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const tokens = await kakaoLogin();
+
+      if (tokens.accessToken && tokens.refreshToken) {
+        router.replace('/(tabs)');
+      }
+    } catch (error) {
+      console.error('Kakao login failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const handleAppleLogin = useCallback(async () => {
@@ -103,7 +114,6 @@ const OnboardingScreen = () => {
       }
     } catch (error) {
       console.error('Apple Sign In failed:', error);
-      // TODO: 사용자에게 로그인 실패를 알리는 UI 피드백(예: 토스트 메시지)을 추가해주세요.
     } finally {
       setIsLoading(false);
     }

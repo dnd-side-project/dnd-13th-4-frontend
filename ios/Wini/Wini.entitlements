@@ -4,5 +4,13 @@
   <dict>
     <key>aps-environment</key>
     <string>production</string>
+    <key>com.apple.developer.applesignin</key>
+    <array>
+      <string>Default</string>
+    </array>
+    <key>com.apple.developer.associated-domains</key>
+    <array>
+      <string>applinks:app.wini.my</string>
+    </array>
   </dict>
 </plist>

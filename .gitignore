@@ -44,3 +44,7 @@ app-example
 
 *-firebase-adminsdk-*.json
 fcm.ts
+
+# Firebase config files
+GoogleService-Info.plist
+google-services.json

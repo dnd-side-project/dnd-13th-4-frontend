@@ -275,7 +275,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - ExpoAppleAuthentication (8.0.7):
+  - ExpoAppleAuthentication (7.2.4):
     - ExpoModulesCore
   - ExpoAsset (11.1.7):
     - ExpoModulesCore
@@ -2240,7 +2240,7 @@ PODS:
     - React-logger (= 0.79.5)
     - React-perflogger (= 0.79.5)
     - React-utils (= 0.79.5)
-  - RNCAsyncStorage (2.2.0):
+  - RNCAsyncStorage (2.1.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2501,7 +2501,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.13.0):
+  - RNSVG (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2524,9 +2524,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.13.0)
+    - RNSVG/common (= 15.11.2)
     - Yoga
-  - RNSVG/common (15.13.0):
+  - RNSVG/common (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2553,7 +2553,7 @@ PODS:
   - SDWebImage (5.21.2):
     - SDWebImage/Core (= 5.21.2)
   - SDWebImage/Core (5.21.2)
-  - SDWebImageAVIFCoder (0.11.1):
+  - SDWebImageAVIFCoder (0.11.0):
     - libavif/core (>= 0.11.0)
     - SDWebImage (~> 5.10)
   - SDWebImageSVGCoder (1.7.0):
@@ -2954,7 +2954,7 @@ SPEC CHECKSUMS:
   expo-dev-launcher: 3bdbeb6102a0ebc885ef0cc1e93b8045fb46cf7c
   expo-dev-menu: 9a65836a93397539ec700e6ec99de8199ad8c4ca
   expo-dev-menu-interface: 609c35ae8b97479cdd4c9e23c8cf6adc44beea0e
-  ExpoAppleAuthentication: bc9de6e9ff3340604213ab9031d4c4f7f802623e
+  ExpoAppleAuthentication: 4d2e0c88a4463229760f1fbb9a937a810efb6863
   ExpoAsset: ef06e880126c375f580d4923fdd1cdf4ee6ee7d6
   ExpoBlur: 3c8885b9bf9eef4309041ec87adec48b5f1986a9
   ExpoClipboard: 436f6de6971f14eb75ae160e076d9cb3b19eb795
@@ -3062,22 +3062,22 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: f3e842e6cb5a825b6918a74a38402ba1409411f8
   ReactCodegen: 542dbcd3d677ed7c4fe69e28b7c492998f48c9db
   ReactCommon: 1aa48867a0fc71a2b4f9e8a1529f5673648354f3
-  RNCAsyncStorage: c1dca434eda758348a549efb46822b4091d76804
+  RNCAsyncStorage: 646c1bf2ebfc78d6632a3b0399f471fba8101e73
   RNDateTimePicker: cbba58b7fde72d73362a8896b9815498c8e014b2
-  RNFBAnalytics: 1a27f05d7ead3197733dd507f2c6629fcf6ba9b5
-  RNFBApp: 22c91c2d4ef60be1de426d3544f68c348e036bb0
-  RNFBMessaging: ab2be07f5d10cd524797785926a1d5c59af10d0d
+  RNFBAnalytics: 74b24ffa69cd578f4617e1fb130d5daddc2bcf0a
+  RNFBApp: 2cbcd7fd5063d8a521a09385915934e99295a79f
+  RNFBMessaging: d307457b2cd06e87d77e3dada610200b328f53a6
   RNGestureHandler: 8ff2b1434b0ff8bab28c8242a656fb842990bbc8
   RNReanimated: a3f55346df73f35c38bf0b446294d3d0b1ac8cf9
   RNScreens: 90b905d545a5ebbe976985702b8a39e3475727b2
-  RNSVG: d2bcb09b6a3527f6d37f0f351bc5149c69876263
+  RNSVG: 4470464e129f6bc58b78b961850b054dbbea8ef7
   SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
-  SDWebImageAVIFCoder: afe194a084e851f70228e4be35ef651df0fc5c57
+  SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: bfcce202dba74007f8974ee9c5f903a9a286c445
 
-PODFILE CHECKSUM: ee1ce8d005323653580abd904147eac27a669eef
+PODFILE CHECKSUM: b783be5bace4a732b5b9843da7efac9e85fef75e
 
 COCOAPODS: 1.16.2

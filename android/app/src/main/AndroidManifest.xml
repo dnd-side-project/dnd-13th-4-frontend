@@ -27,6 +27,13 @@
         <data android:scheme="com.kirikiri.wini"/>
         <data android:scheme="exp+dnd-13th-4-frontend"/>
       </intent-filter>
+      <intent-filter data-generated="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <data android:scheme="https" android:host="app.wini.my" android:pathPrefix="/app"/>
+        <data android:scheme="exp+dnd-13th-4-frontend"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
     </activity>
   </application>
 </manifest>

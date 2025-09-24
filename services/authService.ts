@@ -29,7 +29,7 @@ export const kakaoLogin = async (): Promise<TokenResponse> => {
     } else {
       // 모바일에서는 WebBrowser 사용
       const loginUrl = `${API_BASE_URL}${KAKAO_LOGIN_PATH}`;
-      const redirectUrl = 'com.kirikiri.wini://auth/callback';
+      const redirectUrl = 'com.kirikiri.wini://app/auth/success';
 
       const result = await WebBrowser.openAuthSessionAsync(
         loginUrl,

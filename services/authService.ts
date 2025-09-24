@@ -6,7 +6,7 @@ import {
 } from '@/constants/api';
 import { IdTokenRequest, TokenResponse } from '@/types/auth';
 import * as WebBrowser from 'expo-web-browser';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { api } from '@/lib/api';
 import { tokenStorage } from '@/lib/auth/tokenStorage';
 
@@ -16,6 +16,9 @@ import { tokenStorage } from '@/lib/auth/tokenStorage';
 export const kakaoLogin = async (): Promise<TokenResponse> => {
   try {
     const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+
+    // TestFlight 디버깅용 Alert
+    Alert.alert('DEBUG', `API_BASE_URL: ${API_BASE_URL || 'undefined'}\nPlatform: ${Platform.OS}`);
 
     if (!API_BASE_URL) {
       throw new Error('API URL이 설정되지 않았습니다. 환경변수를 확인해주세요.');
@@ -29,12 +32,18 @@ export const kakaoLogin = async (): Promise<TokenResponse> => {
     } else {
       // 모바일에서는 WebBrowser 사용
       const loginUrl = `${API_BASE_URL}${KAKAO_LOGIN_PATH}`;
-      const redirectUrl = 'com.kirikiri.wini://auth/callback';
+      const redirectUrl = 'com.kirikiri.wini://app/auth/success';
+
+      // WebBrowser 호출 전 디버깅
+      Alert.alert('DEBUG', `WebBrowser 호출\nURL: ${loginUrl}\nRedirect: ${redirectUrl}`);
 
       const result = await WebBrowser.openAuthSessionAsync(
         loginUrl,
         redirectUrl,
       );
+
+      // WebBrowser 결과 확인
+      Alert.alert('DEBUG', `WebBrowser 결과\nType: ${result.type}\nURL: ${'url' in result ? result.url : 'none'}`);
 
       if (result.type === 'success' && result.url) {
         // URL에서 토큰 파라미터 추출

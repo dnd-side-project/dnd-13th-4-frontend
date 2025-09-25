@@ -68,6 +68,12 @@ export const appleAuth = {
       const { accessToken, refreshToken } = response.data;
       await tokenStorage.setTokens(accessToken, refreshToken);
 
+      // 로그인 성공 후 유저 정보 표시
+      alert(`🎉 Apple 로그인 성공!
+사용자 ID: ${appleCredential.user}
+이메일: ${appleCredential.email || '미제공'}
+이름: ${appleCredential.fullName?.givenName || '미제공'}`);
+
       return response.data;
     } catch (error) {
       console.error('Apple authentication failed:', error);

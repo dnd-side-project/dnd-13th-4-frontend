@@ -2,6 +2,7 @@ import { SSE_SUBSCRIBE_PATH } from '@/constants/api';
 import { tokenStorage } from '@/lib/auth/tokenStorage';
 import type { MemberStatusResponse, SimpleNoteResponse } from '@/types/api';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import EventSource from 'react-native-sse';
 
 export type SSEEventType =
   | 'NOTE_RECEIVED'
@@ -115,63 +116,74 @@ const useSSE = (options: UseSSEOptions = {}) => {
         );
       }
 
-      // Note: EventSource doesn't support custom headers directly
-      // We'll need to pass the token as a query parameter instead
-      url.searchParams.set('token', token);
       if (lastEventId) {
         url.searchParams.set('lastEventId', lastEventId);
       }
 
-      const eventSource = new EventSource(url.toString());
+      // react-native-sse supports headers
+      const eventSource = new EventSource(url.toString(), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       eventSourceRef.current = eventSource;
 
-      eventSource.onopen = () => {
+      eventSource.addEventListener('open', () => {
         console.log('SSE connection opened');
         setIsConnected(true);
         setReconnectAttempts(0);
         onOpen?.();
-      };
+      });
 
-
-      eventSource.onerror = (error) => {
+      eventSource.addEventListener('error', (error: any) => {
         console.error('SSE connection error:', error);
         setIsConnected(false);
         onError?.(error);
 
         // Attempt to reconnect
-        if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
-          const delay = RECONNECT_DELAY * Math.pow(2, reconnectAttempts);
-          reconnectTimeoutRef.current = setTimeout(() => {
-            setReconnectAttempts((prev) => prev + 1);
-            connect();
-          }, delay);
-        }
-      };
+        setReconnectAttempts((prevAttempts) => {
+          if (prevAttempts < MAX_RECONNECT_ATTEMPTS) {
+            const delay = RECONNECT_DELAY * Math.pow(2, prevAttempts);
+            reconnectTimeoutRef.current = setTimeout(() => {
+              connect();
+            }, delay);
+            return prevAttempts + 1;
+          }
+          return prevAttempts;
+        });
+      });
 
       // Add event listeners for specific event types
-      const eventTypesToListen = eventTypes || ['NOTE_RECEIVED', 'MATE_STATUS_CHANGED', 'MATE_ONLINE_STATUS'];
+      const eventTypesToListen = eventTypes || [
+        'NOTE_RECEIVED',
+        'MATE_STATUS_CHANGED',
+        'MATE_ONLINE_STATUS',
+      ];
 
       eventTypesToListen.forEach((eventType) => {
-        eventSource.addEventListener(eventType, (event) => {
+        eventSource.addEventListener('message', (event: any) => {
           try {
-            const parsedData = JSON.parse((event as MessageEvent).data);
-            const sseEvent: SSEEvent = {
-              type: eventType,
-              data: parsedData,
-              timestamp: new Date().toISOString(),
-            };
-            setLastEventId((event as MessageEvent).lastEventId || null);
-            onEvent?.(sseEvent);
+            const parsedData = JSON.parse(event.data);
+            // Check if this message is for the event type we want
+            if (parsedData.type === eventType) {
+              const sseEvent: SSEEvent = {
+                type: eventType,
+                data: parsedData.data || parsedData,
+                timestamp: new Date().toISOString(),
+              };
+              setLastEventId(event.lastEventId || null);
+              onEvent?.(sseEvent);
+            }
           } catch (error) {
-            console.error(`Error parsing ${eventType} event:`, error);
+            console.error(`Error parsing SSE event:`, error);
           }
         });
       });
     } catch (error) {
       console.error('Error creating SSE connection:', error);
     }
-  }, [eventTypes, lastEventId, onEvent, onOpen, onError, reconnectAttempts]);
+  }, [eventTypes, lastEventId, onEvent, onOpen, onError]);
 
   const disconnect = useCallback(() => {
     if (eventSourceRef.current) {
@@ -196,7 +208,7 @@ const useSSE = (options: UseSSEOptions = {}) => {
     return () => {
       disconnect();
     };
-  }, [enabled, connect, disconnect]);
+  }, [enabled]);
 
   return {
     isConnected,

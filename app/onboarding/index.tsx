@@ -6,6 +6,8 @@ import { S3_IMAGE_URL } from '@/constants';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { appleAuth } from '@/lib/auth/appleAuth';
 import { kakaoLogin } from '@/services/authService';
+import { api } from '@/lib/api';
+import { ME_PATH } from '@/constants/api';
 import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
 import {
@@ -85,20 +87,36 @@ const OnboardingScreen = () => {
   const progress = useSharedValue<number>(0);
   const isLastSlide = currentIndex === onboardingData.length - 1;
 
+  const navigateAfterLogin = useCallback(async () => {
+    try {
+      const { data } = await api.get<{ isMatched: boolean }>({ path: ME_PATH });
+
+      if (data.isMatched) {
+        router.replace('/(tabs)');
+      } else {
+        router.replace('/matching/start');
+      }
+    } catch (error) {
+      console.error('Failed to get user info:', error);
+      // 실패 시 기본적으로 매칭 화면으로
+      router.replace('/matching/start');
+    }
+  }, []);
+
   const handleKakaoLogin = useCallback(async () => {
     try {
       setIsLoading(true);
       const tokens = await kakaoLogin();
 
       if (tokens.accessToken && tokens.refreshToken) {
-        router.replace('/(tabs)');
+        await navigateAfterLogin();
       }
     } catch (error) {
       console.error('Kakao login failed:', error);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [navigateAfterLogin]);
 
   const handleAppleLogin = useCallback(async () => {
     if (Platform.OS !== 'ios') {
@@ -110,14 +128,14 @@ const OnboardingScreen = () => {
       const result = await appleAuth.signInWithApple();
 
       if (result) {
-        router.replace('/(tabs)');
+        await navigateAfterLogin();
       }
     } catch (error) {
       console.error('Apple Sign In failed:', error);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [navigateAfterLogin]);
 
   const handleNext = useCallback(() => {
     if (!isLastSlide) {

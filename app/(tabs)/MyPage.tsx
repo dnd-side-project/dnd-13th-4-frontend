@@ -8,7 +8,6 @@ import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
 import { getMailDeviceInfo } from '@/components/mypage/modules/getMailDeviceInfo';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
-import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { getDaysAgo } from '@/lib/time';
 import { logout } from '@/services/authService';
 import { toast } from '@/store/toast.store';
@@ -192,13 +191,18 @@ export default function MyPage() {
           </Pressable>
           <Pressable
             onPress={async () => {
+              console.log('탈퇴 버튼 클릭됨');
               modal.show({
                 title: '정말 탈퇴하시겠습니까?',
                 description: `지금 탈퇴하면 룸메이트와 주고받은 마음쪽지를 다시 볼 수 없어요.\n그래도 탈퇴하시겠어요?`,
                 confirmText: '확인',
                 onConfirm: async () => {
-                  await mutateAsyncDeleteAccount();
-                  router.replace('/onboarding');
+                  try {
+                    await mutateAsyncDeleteAccount();
+                    router.replace('/onboarding');
+                  } catch (error) {
+                    toast.show('탈퇴 처리 중 오류가 발생했습니다.');
+                  }
                 },
                 cancelText: '취소',
               });

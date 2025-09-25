@@ -17,8 +17,18 @@ export default function GlobalModalHost() {
       confirmText={active?.confirmText ?? '확인'}
       cancelText={active?.cancelText}
       closeOnBackdropPress={active?.closeOnBackdropPress ?? true}
-      onConfirm={() => modal.confirm()}
-      onCancel={() => modal.cancel()}
+      onConfirm={async () => {
+        if (active?.onConfirm) {
+          await active.onConfirm();
+        }
+        modal.confirm();
+      }}
+      onCancel={async () => {
+        if (active?.onCancel) {
+          await active.onCancel();
+        }
+        modal.cancel();
+      }}
     >
       {active?.children}
     </AppModal>

@@ -159,7 +159,11 @@ export default function MyPage() {
                   body: getMailDeviceInfo({ userId: data.id }),
                 });
               } catch (e) {
-                toast.show('메일을 열 수 없습니다.');
+                if (e instanceof Error && e.message.includes('개발 환경')) {
+                  toast.show('개발 환경에서는 메일 기능을 사용할 수 없습니다.');
+                } else {
+                  toast.show('메일을 열 수 없습니다.');
+                }
               }
             }}
             style={styles.infoItem}

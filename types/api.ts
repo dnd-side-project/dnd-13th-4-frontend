@@ -126,8 +126,8 @@ export type ActionCategoryResponse = {
 };
 
 export type KeywordResponse = {
-  positiveActionCategory: ActionCategoryResponse;
-  negativeActionCategory: ActionCategoryResponse;
+  positiveActionCategory: ActionCategoryResponse | null;
+  negativeActionCategory: ActionCategoryResponse | null;
 };
 
 export type SimpleActionChange = {

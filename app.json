@@ -15,14 +15,12 @@
       },
       "googleServicesFile": "./GoogleService-Info.plist",
       "useFrameworks": "static",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.kirikiri.wini",
       "associatedDomains": ["applinks:app.wini.my"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "UIBackgroundModes": [
-          "remote-notification"
-        ]
+        "UIBackgroundModes": ["remote-notification"]
       },
       "appleTeamId": "5A7A76PWY7"
     },

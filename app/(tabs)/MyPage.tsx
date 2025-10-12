@@ -1,12 +1,17 @@
 import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import { SafeScreenLayout } from '@/components/layout/SafeScreenLayout';
+import { modal } from '@/components/modal/modal';
+import { useDeleteAccountMutation } from '@/components/mypage/hooks/useDeleteAccountMutation';
 import { useMateQuery } from '@/components/mypage/hooks/useMateQuery';
 import { useMeQuery } from '@/components/mypage/hooks/useMeQuery';
 import { useMyRoomsQuery } from '@/components/mypage/hooks/useMyRoomsQuery';
+import { getMailDeviceInfo } from '@/components/mypage/modules/getMailDeviceInfo';
 import { GreyColors, PrimaryColors } from '@/constants/Colors';
 import { getDaysAgo } from '@/lib/time';
+import { logout } from '@/services/authService';
 import { toast } from '@/store/toast.store';
+import { openMail } from '@/utils/openMail';
 import * as Application from 'expo-application';
 import * as Clipboard from 'expo-clipboard';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -17,6 +22,7 @@ const PROFILE_IMAGE_WIDTH = 120;
 
 export default function MyPage() {
   const router = useRouter();
+  const { mutateAsync: mutateAsyncDeleteAccount } = useDeleteAccountMutation();
 
   const handleCopy = async (copyText: string): Promise<void> => {
     await Clipboard.setStringAsync(copyText);
@@ -142,8 +148,22 @@ export default function MyPage() {
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
           <Pressable
-            onPress={() => {
-              /** TODO : 문의하기 페이지 구현 */
+            onPress={async () => {
+              if (!data) return;
+
+              try {
+                await openMail({
+                  recipients: ['dnd13gi4jo@gmail.com'],
+                  subject: '위니 문의하기',
+                  body: getMailDeviceInfo({ userId: data.id }),
+                });
+              } catch (e) {
+                if (e instanceof Error && e.message.includes('개발 환경')) {
+                  toast.show('개발 환경에서는 메일 기능을 사용할 수 없습니다.');
+                } else {
+                  toast.show('메일을 열 수 없습니다.');
+                }
+              }
             }}
             style={styles.infoItem}
           >
@@ -160,8 +180,9 @@ export default function MyPage() {
             기타
           </CustomText>
           <Pressable
-            onPress={() => {
-              /** TODO : 로그아웃 동작 구현 */
+            onPress={async () => {
+              await logout();
+              router.replace('/onboarding');
             }}
             style={styles.infoItem}
           >
@@ -169,8 +190,22 @@ export default function MyPage() {
             <Icon name='expandRight' color={GreyColors.grey400} />
           </Pressable>
           <Pressable
-            onPress={() => {
-              /** TODO : 탈퇴 동작 구현 */
+            onPress={async () => {
+              console.log('탈퇴 버튼 클릭됨');
+              modal.show({
+                title: '정말 탈퇴하시겠습니까?',
+                description: `지금 탈퇴하면 룸메이트와 주고받은 마음쪽지를 다시 볼 수 없어요.\n그래도 탈퇴하시겠어요?`,
+                confirmText: '확인',
+                onConfirm: async () => {
+                  try {
+                    await mutateAsyncDeleteAccount();
+                    router.replace('/onboarding');
+                  } catch (error) {
+                    toast.show('탈퇴 처리 중 오류가 발생했습니다.');
+                  }
+                },
+                cancelText: '취소',
+              });
             }}
             style={styles.infoItem}
           >
@@ -220,11 +255,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
   },
-  roommateData
-    : {
+  roommateDataTitle: {
     paddingBottom: 16,
   },
-
   roommateImage: {
     width: 36,
     height: 36,
@@ -236,7 +269,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  roommateData: { flexDirection: 'row', alignItems: 'center' },
+  roommateData: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
   roommateName: { paddingRight: 8 },
 
   infoItemContainer: {

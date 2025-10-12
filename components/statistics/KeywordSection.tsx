@@ -11,8 +11,10 @@ export default function KeywordSection() {
   const { data } = useMyKeywordQuery();
 
   const { positiveActionCategory, negativeActionCategory } = data;
-  const [positiveEmoji, positiveText] = positiveActionCategory.name.split(' ');
-  const [negativeEmoji, negativeText] = negativeActionCategory.name.split(' ');
+  const [positiveEmoji, positiveText] =
+    positiveActionCategory?.name.split(' ') ?? [];
+  const [negativeEmoji, negativeText] =
+    negativeActionCategory?.name.split(' ') ?? [];
 
   const isMatched = useIsMatched();
 

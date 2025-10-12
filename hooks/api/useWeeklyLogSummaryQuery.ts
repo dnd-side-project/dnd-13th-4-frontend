@@ -22,6 +22,7 @@ const useWeeklyLogSummaryQuery = () => {
     initialData: {
       notesSentThisWeek: 0,
       notesReceivedThisWeek: 0,
+      totalNotesExchanged: 0,
       roomJoinedAt: new Date().toISOString(),
     },
   });

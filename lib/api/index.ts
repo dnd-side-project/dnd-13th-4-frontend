@@ -37,6 +37,11 @@ client.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      // 토큰이 필요하지 않은 인증 API들은 토큰 갱신을 시도하지 않음
+      if (originalRequest.url?.includes('/auth/login')) {
+        return Promise.reject(error);
+      }
+
       originalRequest._retry = true;
 
       try {

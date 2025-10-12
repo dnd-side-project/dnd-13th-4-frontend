@@ -3,9 +3,11 @@ import { CustomText } from '@/components/CustomText';
 import { Icon } from '@/components/icons';
 import MindLetter from '@/components/read-mind-letter/MindLetter';
 import { S3_IMAGE_URL } from '@/constants';
+import { NOTES_SAVED_PATH } from '@/constants/api';
 import { GreyColors } from '@/constants/Colors';
 import useSaveNoteMutation from '@/hooks/api/useSaveNoteMutation';
 import { toast } from '@/store/toast.store';
+import { useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -19,7 +21,7 @@ import {
   View,
 } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 // 별 컴포넌트 - 수직 위아래 반복 움직임과 클릭시 위로 올라가기
 const FloatingStar = ({ onFlash }: { onFlash: () => void }) => {
@@ -100,6 +102,7 @@ const FloatingStar = ({ onFlash }: { onFlash: () => void }) => {
 };
 
 export default function ReadMindLetter() {
+  const queryClient = useQueryClient();
   const jarWidth = 150; // 화면 너비의 60%
   const jarHeight = 200;
   const flashOpacity = useRef(new Animated.Value(0)).current;
@@ -136,6 +139,7 @@ export default function ReadMindLetter() {
   const handleSave = async (): Promise<void> => {
     try {
       await mutateAsync(Number(id));
+      queryClient.invalidateQueries({ queryKey: [NOTES_SAVED_PATH] });
       router.push('/');
       toast.show('마음쪽지를 보관함에 저장했어요');
     } catch (e) {

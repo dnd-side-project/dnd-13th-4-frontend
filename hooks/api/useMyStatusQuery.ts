@@ -21,6 +21,7 @@ const useMyStatusQuery = () => {
     initialData: {
       emoji: null,
       text: null,
+      request: null,
       statusStartedAt: null,
       reservedTimeInfo: null,
     },

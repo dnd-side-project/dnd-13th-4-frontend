@@ -4,11 +4,11 @@ import {
   LOGOUT_PATH,
   TOKEN_REISSUE_PATH,
 } from '@/constants/api';
+import { api } from '@/lib/api';
+import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { IdTokenRequest, TokenResponse } from '@/types/auth';
 import * as WebBrowser from 'expo-web-browser';
 import { Platform } from 'react-native';
-import { api } from '@/lib/api';
-import { tokenStorage } from '@/lib/auth/tokenStorage';
 
 /**
  * 카카오 로그인
@@ -18,7 +18,9 @@ export const kakaoLogin = async (): Promise<TokenResponse> => {
     const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
     if (!API_BASE_URL) {
-      throw new Error('API URL이 설정되지 않았습니다. 환경변수를 확인해주세요.');
+      throw new Error(
+        'API URL이 설정되지 않았습니다. 환경변수를 확인해주세요.',
+      );
     }
 
     if (Platform.OS === 'web') {
@@ -56,7 +58,7 @@ export const kakaoLogin = async (): Promise<TokenResponse> => {
 
         const tokens: TokenResponse = {
           accessToken: cleanAccessToken,
-          refreshToken: cleanRefreshToken
+          refreshToken: cleanRefreshToken,
         };
 
         await tokenStorage.setTokens(cleanAccessToken, cleanRefreshToken);

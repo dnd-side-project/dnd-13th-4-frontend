@@ -66,15 +66,22 @@ export const appleAuth = {
       });
 
       const { accessToken, refreshToken } = response.data;
-      await tokenStorage.setTokens(accessToken, refreshToken);
 
-      // 로그인 성공 후 유저 정보 표시
-      alert(`🎉 Apple 로그인 성공!
-사용자 ID: ${appleCredential.user}
-이메일: ${appleCredential.email || '미제공'}
-이름: ${appleCredential.fullName?.givenName || '미제공'}`);
+      // Bearer 접두사 제거
+      const cleanAccessToken = accessToken.startsWith('Bearer ')
+        ? accessToken.replace('Bearer ', '')
+        : accessToken;
+      const cleanRefreshToken = refreshToken.startsWith('Bearer ')
+        ? refreshToken.replace('Bearer ', '')
+        : refreshToken;
 
-      return response.data;
+      await tokenStorage.setTokens(cleanAccessToken, cleanRefreshToken);
+
+      return {
+        ...response.data,
+        accessToken: cleanAccessToken,
+        refreshToken: cleanRefreshToken,
+      };
     } catch (error) {
       console.error('Apple authentication failed:', error);
       throw error;
